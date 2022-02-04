@@ -1,5 +1,5 @@
 import NavBar from "../NavBar";
-const Report = () => {
+const ReportForm = () => {
     return (
         <div>
             <NavBar />
@@ -7,4 +7,4 @@ const Report = () => {
         </div>
     )
 };
-export default Report;
+export default ReportForm;
