@@ -1,5 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import './App.css';
+import './CSS/App.css';
+
 
 //imported views
 import NoPage from "./Views/NoPageFound";

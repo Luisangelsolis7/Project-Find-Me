@@ -1,9 +1,10 @@
-import AdminNavBar from "../AdminNavBar";
+import AdminNavBar from "../components/AdminNavBar";
+import ItemList from "../components/ItemList";
 const Home = function(){
     return(
         <>
             <AdminNavBar />
-            This has all the items that are currently in possesion of the police department.
+            <ItemList />
         </>
     )
 }

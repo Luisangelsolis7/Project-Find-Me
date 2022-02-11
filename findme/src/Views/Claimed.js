@@ -1,4 +1,4 @@
-import AdminNavBar from "../AdminNavBar";
+import AdminNavBar from "../components/AdminNavBar";
 const Claimed = function() {
     return (
         <div>
