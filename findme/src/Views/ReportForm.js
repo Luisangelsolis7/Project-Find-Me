@@ -20,7 +20,7 @@ const ReportForm = () => {
                     <Col xs lg="2"></Col>
                     <Col>
                         First, last, Driver's license, DOB, email, phone
-                        
+
                         
                     </Col>
                     <Col xs lg="2"></Col>
