@@ -1,32 +1,53 @@
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import {Row} from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 const Login = function() {
     return (
-        <Row className="align-items-center">
-        <Form>
+        <Container>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
+            <Row>
+                <Col></Col>
+                <Col>
+                    <h1>Log-In</h1>
+                    <br />
+                    <br />
+                <Form>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
-            <Button variant="primary" href="/Home" type="submit">
-                Submit
-            </Button>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                        </Form.Text>
+                    </Form.Group>
 
-        </Form>
-        </Row>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" />
+                    </Form.Group>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                            <Button variant="primary" href="/Home" type="submit">
+                                Submit
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" href="/" type="submit">
+                                Back
+                            </Button>
+                        </Col>
+                    </Row>
+
+
+
+                </Form>
+                </Col>
+                <Col></Col>
+            </Row>
+        </Container>
     )
 }
 export default Login;
