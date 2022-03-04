@@ -24,7 +24,7 @@ function AdminNavBar(props){
     return(
         <Navbar bg="light" expand="lg" className="justify-content-end">
             <Container>
-                <Navbar.Brand href="/">LOST-N-FOUND</Navbar.Brand>
+                <Navbar.Brand href="/"><img src={require("../imgs/logo.svg")}/></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>

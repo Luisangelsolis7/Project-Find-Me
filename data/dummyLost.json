@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "itemName": "All About Money",
+      "itemCategory": "",
+      "itemDescription": "Its about the root of all evil",
+      "itemValue": "This ariticle is a complete guide about money. Its nice to have but not eveyone has it.",
+      "userFirst": "",
+      "userLast": "",
+      "userDOB": "",
+      "userPhone": "",
+      "userEmail": "",
+      "date": "",
+      "time": "",
+      "location": ""
+    }
+  ]
+}
