@@ -11,7 +11,7 @@ const Claimed = function() {
                 <Row >
                     <Col>Left</Col>
                     <Col md={10}>
-                        <ItemList />
+                        <ItemList active="C"/>
                     </Col>
                     <Col>
                         Right

@@ -11,7 +11,7 @@ const Reports = function() {
         <Row >
             <Col>Left</Col>
             <Col md={10}>
-                <ItemList />
+                <ItemList active="R"/>
                 <div className="input-group">
                     <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                         <option selected>Delete</option>

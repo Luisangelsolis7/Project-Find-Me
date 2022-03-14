@@ -1,33 +1,23 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-const ItemList = function(){
+const ItemList = function(props){
     //This is the code to format how the list of items to be displayed
+    let tableHeader = [];
+    if(props.active == "H"){
+        tableHeader = ["","Name","Category","Description","Value","Date","Location"];
+    }if(props.active == "C"){
+        tableHeader =["","Big booty bitches"];
+    }if(props.active == "R"){
 
+    }
 
     return(
-<>
-    "itemName": "All About Money",
-    "itemCategory": "",
-    "itemDescription": "Its about the root of all evil",
-    "itemValue": "This ariticle is a complete guide about money. Its nice to have but not eveyone has it.",
-    "userFirst": "",
-    "userLast": "",
-    "userDOB": "",
-    "userPhone": "",
-    "userEmail": "",
-    "date": "",
-    "time": "",
-    "location": ""
-    }
-                <table className="table">
+<>                <table className="table">
                     <thead className="table-dark">
                     <tr scope="row">
-                        <td scope="col">Name</td>
-                        <td scope="col">Category</td>
-                        <td scope="col">Description</td>
-                        <td scope="col">Value</td>
-                        <td scope="col">Date</td>
-                        <td scope="col">Location</td>
+                        {tableHeader.map((i) => (
+                            <td>{i}</td>
+                        ))}
                     </tr>
                     </thead>
                     <tr>
