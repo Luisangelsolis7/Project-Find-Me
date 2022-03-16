@@ -6,7 +6,7 @@ const ItemList = function(props){
     if(props.active == "H"){
         tableHeader = ["","Name","Category","Description","Value","Date","Location"];
     }if(props.active == "C"){
-        tableHeader =["","Big booty bitches"];
+        tableHeader =["","another item"];
     }if(props.active == "R"){
 
     }
