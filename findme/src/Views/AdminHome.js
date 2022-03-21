@@ -3,8 +3,11 @@ import ItemList from "../components/ItemList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Modal from "../components/Modal";
+import {useState} from "react";
 const Home = function(){
-
+const[show,setShow] = useState(false);
     return(
         <>
             <AdminNavBar active="H"/>
@@ -24,7 +27,8 @@ const Home = function(){
             </div>
                     </Col>
                     <Col>
-                        Right
+                        <Button onClick={() => setShow(true)}>Add Item</Button>
+                        <Modal onClose={() => setShow(false)} show={show} />
                     </Col>
                 </Row>
             </Container>

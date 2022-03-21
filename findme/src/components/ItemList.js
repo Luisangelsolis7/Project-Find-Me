@@ -28,17 +28,19 @@ const ItemList = function(props){
                                     </div>
                         </td>
                         <td>Name</td>
-                        <td><select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                        <td>Electronic</td>
+                        {/*<select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                             <option value="electronic">Electronic</option>
                             <option value="clothing">Clothing</option>
                             <option value="accessory">accessory</option>
                             <option value="id">Identification</option>
                             <option value="misc">Misc</option>
-                        </select></td>
+                        </select>*/}
                         <td>This is a test description because we have no idea how long they are going to be. so i will continue to add words here</td>
                         <td>$1000.00</td>
                         <td>3/14/2022</td>
-                        <td><select>
+                        <td>Dunham Hall</td>
+                        {/*<select>
                             <option value="electronic">Alumni Hall</option>
                             <option value="clothing">Bookstore</option>
                             <option value="accessory">Business Office</option>
@@ -101,20 +103,7 @@ const ItemList = function(props){
                                 and Psychological Services)</option>
                             <option value="electronic">Wilkinson Hall</option>
                             <option value="misc"></option>
-
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div className="input-group-text">
-                                <input className="form-check-input mt-0" type="checkbox" value=""
-                                       aria-label="Checkbox for following text input"></input>
-                            </div>
-                        </td>
-                        <td>Name</td>
-                        <td>Category</td>
-                        <td>Value</td>
-                        <td>Blah Blah Blah DESC</td>
+                        </select>*/}
                     </tr>
                 </table>
     </>
