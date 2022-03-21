@@ -27,6 +27,7 @@ const[show,setShow] = useState(false);
             </div>
                     </Col>
                     <Col>
+                        <br />
                         <Button onClick={() => setShow(true)}>Add Item</Button>
                         <Modal onClose={() => setShow(false)} show={show} />
                     </Col>
