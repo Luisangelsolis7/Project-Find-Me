@@ -27,10 +27,11 @@ const ItemList = function(props){
                     <thead className="table-dark">
                     <tr scope="row">
                         {tableHeader.map((i) => (
-                            <td>{i}</td>
+                            <td key={i}>{i}</td>
                         ))}
                     </tr>
                     </thead>
+                    <tbody>
                     <tr>
                         <td>
                                     <div className="input-group-text">
@@ -52,6 +53,7 @@ const ItemList = function(props){
                         <td>3/14/2022</td>
                         <td>Dunham Hall</td>
                     </tr>
+                    </tbody>
                 </table>
     </>
     )

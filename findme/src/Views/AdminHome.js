@@ -18,7 +18,7 @@ const[show,setShow] = useState(false);
             <ItemList active="H"/>
             <div className="input-group">
                 <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option value="destroy" selected>Destroy</option>
+                    <option value="destroy" defaultValue="destroy">Destroy</option>
                     <option value="claim">Claim</option>
                     <option value="edit">Edit</option>
                     <option value="donate">Donate</option>
