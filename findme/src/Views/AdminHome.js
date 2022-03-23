@@ -5,9 +5,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Modal from "../components/Modal";
+import useFetch from "../useFetch";
 import {useState} from "react";
 const Home = function(){
+
 const[show,setShow] = useState(false);
+    const {data : items, isPending, error } = useFetch('http://127.0.0.1:8000/dummyUnclaimed');
     return(
         <>
             <AdminNavBar active="H"/>
@@ -15,7 +18,9 @@ const[show,setShow] = useState(false);
                 <Row >
                     <Col>Savanna is super cool</Col>
                     <Col md={10}>
-            <ItemList active="H"/>
+                        { error  && <div> {error}</div>}
+                        { isPending && <div> Loading ... </div> }
+                        { items && <ItemList items={items} active="H"/>}
             <div className="input-group">
                 <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <option value="destroy" defaultValue="destroy">Destroy</option>
