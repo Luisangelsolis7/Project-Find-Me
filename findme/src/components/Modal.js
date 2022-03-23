@@ -1,3 +1,6 @@
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+
 function Modal(props){
     if(!props.show){
         return null;
@@ -11,8 +14,26 @@ function Modal(props){
                     </h4>
                 </div>
                 <div className="modal-body">
-                    This is modal content,
-                    we are going to have the add function here
+                    <Container>
+                        <Row>
+                            Item Name:<input type="text" />
+                        </Row>
+                        <Row>
+                            Item Category:<select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option value="electronic">Electronic</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="accessory">accessory</option>
+                            <option value="id">Identification</option>
+                            <option value="misc">Misc</option>
+                        </select>
+                        </Row>
+                        <Row>
+                            Location:
+                            <select>
+
+                            </select>
+                        </Row>
+                    </Container>
                 </div>
                 <div className="modal-footer">
                     <button>Add</button>
