@@ -54,13 +54,13 @@ const ItemList = function(props){
                                 <input className="form-check-input mt-0" type="checkbox" value=""
                                        aria-label="Checkbox for following text input"></input>
                             </div></td>
-                            <td>{i.itemName}</td>
-                            <td>{i.itemCategory}</td>
-                            <td>{i.itemDescription}</td>
-                            <td>{i.itemValue}</td>
-                            <td>{i.date}</td>
-                            <td>{i.location}</td>
-                            <td>{i.officerBadge}</td>
+                            <td>{i.Item_Name}</td>
+                            <td>{i.Category_Name}</td>
+                            <td>{i.Item_Desc}</td>
+                            <td>{i.Item_Value}</td>
+                            <td>{i.ISH_Date}</td>
+                            <td>{i.ISH_Location}</td>
+                            <td>{i.Officer_Badge}</td>
                         </tr>
                     ))}
                     </tbody>
