@@ -1,6 +1,7 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import useFetch from "../useFetch";
+import React from 'react';
 const ItemList = function(props){
     //This is the code to format how the list of items to be displayed
     let locations = ["N/A","Alumni Hall","Bookstore","Business Office","Campus Public Safety","Business Office","Centennial Hall",
@@ -17,55 +18,104 @@ const ItemList = function(props){
     let tableHeader = [];
     if(props.active == "H"){
         tableHeader = ["","Name","Category","Description","Value","Date","Location","Officer Badge Number"];
+        return(
+            <>                <table className="table">
+                <thead className="table-dark">
+                <tr scope="row">
+                    {tableHeader.map((i) => (
+                        <td key={i}>{i}</td>
+                    ))}
+                </tr>
+                </thead>
+                <tbody>
+                {props.items.map((i) => (
+                    <tr>
+                        <td><div className="input-group-text">
+                            <input className="form-check-input mt-0" type="checkbox" value=""
+                                   aria-label="Checkbox for following text input"></input>
+                        </div></td>
+                        <td>{i.Item_Name}</td>
+                        <td>{i.Category_Name}</td>
+                        <td>{i.Item_Desc}</td>
+                        <td>{i.Item_Value}</td>
+                        <td>{i.ISH_Date}</td>
+                        <td>{i.ISH_Location}</td>
+                        <td>{i.Officer_Badge}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            </>
+        )
     }if(props.active == "C"){
-        tableHeader =["","another item"];
+        tableHeader =["","Name", "Category", "Description", "Value", "Date", "Claimant Name", "Claimant Email", "Claimant Phone",
+            "Officer Badge Number"];
+        return(
+            <>                <table className="table">
+                <thead className="table-dark">
+                <tr scope="row">
+                    {tableHeader.map((i) => (
+                        <td key={i}>{i}</td>
+                    ))}
+                </tr>
+                </thead>
+                <tbody>
+                {props.items.map((i) => (
+                    <tr>
+                        <td><div className="input-group-text">
+                            <input className="form-check-input mt-0" type="checkbox" value=""
+                                   aria-label="Checkbox for following text input"></input>
+                        </div></td>
+                        <td>{i.Item_Name}</td>
+                        <td>{i.Category_Name}</td>
+                        <td>{i.Item_Desc}</td>
+                        <td>{i.Item_Value}</td>
+                        <td>{i.ISH_Date}</td>
+                        <td>{i.User_Fname} {i.User_Lname}</td>
+                        <td>{i.User_Email}</td>
+                        <td>{i.User_Phone}</td>
+                        <td>{i.Officer_Badge}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            </>
+        )
     }if(props.active == "R"){
-
+        tableHeader =["","Item", "Category", "Description", "Value", "Date", "Location", "Name", "Email", "Phone"];
+        return(
+            <>                <table className="table">
+                <thead className="table-dark">
+                <tr scope="row">
+                    {tableHeader.map((i) => (
+                        <td key={i}>{i}</td>
+                    ))}
+                </tr>
+                </thead>
+                <tbody>
+                {props.items.map((i) => (
+                    <tr>
+                        <td><div className="input-group-text">
+                            <input className="form-check-input mt-0" type="checkbox" value=""
+                                   aria-label="Checkbox for following text input"></input>
+                        </div></td>
+                        <td>{i.Item_Name}</td>
+                        <td>{i.Category_Name}</td>
+                        <td>{i.Item_Desc}</td>
+                        <td>${i.Item_Value}</td>
+                        <td>{i.ISH_Date}</td>
+                        <td>{i.ISH_Location}</td>
+                        <td>{i.User_Fname} {i.User_Lname}</td>
+                        <td>{i.User_Email}</td>
+                        <td>{i.User_Phone}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            </>
+        )
     }
 
-    return(
-<>                <table className="table">
-                    <thead className="table-dark">
-                    <tr scope="row">
-                        {tableHeader.map((i) => (
-                            <td key={i}>{i}</td>
-                        ))}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                                    <div className="input-group-text">
-                                        <input className="form-check-input mt-0" type="checkbox" value=""
-                                               aria-label="Checkbox for following text input"></input>
-                                    </div>
-                        </td>
-                        <td>Name</td>
-                        <td>Electronic</td>
-                        {/**/}
-                        <td>This is a test description because we have no idea how long they are going to be. so i will continue to add words here</td>
-                        <td>$1000.00</td>
-                        <td>3/14/2022</td>
-                        <td>Dunham Hall</td>
-                    </tr>
-                    {props.items.map((i) => (
-                        <tr>
-                            <td><div className="input-group-text">
-                                <input className="form-check-input mt-0" type="checkbox" value=""
-                                       aria-label="Checkbox for following text input"></input>
-                            </div></td>
-                            <td>{i.Item_Name}</td>
-                            <td>{i.Category_Name}</td>
-                            <td>{i.Item_Desc}</td>
-                            <td>{i.Item_Value}</td>
-                            <td>{i.ISH_Date}</td>
-                            <td>{i.ISH_Location}</td>
-                            <td>{i.Officer_Badge}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-    </>
-    )
+
 }
 export default ItemList;

@@ -1,5 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import React from 'react';
 
 function Modal(props){
     if(!props.show){
@@ -26,6 +27,9 @@ function Modal(props){
                             <option value="id">Identification</option>
                             <option value="misc">Misc</option>
                         </select>
+                        </Row>
+                        <Row>
+                            Description:<input type="textarea" />
                         </Row>
                         <Row>
                             Location:

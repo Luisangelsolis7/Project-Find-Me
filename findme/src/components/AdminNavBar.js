@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl, NavItem} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import React from 'react';
 function AdminNavBar(props){
     let Home, Claimed, Reports = "nav-link";
     if(props.active == "H"){
