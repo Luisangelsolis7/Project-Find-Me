@@ -1,5 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import './CSS/App.css';
+import React from 'react';
 
 
 //imported views

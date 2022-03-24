@@ -6,11 +6,11 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Modal from "../components/Modal";
 import useFetch from "../useFetch";
-import {useState} from "react";
+import React, {useState} from "react";
 const Home = function(){
 
 const[show,setShow] = useState(false);
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/get');
+    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getUnclaimed');
     return(
         <>
             <AdminNavBar active="H"/>

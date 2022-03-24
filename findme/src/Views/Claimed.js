@@ -4,9 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ItemList from "../components/ItemList";
 import useFetch from "../useFetch";
+import React from 'react';
 const Claimed = function() {
+    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getClaimed');
 
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/get');
     return (
         <>
             <AdminNavBar active="C"/>
