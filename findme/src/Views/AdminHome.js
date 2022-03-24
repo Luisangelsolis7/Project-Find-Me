@@ -10,7 +10,7 @@ import {useState} from "react";
 const Home = function(){
 
 const[show,setShow] = useState(false);
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/get');
+    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getUnclaimed');
     return(
         <>
             <AdminNavBar active="H"/>
