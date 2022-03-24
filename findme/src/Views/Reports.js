@@ -3,7 +3,9 @@ import ItemList from "../components/ItemList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import useFetch from "../useFetch";
 const Reports = function() {
+    const {data : items, isPending, error } = useFetch('http://127.0.0.1:8000/dummyClaimed');
     return (
         <>
             <AdminNavBar active="R"/>
@@ -11,6 +13,7 @@ const Reports = function() {
         <Row >
             <Col>Left</Col>
             <Col md={10}>
+
                 <ItemList active="R"/>
                 <div className="input-group">
                     <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
