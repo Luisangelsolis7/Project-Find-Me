@@ -17,6 +17,7 @@ const Reports = function() {
                 { error  && <div> {error}</div>}
                 { isPending && <div> Loading ... </div> }
                 { items && <ItemList items={items} active="R"/>}
+
                 <div className="input-group">
                     <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                         <option selected>Delete</option>

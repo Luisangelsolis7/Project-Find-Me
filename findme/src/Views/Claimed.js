@@ -7,6 +7,7 @@ import useFetch from "../useFetch";
 import React from 'react';
 const Claimed = function() {
     const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getClaimed');
+
     return (
         <>
             <AdminNavBar active="C"/>
@@ -17,7 +18,6 @@ const Claimed = function() {
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
                         { items && <ItemList items={items} active="C"/>}
-
                     </Col>
                     <Col>
                         Right
