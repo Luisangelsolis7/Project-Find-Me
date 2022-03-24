@@ -5,7 +5,8 @@ import Col from "react-bootstrap/Col";
 import ItemList from "../components/ItemList";
 import useFetch from "../useFetch";
 const Claimed = function() {
-    const {data : items, isPending, error } = useFetch('http://127.0.0.1:8000/dummyClaimed');
+
+    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/get');
     return (
         <>
             <AdminNavBar active="C"/>
