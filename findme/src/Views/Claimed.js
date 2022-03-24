@@ -6,7 +6,7 @@ import ItemList from "../components/ItemList";
 import useFetch from "../useFetch";
 const Claimed = function() {
 
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/get');
+    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getClaimed');
     return (
         <>
             <AdminNavBar active="C"/>
