@@ -17,8 +17,8 @@ form  { display: table;
 p     { display: table-row;  }
 label { display: table-cell; }
 input { display: table-cell; }
- body {
-
+.ReportBackground{
+   background-image: url("../imgs/AUC.jpg");
    background-repeat: no-repeat;
    background-size: 120%;
 

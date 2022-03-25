@@ -26,10 +26,10 @@ import Navbar from "react-bootstrap/Navbar";
         return (
 
 
-            <div style={{ backgroundImage: "url(/logo.svg" }}>
+            <div>
                 <NavBar />
                 <Navbar.Brand href="/"><img class="resize" src={require("../imgs/AULogo.jpg")}/></Navbar.Brand>
-                <body>
+                <body className="ReportBackground">
                 <header> Lost Item Form</header>
                 <Container>
                     <form>
