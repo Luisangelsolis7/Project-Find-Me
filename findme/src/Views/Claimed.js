@@ -1,3 +1,4 @@
+import React from 'react';
 import AdminNavBar from "../components/AdminNavBar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";

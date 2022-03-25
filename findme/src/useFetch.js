@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 const useFetch = ( url ) => {
     const [ data, setData] = useState( null ); // make this generic so its reusable
