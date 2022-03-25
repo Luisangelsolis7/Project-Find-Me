@@ -37,81 +37,6 @@ import Navbar from "react-bootstrap/Navbar";
                     <Row>
                         <Col xs lg="2"></Col>
 
-<<<<<<< Updated upstream
-const ReportForm = () => {
-    let category = "Category ";
-
-    function changeCat(cat) {
-        category = cat;
-    }
-
-    return (
-        <div style={{backgroundColor:"lightsalmon"}}>
-            <NavBar />
-            <Container>
-                <Row>
-                    <Col xs lg="2"></Col>
-                    <Col>
-                        <Col>
-                            <Row>
-                            Item Name <input type="text" />
-                            </Row>
-                            <Row>
-                            {category}<select className="form-select">
-                                <option>option1</option>
-                                <option>option2</option>
-                                <option>option3</option>
-                                <option>option4</option>
-                            </select>
-                            </Row>
-                            <Row>
-                                Location<select className="form-select">
-                                <option>option1</option>
-                                <option>option2</option>
-                                <option>option3</option>
-                                <option>option4</option>
-                            </select>
-                            </Row>
-                            <Row>
-                                Description:
-                                <input type="textarea" />
-                            </Row>
-                            <Row>
-                                Name:
-                                <input type="text" />
-                            </Row>
-                            <Row>
-                                Email:
-                                <input type="text" />
-                            </Row>
-                            <Row>
-                                Phone:
-                                <input type="text"/>
-                            </Row>
-                            <br/>
-                            <Button>Add Item</Button>
-                        </Col>
-                        "itemName": "All About Money",
-                        "itemCategory": "",
-                        "itemDescription": "Its about the root of all evil",
-                        "itemValue": "This ariticle is a complete guide about money. Its nice to have but not eveyone has it.",
-                        "userFirst": "",
-                        "userLast": "",
-                        "userDOB": "",
-                        "userPhone": "",
-                        "userEmail": "",
-                        "date": "",
-                        "time": "",
-                        "location": ""
-                        }
-
-
-                        
-                    </Col>
-                    <Col xs lg="2"></Col>
-                </Row>
-            </Container>
-=======
                         <Col>
                             <Row>
                                 <Col>
@@ -285,7 +210,6 @@ const ReportForm = () => {
                 </Container>
 
                 </body>
->>>>>>> Stashed changes
             </div>
 
 
