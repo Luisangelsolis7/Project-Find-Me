@@ -27,19 +27,45 @@ const ReportForm = () => {
                 <Row>
                     <Col xs lg="2"></Col>
                     <Col>
-                        <Row>
-                            <Col>
+                        <Col>
+                            <Row>
                             Item Name <input type="text" />
-                            </Col>
-                            <Col>
+                            </Row>
+                            <Row>
                             {category}<select className="form-select">
                                 <option>option1</option>
                                 <option>option2</option>
                                 <option>option3</option>
                                 <option>option4</option>
                             </select>
-                            </Col>
-                        </Row>
+                            </Row>
+                            <Row>
+                                Location<select className="form-select">
+                                <option>option1</option>
+                                <option>option2</option>
+                                <option>option3</option>
+                                <option>option4</option>
+                            </select>
+                            </Row>
+                            <Row>
+                                Description:
+                                <input type="textarea" />
+                            </Row>
+                            <Row>
+                                Name:
+                                <input type="text" />
+                            </Row>
+                            <Row>
+                                Email:
+                                <input type="text" />
+                            </Row>
+                            <Row>
+                                Phone:
+                                <input type="text"/>
+                            </Row>
+                            <br/>
+                            <Button>Add Item</Button>
+                        </Col>
                         "itemName": "All About Money",
                         "itemCategory": "",
                         "itemDescription": "Its about the root of all evil",
