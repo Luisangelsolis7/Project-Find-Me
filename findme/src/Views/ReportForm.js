@@ -1,3 +1,4 @@
+import React from 'react';
 import NavBar from "../components/NavBar";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
@@ -51,28 +52,45 @@ const ReportForm = () => {
                 <Row>
                     <Col xs lg="2"></Col>
                     <Col>
-                        <Row>
-                            <Col>
+                        <Col>
+                            <Row>
                             Item Name <input type="text" />
-                            </Col>
-                            <Col>
-                            {category}<Dropdown>
-                            <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-                                Dropdown Button
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu variant="dark">
-                                <Dropdown.Item href="#/action-1" active>
-                                    Action
-                                </Dropdown.Item>
-                                <Dropdown.Item onClick={changeCat()}>Electronic</Dropdown.Item>
-                                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                                <Dropdown.Divider />
-                                <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                            </Col>
-                        </Row>
+                            </Row>
+                            <Row>
+                            {category}<select className="form-select">
+                                <option>option1</option>
+                                <option>option2</option>
+                                <option>option3</option>
+                                <option>option4</option>
+                            </select>
+                            </Row>
+                            <Row>
+                                Location<select className="form-select">
+                                <option>option1</option>
+                                <option>option2</option>
+                                <option>option3</option>
+                                <option>option4</option>
+                            </select>
+                            </Row>
+                            <Row>
+                                Description:
+                                <input type="textarea" />
+                            </Row>
+                            <Row>
+                                Name:
+                                <input type="text" />
+                            </Row>
+                            <Row>
+                                Email:
+                                <input type="text" />
+                            </Row>
+                            <Row>
+                                Phone:
+                                <input type="text"/>
+                            </Row>
+                            <br/>
+                            <Button>Add Item</Button>
+                        </Col>
                         "itemName": "All About Money",
                         "itemCategory": "",
                         "itemDescription": "Its about the root of all evil",

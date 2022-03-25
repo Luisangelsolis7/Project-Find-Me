@@ -1,3 +1,4 @@
+import React from 'react';
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import {Row} from "react-bootstrap";
@@ -5,9 +6,9 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 const Login = function() {
     return (
-        <Container>
+        <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
 
-            <Row>
+            <Row style={{marginRight: 0, marginLeft: 0 ,backgroundColor:"sandybrown"}}>
                 <Col></Col>
                 <Col>
                     <h1>Log-In</h1>
@@ -39,6 +40,8 @@ const Login = function() {
                                 Back
                             </Button>
                         </Col>
+                        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
                     </Row>
 
 
