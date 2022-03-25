@@ -29,6 +29,7 @@ const ItemList = function(props){
                 </thead>
                 <tbody>
 
+
                 {props.items.map((i) => (
                     <tr>
                         <td><div className="input-group-text">
@@ -42,6 +43,7 @@ const ItemList = function(props){
                         <td>{i.ISH_Date}</td>
                         <td>{i.ISH_Location}</td>
                         <td>{i.Officer_Fname} {i.Officer_Lname} <br/>{i.Officer_Badge}</td>
+
                     </tr>
                 ))}
                 </tbody>
@@ -97,6 +99,7 @@ const ItemList = function(props){
                 <tbody>
                 {props.items.map((i) => (
                     <tr>
+
                         <td><div className="input-group-text">
                             <input className="form-check-input mt-0" type="checkbox" value=""
                                    aria-label="Checkbox for following text input"></input>
@@ -110,6 +113,7 @@ const ItemList = function(props){
                         <td>{i.User_Fname} {i.User_Lname} <br/>
                         {i.User_Email} <br/>
                         {i.User_Phone}</td>
+
                     </tr>
                 ))}
                 </tbody>

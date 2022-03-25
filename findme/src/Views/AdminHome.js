@@ -10,14 +10,16 @@ import useFetch from "../useFetch";
 import {useState} from "react";
 const Home = function(){
 
+
 const[show,setShow] = useState(false);
     const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getUnclaimed');
+
     return(
         <>
             <AdminNavBar active="H"/>
             <Container>
                 <Row >
-                    <Col>Savanna is super cool</Col>
+                    <Col></Col>
                     <Col md={10}>
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
@@ -33,9 +35,11 @@ const[show,setShow] = useState(false);
             </div>
                     </Col>
                     <Col>
-                        <br />
+         
+                  <br />
                         <Button onClick={() => setShow(true)}>Add Item</Button>
                         <Modal onClose={() => setShow(false)} show={show} />
+
                     </Col>
                 </Row>
             </Container>

@@ -13,14 +13,14 @@ const Claimed = function() {
             <AdminNavBar active="C"/>
             <Container>
                 <Row >
-                    <Col>Left</Col>
+                    <Col></Col>
                     <Col md={10}>
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
                         { items && <ItemList items={items} active="C"/>}
                     </Col>
                     <Col>
-                        Right
+
                     </Col>
                 </Row>
             </Container>
