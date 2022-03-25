@@ -9,12 +9,12 @@ const Claimed = function() {
             <AdminNavBar active="C"/>
             <Container>
                 <Row >
-                    <Col>Left</Col>
+                    <Col></Col>
                     <Col md={10}>
                         <ItemList />
                     </Col>
                     <Col>
-                        Right
+
                     </Col>
                 </Row>
             </Container>

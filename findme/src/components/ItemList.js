@@ -9,12 +9,12 @@ const ItemList = function(){
                 <table className="table">
                     <thead className="table-dark">
                     <tr scope="row">
-                        <td>Blah</td>
-                        <td scope="col">Blah</td>
-                        <td scope="col">Blah</td>
-                        <td scope="col">Blah</td>
-                        <td scope="col">Blah</td>
-                        <td scope="col">Blah</td>
+                        <td>Check</td>
+                        <td scope="col">Name</td>
+                        <td scope="col">Category</td>
+                        <td scope="col">Value</td>
+                        <td scope="col">Description</td>
+                        <td scope="col">Item ID</td>
                     </tr>
                     </thead>
                     <tr>
@@ -39,7 +39,7 @@ const ItemList = function(){
                         <td>Name</td>
                         <td>Category</td>
                         <td>Value</td>
-                        <td>Blah Blah Blah DESC</td>
+                        <td>Description</td>
                     </tr>
                 </table>
     </>

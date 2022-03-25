@@ -24,7 +24,13 @@ function AdminNavBar(props){
     return(
         <Navbar bg="light" expand="lg" className="justify-content-end">
             <Container>
+<<<<<<< Updated upstream
                 <Navbar.Brand href="/"><img class="resize" src={require("../imgs/AULogo.jpg")}/></Navbar.Brand>
+=======
+                <Navbar.Brand href="/"><img src={require("../imgs/Aurora_University_logo.jpg")} />
+                    </Navbar.Brand>
+
+>>>>>>> Stashed changes
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
