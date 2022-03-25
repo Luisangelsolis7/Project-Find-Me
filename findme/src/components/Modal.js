@@ -1,3 +1,4 @@
+import React from 'react';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
@@ -27,6 +28,11 @@ function Modal(props){
                             <option value="misc">Misc</option>
                         </select>
                         </Row>
+                        <Row>
+                            Description:
+                            <input type="typearea" />
+                        </Row>
+
                         <Row>
                             Location:
                             <select>

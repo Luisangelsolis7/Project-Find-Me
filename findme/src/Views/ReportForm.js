@@ -1,3 +1,4 @@
+import React from 'react';
 import NavBar from "../components/NavBar";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";

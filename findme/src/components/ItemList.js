@@ -1,6 +1,7 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import useFetch from "../useFetch";
+import React from 'react';
 const ItemList = function(props){
     //This is the code to format how the list of items to be displayed
     let locations = ["N/A","Alumni Hall","Bookstore","Business Office","Campus Public Safety","Business Office","Centennial Hall",
@@ -16,7 +17,7 @@ const ItemList = function(props){
         "Wackerlin Center for Faith and Action","Watkins Hall","Wellness Center","Wilkinson Hall"];
     let tableHeader = [];
     if(props.active == "H"){
-        tableHeader = ["","Name","Category","Description","Value","Date","Location","Officer Badge Number"];
+        tableHeader = ["","Name","Category","Description","Value","Date","Location","Officer"];
         return(<>
             <table className="table">
                 <thead className="table-dark">
@@ -37,10 +38,10 @@ const ItemList = function(props){
                         <td>{i.Item_Name}</td>
                         <td>{i.Category_Name}</td>
                         <td>{i.Item_Desc}</td>
-                        <td>{i.Item_Value}</td>
+                        <td>${i.Item_Value}</td>
                         <td>{i.ISH_Date}</td>
                         <td>{i.ISH_Location}</td>
-                        <td>{i.Officer_Badge}</td>
+                        <td>{i.Officer_Fname} {i.Officer_Lname} <br/>{i.Officer_Badge}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -48,8 +49,8 @@ const ItemList = function(props){
         </>)
     }if(props.active == "C"){
 
-        tableHeader =["","Name", "Category", "Description", "Value", "Date", "Claimant Name", "Claimant Email", "Claimant Phone",
-            "Officer Badge Number"];
+        tableHeader =["","Name", "Category", "Description", "Value", "Date", "Claimant",
+            "Officer"];
         return(
             <>                <table className="table">
                 <thead className="table-dark">
@@ -69,12 +70,12 @@ const ItemList = function(props){
                         <td>{i.Item_Name}</td>
                         <td>{i.Category_Name}</td>
                         <td>{i.Item_Desc}</td>
-                        <td>{i.Item_Value}</td>
+                        <td>${i.Item_Value}</td>
                         <td>{i.ISH_Date}</td>
-                        <td>{i.User_Fname} {i.User_Lname}</td>
-                        <td>{i.User_Email}</td>
-                        <td>{i.User_Phone}</td>
-                        <td>{i.Officer_Badge}</td>
+                        <td>{i.User_Fname} {i.User_Lname} <br/>
+                            {i.User_Email} <br/>
+                            {i.User_Phone}</td>
+                        <td>{i.Officer_Fname} {i.Officer_Lname} <br/> Badge: {i.Officer_Badge}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -83,7 +84,7 @@ const ItemList = function(props){
         )
     }if(props.active == "R"){
 
-        tableHeader =["","Item", "Category", "Description", "Value", "Date", "Location", "Name", "Email", "Phone"];
+        tableHeader =["","Item", "Category", "Description", "Value", "Date", "Location", "Reported by"];
         return(
             <>                <table className="table">
                 <thead className="table-dark">
@@ -106,9 +107,9 @@ const ItemList = function(props){
                         <td>${i.Item_Value}</td>
                         <td>{i.ISH_Date}</td>
                         <td>{i.ISH_Location}</td>
-                        <td>{i.User_Fname} {i.User_Lname}</td>
-                        <td>{i.User_Email}</td>
-                        <td>{i.User_Phone}</td>
+                        <td>{i.User_Fname} {i.User_Lname} <br/>
+                        {i.User_Email} <br/>
+                        {i.User_Phone}</td>
                     </tr>
                 ))}
                 </tbody>
