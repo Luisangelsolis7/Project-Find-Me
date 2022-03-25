@@ -14,7 +14,7 @@ const Reports = function() {
     <Container>
         <Row >
             <Col>Left</Col>
-            <Col md={10}>
+            <Col md={11}>
 
                 { error  && <div> {error}</div>}
                 { isPending && <div> Loading ... </div> }

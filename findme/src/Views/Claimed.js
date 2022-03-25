@@ -14,7 +14,7 @@ const Claimed = function() {
             <Container>
                 <Row >
                     <Col></Col>
-                    <Col md={10}>
+                    <Col md={11}>
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
                         { items && <ItemList items={items} active="C"/>}

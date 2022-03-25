@@ -1,93 +1,139 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
-#nav-link{
-  color:blue;
-}
-header{ font-size: 40px;
-font-weight: bold;
-}
-button{
-  size: 100px;
-}
-form  { display: table;
-  background-color: white;
-  width: 300px;
-  margin: auto;}
-p     { display: table-row;  }
-label { display: table-cell; }
-input { display: table-cell; }
-.ReportBackground{
-   background-image: url("../imgs/AUC.jpg");
-   background-repeat: no-repeat;
-   background-size: 120%;
 
- }
+#nav-link {
+    color: blue;
+}
+
+header {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+button {
+    size: 100px;
+}
+
+form {
+    background-color: white;
+    display: table;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    padding-bottom: 0;
+}
+.submitButton{
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+}
+p {
+    display: table-row;
+}
+
+label {
+    display: table-cell;
+}
+
+input {
+    display: table-cell;
+}
+
+.ReportBackground {
+    background-image: url("../imgs/AUC.jpg");
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+.smallLabel{
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #c5c5c5;
+}
+.ReportTitle {
+    color: #111;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 64px;
+    margin: 0 0 0;
+    padding: 20px 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
 .resize {
-  width: 100px;
-  height: 50px;
+    width: 100px;
+    height: 50px;
 }
-#img{
-  height: 10px;
-  width : 10px;
+
+#img {
+    height: 10px;
+    width: 10px;
 }
+
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
-.modal{
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.modal-content{
-  width: 500px;
-  background-color: whitesmoke;
+
+.modal-content {
+    width: 500px;
+    background-color: whitesmoke;
 }
-.modal-header, .modal-footer{
-  padding: 10px;
+
+.modal-header, .modal-footer {
+    padding: 10px;
 }
-.modal-title{
-  margin: 0;
+
+.modal-title {
+    margin: 0;
 }
-.modal-body{
-  padding: 10px;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
+
+.modal-body {
+    padding: 10px;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
 }

@@ -11,11 +11,22 @@ import Report from "./Views/ReportForm";
 import AdminHome from "./Views/AdminHome";
 import Reports from "./Views/Reports";
 function App() {
+    let locations = ["N/A", "Alumni Hall", "Bookstore", "Business Office", "Campus Public Safety", "Business Office", "Centennial Hall",
+        "Parking Garage", "Dunham Hall", "Institute for Collaboration", "Business Office",
+        "The Community Foundation of the Fox River Valley Center for Cultural Enrichment and Perry Theatre",
+        "Copy Center", "Dunham Hall", "Davis Hall", "Dining Hall", "Dunham Hall", "Eckhart Hall", "Fitness Center", "Founders Annex",
+        "Founders House", "Hill Welcome Center and Ethel Tapper Recital Hall", "Human Resources", "Institute for Collaboration",
+        "Crimi Auditorium", "Jenks Hall", "John C. Dunham STEM Partnership School", "Kimberly and James Hill Center for Student Success",
+        "Labyrinth", "Mail Center", "Memorial Hall", "Michael J. Birck Collaboration Center for Innovation",
+        "Office of Admission and Financial Aid", "Phillips Library", "Quad", "Roger and Marilyn Parolini Music Center",
+        "Schingoethe Center", "Spartan Spot", "Spartan Statue/Bedrosian Plaza", "Spartan Terrace", "Stephens Hall",
+        "Thornton Gymnasium", "Tru Blu Coffee", "University Banquet Hall", "University Communications", "Vago Field", "Parking Garage",
+        "Wackerlin Center for Faith and Action", "Watkins Hall", "Wellness Center", "Wilkinson Hall"];
   return (
       <div className="App">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Report />} />
+            <Route path="/" element={<Report locations={locations}/>} />
               <Route path="/AdminLogin" element={<Login />} />
               <Route path="/Home" element={<AdminHome />} />
               <Route path="/Claimed" element={<Claimed />} />

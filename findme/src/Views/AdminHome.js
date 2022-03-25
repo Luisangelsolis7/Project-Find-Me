@@ -20,7 +20,7 @@ const[show,setShow] = useState(false);
             <Container>
                 <Row >
                     <Col></Col>
-                    <Col md={10}>
+                    <Col md={11}>
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
                         { items && <ItemList items={items} active="H"/>}
@@ -38,7 +38,7 @@ const[show,setShow] = useState(false);
          
                   <br />
                         <Button onClick={() => setShow(true)}>Add Item</Button>
-                        <Modal onClose={() => setShow(false)} show={show} />
+                        <Modal onClose={() => setShow(false)} show={show} active="H" />
 
                     </Col>
                 </Row>
