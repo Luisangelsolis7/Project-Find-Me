@@ -18,7 +18,8 @@ class ReportForm extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            input: {},
+            input: {itemName:"", category:"", value:"",  desc:"",
+                firstName:"", lastName:"", date:"", phone:"", time:"", email:""},
             errors: {},
             itemDetails: [],
             userDetails: [],
@@ -206,10 +207,11 @@ class ReportForm extends React.Component {
                                     <Form.Group>
                                         <Form.Label>Location Lost</Form.Label>
                                         <select className="form-select" id="inputGroupSelect04"
-                                                name="location" value={this.state.input.location}
+                                                name="location"
+                                                onChange={this.handleChange}
                                                 aria-label="Example select with button addon">
                                             {this.props.locations.map((i) => (
-                                                <option key={i}>{i}</option>
+                                                <option key={i} value={i}>{i}</option>
                                             ))}
                                         </select>
                                     </Form.Group>
