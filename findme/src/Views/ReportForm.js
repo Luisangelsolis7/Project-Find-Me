@@ -157,8 +157,8 @@ class ReportForm extends React.Component {
         return (
             <div className="ReportBackground">
                 <NavBar/>
-                <Navbar.Brand href="/"><img className="resize" src={require("../imgs/AULogo.jpg")}/></Navbar.Brand>
                 <Container>
+                    <br />
                     <form onSubmit={this.handleSubmit}>
                         <h1 className="ReportTitle"> Lost Item Form</h1>
                         <Row className="justify-content-md-center">
@@ -206,7 +206,7 @@ class ReportForm extends React.Component {
                                     <div className="text-danger">{this.state.errors.value}</div>
                                     <Form.Group>
                                         <Form.Label>Location Lost</Form.Label>
-                                        <select className="form-select" id="inputGroupSelect04"
+                                        <select className="form-select" id="inputGroupSelect05"
                                                 name="location"
                                                 onChange={this.handleChange}
                                                 aria-label="Example select with button addon">
