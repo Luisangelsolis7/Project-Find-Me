@@ -50,6 +50,7 @@ class ReportForm extends React.Component {
         if (this.validate()) {
             console.log(this.state);
 
+
             let input = {};
             input["itemName"] = "";
             input["category"] = "";
@@ -62,8 +63,14 @@ class ReportForm extends React.Component {
             input["phone"] = "";
             input["time"] = "";
             input["email"] = "";
-            this.setState({input: input});
 
+
+            fetch('http://localhost:3001/api/insertLost', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(this.state.input)
+            })
+            this.setState({input: input});
             alert('Demo Form is submitted');
         }
     }
