@@ -73,11 +73,11 @@ app.get("/api/insertLost", (req, res) => {
     const itemSql = `INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values ('Black Hat', 'Accessory', 30, 'Has a Chicago Bulls logo on the bill');`
     const ishSql = `INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) values (?, ?, 'Lost', '2022-01-01', '3:00', "Test");`
 
-    db.query(userSql, [req.body.fName, req.body.lName, req.body.phoneNum, req.body.email], (err, uresult) => {
+    db.query(userSql, /*[req.body.fName, req.body.lName, req.body.phoneNum, req.body.email],*/ (err, uresult) => {
         const userid = uresult.insertId;
-        db.query(itemSql,[req.body.itemName, req.body.category, req.body.itemValue, req.body.desc], (err, iresult) => {
+        db.query(itemSql, /*[req.body.itemName, req.body.category, req.body.itemValue, req.body.desc],*/ (err, iresult) => {
             const itemid = iresult.insertId;
-            db.query(ishSql, [itemid, userid, req.body.date, req.body.time, req.body.location], (err, result) => {
+            db.query(ishSql, [itemid, userid],/*, req.body.date, req.body.time, req.body.location],*/ (err, result) => {
                 if(err){
                     console.log(err)
                 }
