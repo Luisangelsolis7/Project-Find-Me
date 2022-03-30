@@ -75,13 +75,18 @@ app.post("/api/insertLost", (req, res) => {
 
     db.query(userSql, [req.body.fName, req.body.lName, req.body.phoneNum, req.body.email], (err, uResult) => {
         const userid = uResult.insertId;
+        if(err){
+            console.log(err)
+        }
         db.query(itemSql, [req.body.itemName, req.body.category, req.body.itemValue, req.body.desc], (err, iResult) => {
             const itemid = iResult.insertId;
+            if(err){
+                console.log(err)
+            }
             db.query(ishSql, [itemid, userid, req.body.date, req.body.time, req.body.location], (err, result) => {
                 if(err){
                     console.log(err)
                 }
-                console.log(result);
             });
         });
     });
