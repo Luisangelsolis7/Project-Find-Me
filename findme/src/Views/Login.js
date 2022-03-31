@@ -11,10 +11,11 @@ const Login = function() {
             <Row style={{marginRight: 0, marginLeft: 0 ,backgroundColor:"sandybrown"}}>
                 <Col></Col>
                 <Col>
-                    <h1>Log-In</h1>
+                    <h4>Log-In</h4>
                     <br />
                     <br />
                 <Form>
+
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
