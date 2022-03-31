@@ -29,7 +29,7 @@ function Modal(props) {
                                                       aria-label="Example select with button addon">
                                 <option value="electronic">Electronic</option>
                                 <option value="clothing">Clothing</option>
-                                <option value="accessory">accessory</option>
+                                <option value="accessory">Accessory</option>
                                 <option value="id">Identification</option>
                                 <option value="misc">Misc</option>
                             </select>

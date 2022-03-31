@@ -15,6 +15,19 @@ const ItemList = function (props) {
             return (<>{item}</>)
         }
     }
+    function  formatDate(inputDate){
+        var date = new Date(inputDate);
+        if (!isNaN(date.getTime())) {
+            // Months use 0 index.
+            return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+        }
+
+    }
+
+
+
+
+
 
     if (props.active == "H") {
         tableHeader = ["", "Name", "Category", "Description", "Value", "Date", "Location","", "Officer"];
@@ -46,7 +59,7 @@ const ItemList = function (props) {
                     <td>{checkNull(i.Category_Name)}</td>
                     <td>{i.Item_Desc}</td>
                     <td>${i.Item_Value}</td>
-                    <td>{i.ISH_Date}</td>
+                    <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                     <td>{checkNull(i.ISH_Location)}</td>
                     <td>{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
                         {checkNull(i.User_Email)} <br/>
