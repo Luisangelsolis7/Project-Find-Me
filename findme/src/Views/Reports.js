@@ -13,7 +13,7 @@ const Reports = function() {
             <AdminNavBar active="R"/>
     <Container>
         <Row >
-            <Col>Left</Col>
+            <Col></Col>
             <Col md={11}>
 
                 { error  && <div> {error}</div>}
@@ -27,9 +27,7 @@ const Reports = function() {
                     <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
                 </div>
             </Col>
-            <Col>
-                Right
-            </Col>
+            <Col></Col>
         </Row>
     </Container>
             </>

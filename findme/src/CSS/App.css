@@ -43,7 +43,7 @@ input {
     background-image: url("../imgs/AUC.jpg");
     background-size: auto 100%;
     background-repeat: no-repeat;
-    background-position: left top;
+    background-position: center;
 }
 .smallLabel{
     margin-top: 3rem;
