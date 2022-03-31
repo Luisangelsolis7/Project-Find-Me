@@ -16,7 +16,7 @@ function Modal(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">
-                            This is a title
+                            Log an Unclaimed Item
                         </h4>
                     </div>
                     <div className="modal-body">
@@ -40,10 +40,16 @@ function Modal(props) {
                             </Row>
 
                             <Row>
-                                Location:
+                                Location Found:
                                 <select>
 
                                 </select>
+                            </Row>
+                            <Row>
+                                Date Found:
+                                <input type="Date"/>
+                                    Time Found:
+                                <input type="Time"/>
                             </Row>
                         </Container>
                     </div>
@@ -62,7 +68,7 @@ function Modal(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">
-                            This is a title
+                            Admin Log-in
                         </h4>
                     </div>
                     <div className="modal-body">
