@@ -26,8 +26,7 @@ function Modal(props) {
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
-            const entry = {category};
-            console.log(entry);
+            const entry = {name,category,description,value,location,date,time};
             fetch("http://localhost:8000/Inventory", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
@@ -46,15 +45,10 @@ function Modal(props) {
                         </h4>
                     </div>
                     <div className="modal-body">
-
-                        -Item Value
-                        -Locaton
-                        -Date
-                        -Time
-
                         <Container>
                             <Row>
-                                Item Name:<input  value={name} onChange={(event => setName(event.target.value))} type="text"/>
+                                Item Name:<input value={name} onChange={(event => setName(event.target.value))}
+                                                 type="text"/>
                             </Row>
                             <Row>
                                 Item Category:<select className="form-select" id="inputGroupSelect04"
@@ -71,7 +65,8 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Description:
-                                <input value={description} onChange={(event => setDesc(event.target.value))} type="textarea"/>
+                                <input value={description} onChange={(event => setDesc(event.target.value))}
+                                       type="textarea"/>
                             </Row>
                             <Row>
                                 <Form.Label>Value</Form.Label>
@@ -85,13 +80,15 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Location Found:
-                                <input value={location} onChange={(event => setLocation(event.target.value))} type="text"/>
+                                <input value={location} onChange={(event => setLocation(event.target.value))}
+                                       type="text"/>
                             </Row>
                             <Row>
                                 <Col>
                                     <Form.Group>
                                         <Form.Label>Select Date</Form.Label>
-                                        <Form.Control type="date" name="date" onChange={event => setDate(event.target.value)} value={date}/>
+                                        <Form.Control type="date" name="date"
+                                                      onChange={event => setDate(event.target.value)} value={date}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
@@ -139,7 +136,7 @@ function Modal(props) {
                     </div>
                     <div className="modal-footer">
                         <Link to="/Home">
-                        <button className="btn btn-success">Log In</button>
+                            <button className="btn btn-success">Log In</button>
                         </Link>
                         <button className="btn btn-success" onClick={props.onClose}>Close</button>
                     </div>
