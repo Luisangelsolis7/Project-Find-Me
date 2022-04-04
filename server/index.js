@@ -137,7 +137,7 @@ app.post("/api/edit", (req, res) => {
         if (err) {
             console.log(err);
         }
-        if (req.body.category == 'Lost' || req.body.category == 'Claimed') {
+        if (req.body.category === 'Lost' || req.body.category === 'Claimed') {
             const uSql = `UPDATE User
                           SET User_Fname = ?, User_Lname = ?, User_Phone = ?, User_Email = ?
                           Where User_ID = ?`
