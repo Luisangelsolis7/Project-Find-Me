@@ -20,18 +20,18 @@ const[show,setShow] = useState(false);
                 <Row >
                     <Col></Col>
                     <Col md={11}>
+                        <div className="input-group">
+                            <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                <option value="claim" selected>Claim</option>
+                                <option value="donate">Donate</option>
+                                <option value="destroy">Destroy</option>
+
+                            </select>
+                            <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
+                        </div>
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
                         { items && <ItemList items={items} active="H"/>}
-            <div className="input-group">
-                <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option value="destroy" defaultValue="destroy">Destroy</option>
-                    <option value="claim">Claim</option>
-                    <option value="edit">Edit</option>
-                    <option value="donate">Donate</option>
-                </select>
-                <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
-            </div>
                     </Col>
                     <Col>
          
