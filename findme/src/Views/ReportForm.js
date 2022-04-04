@@ -150,22 +150,6 @@ class ReportForm extends React.Component {
             isValid = false;
             errors["date"] = "Please enter a date.";
         }
-        if (!input["phone"]) {
-            isValid = false;
-            errors["phone"] = "Please enter your phone number.";
-        }
-
-        if (typeof input["phone"] !== "undefined") {
-
-            var pattern = new RegExp(/^[0-9\b]+$/);
-            if (!pattern.test(input["phone"])) {
-                isValid = false;
-                errors["phone"] = "Please enter only numbers without any characters.";
-            } else if (input["phone"].length != 10) {
-                isValid = false;
-                errors["phone"] = "Please enter valid phone number.";
-            }
-        }
         if (!input["email"]) {
             isValid = false;
             errors["email"] = "Please enter your email address.";
@@ -200,29 +184,29 @@ class ReportForm extends React.Component {
                 <Container>
                     <br />
                     <form onSubmit={this.handleSubmit}>
-                        <h1 className="ReportTitle"> Lost Item Form</h1>
+                        <h1 className="ReportTitle" > Lost Item Form</h1>
                         <Row className="justify-content-md-center">
                             <Row>
-                                <Col md={5}>
+                                <Col md={6}>
                                     <FormGroup>
                                         <Form.Label>Item Name</Form.Label>
                                         <FormControl type="text"
                                                      name="itemName"
                                                      value={this.state.input.itemName}
                                                      onChange={this.handleChange}
-                                                     placeholder="Enter Item Name"/>
+                                                     placeholder="Ex: Black Iphone, Red Beanie"/>
                                         <div className="text-danger">{this.state.errors.itemName}</div>
                                     </FormGroup>
                                 </Col>
 
-                                <Col md={6}>
+                                <Col md={5}>
                                     <FormGroup>
                                         <Form.Label>Item Category</Form.Label>
                                         <select className="form-select" id="inputGroupSelect04"
                                                 name="category"
                                                 onChange={this.handleChange}
                                                 aria-label="Example select with button addon">
-                                            <option value="">---Categories---</option>
+                                            <option default value="">---Categories---</option>
                                             <option value="electronic">Electronic</option>
                                             <option value="clothing">Clothing</option>
                                             <option value="accessory">Accessory</option>
@@ -234,7 +218,7 @@ class ReportForm extends React.Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={5}>
+                                <Col md={4}>
                                     <Form.Label>Value</Form.Label>
                                     <InputGroup className="mb-3">
                                         <InputGroup.Text>$</InputGroup.Text>
@@ -267,12 +251,34 @@ class ReportForm extends React.Component {
                                         <div className="text-danger">{this.state.errors.desc}</div>
                                     </Form.Group>
                                 </Col>
+
                             </Row>
+                            <Row>
+                                <Col md={2}>
+                                    <Form.Group>
+                                        <Form.Label>Select Date</Form.Label>
+                                        <Form.Control type="date" name="date" onChange={this.handleChange} value={this.state.input.date}/>
+                                        <div className="text-danger">{this.state.errors.date}</div>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={2}>
+                                    <Form.Group>
+                                        <Form.Label>Time Lost</Form.Label>
+                                        <Form.Control type="time" name="time" onChange={this.handleChange}
+                                                      value={this.state.input.time}></Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+
+                            </Row>
+
+                            <div></div>
                             <Row>
                                 <Col className="smallLabel"><Form.Label>Reporter Information</Form.Label></Col>
                             </Row>
                             <Row>
-                                <Col>
+                                <Col md={4}>
                                     <Form.Group>
                                         <Form.Label>First Name</Form.Label>
                                         <FormControl type="text"
@@ -283,7 +289,7 @@ class ReportForm extends React.Component {
                                         <div className="text-danger">{this.state.errors.firstName}</div>
                                     </Form.Group>
                                 </Col>
-                                <Col>
+                                <Col md={4}>
                                     <Form.Group>
                                         <Form.Label>Last Name</Form.Label>
                                         <FormControl type="text"
@@ -295,31 +301,9 @@ class ReportForm extends React.Component {
                                     </Form.Group>
                                 </Col>
                             </Row>
+
                             <Row>
-                                <Col md={4}>
-                                    <Form.Group>
-                                        <Form.Label>Select Date</Form.Label>
-                                        <Form.Control type="date" name="date" onChange={this.handleChange} value={this.state.input.date}/>
-                                        <div className="text-danger">{this.state.errors.date}</div>
-                                    </Form.Group>
-                                </Col>
-                                <Col md={4}>
-                                    <Form.Group>
-                                        <Form.Label>Phone Number</Form.Label>
-                                        <Form.Control type="input" name="phone" onChange={this.handleInput} value={this.state.input.phone} placeholder="(xxx)xxx-xxxx"/>
-                                        <div className="text-danger">{this.state.errors.phone}</div>
-                                    </Form.Group>
-                                </Col>
-                                <Col md={4}>
-                                    <Form.Group>
-                                        <Form.Label>Time Lost</Form.Label>
-                                        <Form.Control type="time" name="time" onChange={this.handleChange}
-                                                      value={this.state.input.time}></Form.Control>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
+                                <Col md={5}>
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control type="email"
                                                   name="email"
@@ -327,6 +311,13 @@ class ReportForm extends React.Component {
                                                   onChange={this.handleChange}
                                                   placeholder="Email"></Form.Control>
                                     <div className="text-danger">{this.state.errors.email}</div>
+                                </Col>
+                                <Col md={3}>
+                                    <Form.Group>
+                                        <Form.Label>Phone Number</Form.Label>
+                                        <Form.Control type="input" name="phone" onChange={this.handleInput} value={this.state.input.phone} placeholder="(###)###-####"/>
+                                        <div className="text-danger">{this.state.errors.phone}</div>
+                                    </Form.Group>
                                 </Col>
                             </Row>
                             <Row md={1}>
