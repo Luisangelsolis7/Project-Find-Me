@@ -21,25 +21,16 @@ class ReportForm extends React.Component {
             input: {itemName:"", category:"", value:"",  desc:"",
                 firstName:"", lastName:"", date:"", phone:"", time:"", email:""},
             errors: {},
-            /*itemDetails: [],
-            userDetails: [],
-            ISHDetails: []*/
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    setItemName = (v) => {
-        this.setState({itemName: v.target.value});
-    }
-    setCategory = (v) => {
-        this.setState({category: v.target.value});
-    }
-
     handleChange(event) {
         let input = this.state.input;
         input[event.target.name] = event.target.value;
+        console.log(input[event.target.name])
         this.setState({input});
 
     }
@@ -174,6 +165,7 @@ class ReportForm extends React.Component {
                                     <FormGroup>
                                         <Form.Label>Item Name</Form.Label>
                                         <FormControl type="text"
+                                                     required
                                                      name="itemName"
                                                      value={this.state.input.itemName}
                                                      onChange={this.handleChange}
@@ -192,8 +184,9 @@ class ReportForm extends React.Component {
                                             <option value="">---Categories---</option>
                                             <option value="electronic">Electronic</option>
                                             <option value="clothing">Clothing</option>
-                                            <option value="accessory">accessory</option>
+                                            <option value="accessory">Accessory</option>
                                             <option value="id">Identification</option>
+                                            <option value="currency">Currency</option>
                                             <option value="misc">Misc</option>
                                         </select>
                                         <div className="text-danger">{this.state.errors.category}</div>

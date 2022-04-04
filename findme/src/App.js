@@ -11,7 +11,7 @@ import Report from "./Views/ReportForm";
 import AdminHome from "./Views/AdminHome";
 import Reports from "./Views/Reports";
 function App() {
-    let locations = ["N/A", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
+    let locations = ["N/A","Other", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
         "Parking Garage", "Institute for Collaboration",
         "The Community Foundation of the Fox River Valley Center for Cultural Enrichment and Perry Theatre",
         "Copy Center", "Dunham Hall", "Davis Hall", "Dining Hall", "Eckhart Hall", "Fitness Center", "Founders Annex",

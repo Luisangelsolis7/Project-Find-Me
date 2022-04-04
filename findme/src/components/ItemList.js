@@ -26,17 +26,14 @@ const ItemList = function (props) {
 
 
 
-
-
-
     if (props.active == "H") {
-        tableHeader = ["", "Name", "Category", "Description", "Value", "Date", "Location","", "Officer"];
+        tableHeader = ["","Date", "Name", "Category", "Description", "Value", "Location","", "Officer"];
     }
     if (props.active == "C") {
-        tableHeader = ["", "Name", "Category", "Description", "Value", "Date","", "Claimant", "Officer"];
+        tableHeader = ["","Date", "Name", "Category", "Description", "Value", "", "Claimant", "Officer"];
     }
     if (props.active == "R") {
-        tableHeader = ["", "Item","Category", "Description", "Value", "Date", "Location", "Reported by",""];
+        tableHeader = ["","Date", "Item","Category", "Description", "Value","Location", "Reported by",""];
     }
 
     return(
@@ -55,16 +52,16 @@ const ItemList = function (props) {
                         <input className="form-check-input mt-0" type="checkbox" value=""
                                aria-label="Checkbox for following text input"></input>
                     </div></td>
+                    <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                     <td>{checkNull(i.Item_Name)}</td>
                     <td>{checkNull(i.Category_Name)}</td>
                     <td>{i.Item_Desc}</td>
                     <td>${i.Item_Value}</td>
-                    <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                     <td>{checkNull(i.ISH_Location)}</td>
                     <td>{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
                         {checkNull(i.User_Email)} <br/>
                         {checkNull(i.User_Phone)}</td>
-                    <td>{checkNull(i.Officer_Fname)} {checkNull(i.Officer_Lname)} <br/> {checkNull(i.Officer_Badge)}</td>
+                    <td>{checkNull(i.Officer_Badge)}</td>
                 </tr>
             ))}
             </tbody>

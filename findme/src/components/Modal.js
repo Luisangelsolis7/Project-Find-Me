@@ -1,12 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function Modal(props) {
+    const navigate = useNavigate();
+    const [date, setDate] = useState("");
+    const [name, setName] = useState("");
+    const [category, setCat] = useState("");
+    const [description, setDesc] = useState("");
+    const [value, setValue] = useState("");
+    const [location, setLocation] = useState("");
+    const [time, setTime] = useState("");
+    const [isPending, setIsPending] = useState(false);
+    const handleSubmitHome = (e) => {
+        e.preventDefault(); // prevent page from auto refresh
+        setIsPending(true);
+        const entry = {date,name,category,description,value,location,time};
+        console.log(entry);
+        fetch("http://localhost:3001/api/insertUnclaimed", {
+            method: 'POST',
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify(entry)
+        }).then(() => {
+            setIsPending(false);
+            //history.go(-1); // adding go back 1 page-
+            //history.push('/'); // adding go back 1 page-
+            navigate('/Home'); // adding go back 1 page-
+        });
+    }
     if (!props.show) {
         return null;
     }
@@ -36,7 +61,7 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Description:
-                                <input type="typearea"/>
+                                <input type="textarea"/>
                             </Row>
 
                             <Row>
@@ -54,7 +79,7 @@ function Modal(props) {
                         </Container>
                     </div>
                     <div className="modal-footer">
-                        <button>Add</button>
+                        <button onClick={handleSubmitHome}>Add</button>
                         <button onClick={props.onClose}>Close</button>
                     </div>
                 </div>
