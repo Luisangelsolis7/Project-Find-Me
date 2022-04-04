@@ -31,8 +31,8 @@ function Modal(props) {
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({itemName: name,
                                             category: cat,
-                                            Desc : des,
-                                            itemValue: val,
+                                            desc : des,
+                                            value: val,
                                             location : loc,
                                             date : dat,
                                             time : tim
