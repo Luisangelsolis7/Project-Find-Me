@@ -10,14 +10,14 @@ import {FormControl} from "react-bootstrap";
 
 function Modal(props) {
     const navigate = useNavigate;
-    const [category, setCat] = useState("");
+    const [cat, setCat] = useState("");
     const [id, setID] = useState("");
     const [name, setName] = useState("");
-    const [value, setValue] = useState("");
-    const [description, setDesc] = useState("");
-    const [location, setLocation] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
+    const [val, setValue] = useState("");
+    const [des, setDesc] = useState("");
+    const [loc, setLocation] = useState("");
+    const [dat, setDate] = useState("");
+    const [tim, setTime] = useState("");
     const [isPending, setIsPending] = useState(false);
     if (!props.show) {
         return null;
@@ -26,15 +26,21 @@ function Modal(props) {
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
-            const entry = {name,category,description,value,location,date,time};
-            fetch("http://localhost:8000/Inventory", {
+            fetch("http://localhost:3001/api/insertUnclaimed", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
-                body: JSON.stringify(entry)
+                body: JSON.stringify({itemName: name,
+                                            category: cat,
+                                            Desc : des,
+                                            itemValue: val,
+                                            location : loc,
+                                            date : dat,
+                                            time : tim
+                                            })
             }).then(() => {
                 setIsPending(false);
                 navigate('/Home'); // adding go back 1 page-
-            });
+            })
         }
         return (
             <div className="modal">
@@ -52,9 +58,10 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Item Category:<select className="form-select" id="inputGroupSelect04"
-                                                      value={category}
+                                                      value={cat}
                                                       onChange={(event => setCat(event.target.value))}
                                                       aria-label="Example select with button addon">
+                                <option value="">--Category--</option>
                                 <option value="electronic">Electronic</option>
                                 <option value="clothing">Clothing</option>
                                 <option value="currency">Currency</option>
@@ -65,14 +72,14 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Description:
-                                <input value={description} onChange={(event => setDesc(event.target.value))}
+                                <input value={des} onChange={(event => setDesc(event.target.value))}
                                        type="textarea"/>
                             </Row>
                             <Row>
                                 <Form.Label>Value</Form.Label>
                                 <InputGroup className="mb-3">
                                     <InputGroup.Text>$</InputGroup.Text>
-                                    <FormControl name="value" value={value}
+                                    <FormControl name="value" value={val}
                                                  onChange={(event => setValue(event.target.value))}
                                                  aria-label="Amount (to the nearest dollar)"/>
                                     <InputGroup.Text>.00</InputGroup.Text>
@@ -80,7 +87,7 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Location Found:
-                                <input value={location} onChange={(event => setLocation(event.target.value))}
+                                <input value={loc} onChange={(event => setLocation(event.target.value))}
                                        type="text"/>
                             </Row>
                             <Row>
@@ -88,7 +95,7 @@ function Modal(props) {
                                     <Form.Group>
                                         <Form.Label>Select Date</Form.Label>
                                         <Form.Control type="date" name="date"
-                                                      onChange={event => setDate(event.target.value)} value={date}/>
+                                                      onChange={event => setDate(event.target.value)} value={dat}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
@@ -96,7 +103,7 @@ function Modal(props) {
                                         <Form.Label>Time Lost</Form.Label>
                                         <Form.Control type="time" name="time"
                                                       onChange={(e) => setTime(e.target.value)}
-                                                      value={time}></Form.Control>
+                                                      value={tim}></Form.Control>
                                     </Form.Group>
                                 </Col>
                             </Row>
