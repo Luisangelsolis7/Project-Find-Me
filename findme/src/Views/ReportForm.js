@@ -24,9 +24,6 @@ class ReportForm extends React.Component {
                 firstName:"", lastName:"", date:"", phone:"", time:"", email:""},
             errors: {},
             inputValue : ''
-            /*itemDetails: [],
-            userDetails: [],
-            ISHDetails: []*/
         };
 
         this.handleChange = this.handleChange.bind(this);

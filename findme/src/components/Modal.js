@@ -1,16 +1,42 @@
-import React from 'react';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import InputGroup from "react-bootstrap/InputGroup";
+import {FormControl} from "react-bootstrap";
 
 function Modal(props) {
+    const navigate = useNavigate;
+    const [category, setCat] = useState("");
+    const [id, setID] = useState("");
+    const [name, setName] = useState("");
+    const [value, setValue] = useState("");
+    const [description, setDesc] = useState("");
+    const [location, setLocation] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
+    const [isPending, setIsPending] = useState(false);
     if (!props.show) {
         return null;
     }
     if (props.active == "H") {
+        const handleSubmit = (e) => {
+            e.preventDefault(); // prevent page from auto refresh
+            setIsPending(true);
+            const entry = {category};
+            console.log(entry);
+            fetch("http://localhost:8000/Inventory", {
+                method: 'POST',
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify(entry)
+            }).then(() => {
+                setIsPending(false);
+                navigate('/Home'); // adding go back 1 page-
+            });
+        }
         return (
             <div className="modal">
                 <div className="modal-content">
@@ -20,15 +46,24 @@ function Modal(props) {
                         </h4>
                     </div>
                     <div className="modal-body">
+
+                        -Item Value
+                        -Locaton
+                        -Date
+                        -Time
+
                         <Container>
                             <Row>
-                                Item Name:<input type="text"/>
+                                Item Name:<input  value={name} onChange={(event => setName(event.target.value))} type="text"/>
                             </Row>
                             <Row>
                                 Item Category:<select className="form-select" id="inputGroupSelect04"
+                                                      value={category}
+                                                      onChange={(event => setCat(event.target.value))}
                                                       aria-label="Example select with button addon">
                                 <option value="electronic">Electronic</option>
                                 <option value="clothing">Clothing</option>
+                                <option value="currency">Currency</option>
                                 <option value="accessory">Accessory</option>
                                 <option value="id">Identification</option>
                                 <option value="misc">Misc</option>
@@ -36,25 +71,42 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Description:
-                                <input type="typearea"/>
+                                <input value={description} onChange={(event => setDesc(event.target.value))} type="textarea"/>
                             </Row>
-
+                            <Row>
+                                <Form.Label>Value</Form.Label>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Text>$</InputGroup.Text>
+                                    <FormControl name="value" value={value}
+                                                 onChange={(event => setValue(event.target.value))}
+                                                 aria-label="Amount (to the nearest dollar)"/>
+                                    <InputGroup.Text>.00</InputGroup.Text>
+                                </InputGroup>
+                            </Row>
                             <Row>
                                 Location Found:
-                                <select>
-
-                                </select>
+                                <input value={location} onChange={(event => setLocation(event.target.value))} type="text"/>
                             </Row>
                             <Row>
-                                Date Found:
-                                <input type="Date"/>
-                                    Time Found:
-                                <input type="Time"/>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Select Date</Form.Label>
+                                        <Form.Control type="date" name="date" onChange={event => setDate(event.target.value)} value={date}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Time Lost</Form.Label>
+                                        <Form.Control type="time" name="time"
+                                                      onChange={(e) => setTime(e.target.value)}
+                                                      value={time}></Form.Control>
+                                    </Form.Group>
+                                </Col>
                             </Row>
                         </Container>
                     </div>
                     <div className="modal-footer">
-                        <button>Add</button>
+                        <button onClick={handleSubmit}>Add</button>
                         <button onClick={props.onClose}>Close</button>
                     </div>
                 </div>
