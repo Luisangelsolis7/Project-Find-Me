@@ -92,6 +92,27 @@ app.post("/api/insertLost", (req, res) => {
     });
 });
 
+app.post("api/edit"), (req,res) => {
+    const sql = `UPDATE Item
+                 SET Item_Name = ?, Item_Category = ?, Item_Value = ?, Item_Desc = ?
+                 Where Item_ID = ?`
+    db.query(sql, [req.body.itemName, req.body.category, req.body.value, req.body.desc, req.body.itemId], (err, result) =>{
+        if(req.body.category = 'Lost'){
+            const uSql = `UPDATE User
+                          SET User_Fname = ?, User_Lname = ?, User_Phone = ?, User_Email = ?
+                          Where User_ID = ?`
+            db.query(uSql, [req.body.firstName, req.body.lastName, req.body.email, req.body.phone, req.body.userId]), (err, result) => {
+                if(err){
+                    console.log(err);
+                }
+            }
+            if(err){
+                console.log(err);
+            }
+        }
+
+    })
+}
 //Turtles
 
 
