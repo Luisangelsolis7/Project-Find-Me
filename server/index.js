@@ -68,65 +68,50 @@ app.get("/api/getClaimed", (req, res) => {
 });
 
 app.post("/api/insertLost", (req, res) => {
+    const sql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email) values (?, ?, ?, ?);
+                    SET @user_id = LAST_INSERT_ID();
+                 INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);
+                    SET @item_id = LAST_INSERT_ID();
+                 INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) 
+                        values (@item_id, @user_id, 'Lost', ?, ?, ?);`
+    db.query(sql,  [req.body.firstName, req.body.lastName, req.body.phone, req.body.email,
+                    req.body.itemName, req.body.category, req.body.value, req.body.desc,
+                    req.body.date, req.body.time, req.body.location], (err, result) =>{
+       if(err){
+           console.log(err)
+       }
 
-    const userSql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email) values (?, ?, ?, ?);`
-    const itemSql = `INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);`
-    const ishSql = `INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) values (?, ?, 'Lost', ?, ?, ?);`
-
-    db.query(userSql, [req.body.firstName, req.body.lastName, req.body.phone, req.body.email], (err, uResult) => {
-        const userId = uResult.insertId;
-        if(err){
-            console.log(err)
-        }
-        db.query(itemSql, [req.body.itemName, req.body.category, req.body.value, req.body.desc], (err, iResult) => {
-            const itemId = iResult.insertId;
-            if(err){
-                console.log(err)
-            }
-            db.query(ishSql, [itemId, userId, req.body.date, req.body.time, req.body.location], (err, result) => {
-                if(err){
-                    console.log(err)
-                }
-            });
-        });
     });
 });
 
 app.post("/api/insertUnclaimed", (req, res) => {
 
-    const itemSql = `INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);`
-    const ishSql = `INSERT INTO Item_Status_History (Item_FK, Officer_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) values (?, '999', 'Unclaimed', ?, ?, ?);`
+    const sql = `INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);
+                    SET @item_id = LAST_INSERT_ID();
+                 INSERT INTO Item_Status_History (Item_FK, Officer_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) 
+                        values (@item_id, '999', 'Unclaimed', ?, ?, ?);`
 
-        db.query(itemSql, [req.body.itemName, req.body.category, req.body.value, req.body.desc], (err, iResult) => {
-            const itemId = iResult.insertId;
+        db.query(sql, [req.body.itemName, req.body.category, req.body.value, req.body.desc,
+                           req.body.date, req.body.time, req.body.location], (err, iResult) => {
             if(err){
                 console.log(err)
             }
-            db.query(ishSql, [itemId, req.body.date, req.body.time, req.body.location], (err, result) => {
-                if(err){
-                    console.log(err)
-                }
-            });
         });
 });
 
 app.post("/api/insertClaimed", (req, res) => {
-
     const itemId = req.body.itemId;
-    const userSql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email) values (?, ?, ?, ?);`
-    const ishSql = `INSERT INTO Item_Status_History (Item_FK, User_FK, Officer_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) values (?, ?, '999', 'Claimed', ?, ?, ?);`
-
-    db.query(userSql, [req.body.firstName, req.body.lastName, req.body.phone, req.body.email], (err, uResult) => {
-        const userId = uResult.insertId;
+    const sql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email, User_DriverLicense) values (?, ?, ?, ?, ?);
+                    SET @user_id = LAST_INSERT_ID();
+                 INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time) 
+                        values ({itemID}, @user_id, 'Claimed', ?, ?);`
+    db.query(sql, [req.body.firstName, req.body.lastName, req.body.phone, req.body.email, req.body.driverlicense,
+                   req.body.date, req.body.time], (err, result) =>{
         if(err){
             console.log(err)
         }
-            db.query(ishSql, [itemId, userId, req.body.date, req.body.time, req.body.location], (err, result) => {
-                if(err){
-                    console.log(err)
-                }
-            });
-    });
+    })
+
 });
 
 app.post("/api/edit", (req, res) => {
