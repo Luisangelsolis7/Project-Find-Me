@@ -52,7 +52,7 @@ const ItemList = function (props) {
             {props.items.map((i) => (
                 <tr>
                     <td><div className="input-group-text">
-                        <input className="form-check-input mt-0" type="checkbox" value=""
+                        <input className="form-check-input mt-0" type="checkbox" value={i.Item_ID}
                                aria-label="Checkbox for following text input"></input>
                     </div></td>
                     <td>{checkNull(i.Item_Name)}</td>
@@ -64,7 +64,7 @@ const ItemList = function (props) {
                     <td>{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
                         {checkNull(i.User_Email)} <br/>
                         {checkNull(i.User_Phone)}</td>
-                    <td>{checkNull(i.Officer_Fname)} {checkNull(i.Officer_Lname)} <br/> {checkNull(i.Officer_Badge)}</td>
+                    <td>{checkNull(i.Officer_Badge)}</td>
                 </tr>
             ))}
             </tbody>

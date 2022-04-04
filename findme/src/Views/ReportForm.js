@@ -14,6 +14,8 @@ import Button from "react-bootstrap/Button";
 import {logDOM} from "@testing-library/react";
 
 
+
+
 class ReportForm extends React.Component {
     constructor(props) {
         super();
@@ -21,6 +23,7 @@ class ReportForm extends React.Component {
             input: {itemName:"", category:"", value:"",  desc:"",
                 firstName:"", lastName:"", date:"", phone:"", time:"", email:""},
             errors: {},
+            inputValue : ''
             /*itemDetails: [],
             userDetails: [],
             ISHDetails: []*/
@@ -28,14 +31,38 @@ class ReportForm extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInput = this.handleInput.bind(this);
     }
 
-    setItemName = (v) => {
-        this.setState({itemName: v.target.value});
+
+    formatPhoneNumber(value) {
+        // if input value is falsy eg if the user deletes the input, then just return
+        if (!value) return value;
+        console.log(value);
+        // clean the input for any non-digit values.
+        const phoneNumber = value.replace(/[^\d]/g, "");
+
+        // phoneNumberLength is used to know when to apply our formatting for the phone number
+        const phoneNumberLength = phoneNumber.length;
+
+        // we need to return the value with no formatting if its less then four digits
+        // this is to avoid weird behavior that occurs if you  format the area code to early
+        if (phoneNumberLength < 4) return phoneNumber;
+
+        // if phoneNumberLength is greater than 4 and less the 7 we start to return
+        // the formatted number
+        if (phoneNumberLength < 7) {
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+        }
+
+        // finally, if the phoneNumberLength is greater then seven, we add the last
+        // bit of formatting and return it.
+        return( `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+            3,
+            6
+        )}-${phoneNumber.slice(6, 10)}`);
     }
-    setCategory = (v) => {
-        this.setState({category: v.target.value});
-    }
+
 
     handleChange(event) {
         let input = this.state.input;
@@ -44,12 +71,18 @@ class ReportForm extends React.Component {
 
     }
 
+
+    handleInput (event){
+        let input = this.state.input;
+        input[event.target.name] = this.formatPhoneNumber(event.target.value);
+        this.setState({input});
+    };
+
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.state.input);
         if (this.validate()) {
             console.log(this.state);
-
 
             let input = {};
             input["itemName"] = "";
@@ -192,7 +225,7 @@ class ReportForm extends React.Component {
                                             <option value="">---Categories---</option>
                                             <option value="electronic">Electronic</option>
                                             <option value="clothing">Clothing</option>
-                                            <option value="accessory">accessory</option>
+                                            <option value="accessory">Accessory</option>
                                             <option value="id">Identification</option>
                                             <option value="misc">Misc</option>
                                         </select>
@@ -273,7 +306,7 @@ class ReportForm extends React.Component {
                                 <Col md={4}>
                                     <Form.Group>
                                         <Form.Label>Phone Number</Form.Label>
-                                        <Form.Control type="input" name="phone" onChange={this.handleChange} placeholder="(xxx)xxx-xxxx"/>
+                                        <Form.Control type="input" name="phone" onChange={this.handleInput} value={this.state.input.phone} placeholder="(xxx)xxx-xxxx"/>
                                         <div className="text-danger">{this.state.errors.phone}</div>
                                     </Form.Group>
                                 </Col>
