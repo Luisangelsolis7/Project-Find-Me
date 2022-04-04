@@ -9,9 +9,9 @@ const ItemList = function (props) {
 
     function checkNull(item) {
         if (item !== null) {
-            if(!isNaN(+item)){
+            /*if(!isNaN(+item)){
                 return(<>Badge: {item}</>)
-            }
+            }*/
             return (<>{item}</>)
         }
     }
@@ -30,13 +30,13 @@ const ItemList = function (props) {
 
 
     if (props.active == "H") {
-        tableHeader = ["", "Name", "Category", "Description", "Value", "Date", "Location","", "Officer"];
+        tableHeader = ["","Date Found", "Name", "Category", "Description", "Value",  "Location Found","", "Officer Badge",""];
     }
     if (props.active == "C") {
-        tableHeader = ["", "Name", "Category", "Description", "Value", "Date","", "Claimant", "Officer"];
+        tableHeader = ["","Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge",""];
     }
     if (props.active == "R") {
-        tableHeader = ["", "Item","Category", "Description", "Value", "Date", "Location", "Reported by",""];
+        tableHeader = ["","Date Lost", "Item","Category", "Description", "Value",  "Location Lost", "Reported by","",""];
     }
 
     return(
@@ -54,17 +54,21 @@ const ItemList = function (props) {
                     <td><div className="input-group-text">
                         <input className="form-check-input mt-0" type="checkbox" value={i.Item_ID}
                                aria-label="Checkbox for following text input"></input>
-                    </div></td>
+
+
+                    </div>
+                        </td>
+                    <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                     <td>{checkNull(i.Item_Name)}</td>
                     <td>{checkNull(i.Category_Name)}</td>
                     <td>{i.Item_Desc}</td>
                     <td>${i.Item_Value}</td>
-                    <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                     <td>{checkNull(i.ISH_Location)}</td>
                     <td>{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
                         {checkNull(i.User_Email)} <br/>
                         {checkNull(i.User_Phone)}</td>
                     <td>{checkNull(i.Officer_Badge)}</td>
+                    <td><a href="">Edit</a></td>
                 </tr>
             ))}
             </tbody>

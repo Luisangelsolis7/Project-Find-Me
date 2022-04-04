@@ -15,17 +15,17 @@ const Reports = function() {
         <Row >
             <Col></Col>
             <Col md={11}>
-
-                { error  && <div> {error}</div>}
-                { isPending && <div> Loading ... </div> }
-                { items && <ItemList items={items} active="R"/>}
                 <div className="input-group">
                     <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                        <option selected>Delete</option>
-                        <option value="1">Notify</option>
+                        <option value="N" selected>Notify</option>
+                        <option value="D">Delete</option>
                     </select>
                     <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
                 </div>
+                { error  && <div> {error}</div>}
+                { isPending && <div> Loading ... </div> }
+                { items && <ItemList items={items} active="R"/>}
+
             </Col>
             <Col></Col>
         </Row>

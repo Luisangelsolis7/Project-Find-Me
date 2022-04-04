@@ -33,9 +33,9 @@ function AdminNavBar(props){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
-                        <NavItem><Nav.Link className={Home} href="/Home">Unclaimed Items</Nav.Link></NavItem>
+                        <NavItem><Nav.Link className={Reports} href="/Reports">Lost Reports</Nav.Link></NavItem>
+                        <NavItem><Nav.Link className={Home} href="/Home">Found Items</Nav.Link></NavItem>
                         <NavItem><Nav.Link className={Claimed} href="/Claimed">Claimed Items</Nav.Link></NavItem>
-                        <NavItem><Nav.Link className={Reports} href="/Reports">Reports</Nav.Link></NavItem>
                         <NavItem>
                             <InputGroup >
                                 <FormControl
