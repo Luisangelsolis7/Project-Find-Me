@@ -129,20 +129,20 @@ app.post("/api/insertClaimed", (req, res) => {
     });
 });
 
-app.post("api/edit"), (req,res) => {
+app.post("/api/edit", (req, res) => {
     const sql = `UPDATE Item
                  SET Item_Name = ?, Category_FK = ?, Item_Value = ?, Item_Desc = ?
                  Where Item_ID = ?`
-    db.query(sql, [req.body.itemName, req.body.category, req.body.value, req.body.desc, req.body.itemId], (err, result) =>{
-        if(err){
+    db.query(sql, [req.body.itemName, req.body.category, req.body.value, req.body.desc, req.body.itemId], (err, result) => {
+        if (err) {
             console.log(err);
         }
-        if(req.body.category == 'Lost' || req.body.category == 'Claimed'){
+        if (req.body.category == 'Lost' || req.body.category == 'Claimed') {
             const uSql = `UPDATE User
                           SET User_Fname = ?, User_Lname = ?, User_Phone = ?, User_Email = ?
                           Where User_ID = ?`
             db.query(uSql, [req.body.firstName, req.body.lastName, req.body.phone, req.body.email, req.body.userId]), (err, result) => {
-                if(err){
+                if (err) {
                     console.log(err);
                 }
             }
@@ -150,15 +150,43 @@ app.post("api/edit"), (req,res) => {
         const ishSql = `Update Item_Status_History
                       SET ISH_Date = ?, ISH_Time = ?, ISH_Location = ?
                       WHERE Item_FK = ? and Status_FK = ?`
-        db.query(ishSql, [req.body.date, req.body.time, req.body.location, req.body.itemId, req.body.category], (err, result) =>{
-            if(err){
+        db.query(ishSql, [req.body.date, req.body.time, req.body.location, req.body.itemId, req.body.status], (err, result) => {
+            if (err) {
                 console.log(err)
             }
         })
-
     })
-}
-//Turtles
+});
+
+app.post("/api/deleteItem", (req, res) => {
+    const sql = `Delete FROM Item Where Item_ID = ?`
+    db.query(sql, req.body.itemId, (err, result) =>{
+        if(err){
+            console.log(err)
+        }
+    });
+
+});
+
+app.post("/api/deleteUser", (req, res) => {
+    const sql = `Delete FROM User Where User_ID = ?`
+    db.query(sql, req.body.userId, (err, result) =>{
+        if(err){
+            console.log(err)
+        }
+    });
+
+});
+
+app.post("/api/deleteISH", (req, res) => {
+    const sql = `Delete FROM Item_Status_History Where Item_ID = ? and Status_FK = ?'`
+    db.query(sql, [req.body.itemId, req.body.status], (err, result) =>{
+        if(err){
+            console.log(err)
+        }
+    });
+
+});
 
 
 app.listen(3001, () => {
