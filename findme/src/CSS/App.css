@@ -23,6 +23,10 @@ form {
     margin: auto;
     padding-bottom: 0;
 }
+.descFixedHeight{
+    height:40px;
+    overflow:hidden
+}
 .submitButton{
     padding-bottom: 1rem;
     padding-top: 2rem;

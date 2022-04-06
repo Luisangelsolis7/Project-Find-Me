@@ -8,37 +8,41 @@ import Button from "react-bootstrap/Button";
 import Modal from "../components/Modal";
 import useFetch from "../useFetch";
 import {useState} from "react";
-const Home = function(){
+
+const Home = function () {
 
 
-const[show,setShow] = useState(false);
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getUnclaimed');
-    return(
+    const [showAdd, setAddShow] = useState(false);
+    const [showClaim, setClaimShow] = useState(false);
+    const {data: items, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
+    return (
         <>
             <AdminNavBar active="H"/>
             <Container>
-                <Row >
+                <Row>
                     <Col></Col>
                     <Col md={11}>
+                        <br/>
                         <div className="input-group">
-                            <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                <option value="claim" selected>Claim</option>
+                            <select className="form-select" defaultValue="claim" id="inputGroupSelect04"
+                                    aria-label="Example select with button addon">
+                                <option value="claim">Claim</option>
                                 <option value="donate">Donate</option>
                                 <option value="destroy">Destroy</option>
-
                             </select>
-                            <button className="openClaimedForm" onClick={() => setShow(true)}>Apply to ALL</button>
-                            <Modal onClose={() => setShow(false)} show={show} active="C" />
+                            <button className="openClaimedForm" onClick={() => setClaimShow(true)}>Apply to ALL</button>
+                            <Modal onClose={() => setClaimShow(false)} show={showClaim} active="Claim"/>
                         </div>
-                        { error  && <div> {error}</div>}
-                        { isPending && <div> Loading ... </div> }
-                        { items && <ItemList items={items} active="H"/>}
+                        <br/>
+                        {error && <div> {error}</div>}
+                        {isPending && <div> Loading ... </div>}
+                        {items && <ItemList items={items} active="H"/>}
                     </Col>
                     <Col>
-         
-                  <br />
-                        <Button className="openAddUnclaimed" onClick={() => setShow(true)}>Add Item</Button>
-                        <Modal onClose={() => setShow(false)} show={show} active="H" />
+
+                        <br/>
+                        <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
+                        <Modal onClose={() => setAddShow(false)} show={showAdd} active="Add"/>
 
                     </Col>
                 </Row>

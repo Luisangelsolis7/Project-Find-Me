@@ -22,7 +22,8 @@ function Modal(props) {
     if (!props.show) {
         return null;
     }
-    if (props.active === "H") {
+
+    if(props.active === "Claim"){
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
@@ -30,13 +31,69 @@ function Modal(props) {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({itemName: name,
-                                            category: cat,
-                                            desc : des,
-                                            value: val,
-                                            location : loc,
-                                            date : dat,
-                                            time : tim
-                                            })
+                    category: cat,
+                    desc : des,
+                    value: val,
+                    location : loc,
+                    date : dat,
+                    time : tim
+                })
+            }).then(() => {
+                setIsPending(false);
+                navigate('/Home'); // adding go back 1 page-
+            })
+        }
+        return (
+            <div className="modal">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h4 className="modal-title">
+                            Release an Item
+                        </h4>
+                    </div>
+                    <div className="modal-body">
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Select Date</Form.Label>
+                                        <Form.Control type="date" name="date"
+                                                      onChange={event => setDate(event.target.value)} value={dat}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Time Lost</Form.Label>
+                                        <Form.Control type="time" name="time"
+                                                      onChange={(e) => setTime(e.target.value)}
+                                                      value={tim}></Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
+                    <div className="modal-footer">
+                        <button onClick={handleSubmit}>Add</button>
+                        <button onClick={props.onClose}>Close</button>
+                    </div>
+                </div>
+            </div>
+        )
+    }if (props.active === "Add") {
+        const handleSubmit = (e) => {
+            e.preventDefault(); // prevent page from auto refresh
+            setIsPending(true);
+            fetch("http://localhost:3001/api/insertUnclaimed", {
+                method: 'POST',
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify({itemName: name,
+                    category: cat,
+                    desc : des,
+                    value: val,
+                    location : loc,
+                    date : dat,
+                    time : tim
+                })
             }).then(() => {
                 setIsPending(false);
                 navigate('/Home'); // adding go back 1 page-
@@ -116,66 +173,6 @@ function Modal(props) {
                 </div>
             </div>
         )
-
-    }
-    if(props.active === "C"){
-
-        const handleSubmit = (e) => {
-            e.preventDefault(); // prevent page from auto refresh
-            setIsPending(true);
-            fetch("http://localhost:3001/api/insertUnclaimed", {
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({itemName: name,
-                    category: cat,
-                    desc : des,
-                    value: val,
-                    location : loc,
-                    date : dat,
-                    time : tim
-                })
-            }).then(() => {
-                setIsPending(false);
-                navigate('/Home'); // adding go back 1 page-
-            })
-        }
-        return (
-            <div className="modal">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h4 className="modal-title">
-                            Release an Item
-                        </h4>
-                    </div>
-                    <div className="modal-body">
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Select Date</Form.Label>
-                                        <Form.Control type="date" name="date"
-                                                      onChange={event => setDate(event.target.value)} value={dat}/>
-                                    </Form.Group>
-                                </Col>
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Time Lost</Form.Label>
-                                        <Form.Control type="time" name="time"
-                                                      onChange={(e) => setTime(e.target.value)}
-                                                      value={tim}></Form.Control>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </div>
-                    <div className="modal-footer">
-                        <button onClick={handleSubmit}>Add</button>
-                        <button onClick={props.onClose}>Close</button>
-                    </div>
-                </div>
-            </div>
-        )
-
 
     }
     if (props.active === "L") {
