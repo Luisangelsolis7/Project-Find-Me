@@ -50,20 +50,18 @@ const ItemList = function (props) {
             </thead>
             <tbody>
             {props.items.map((i) => (
-                <tr>
+                <tr key={i.Item_ID}>
                     <td><div className="input-group-text">
                         <input className="form-check-input mt-0" type="checkbox" value={i.Item_ID}
                                aria-label="Checkbox for following text input"></input>
-
-
                     </div>
                         </td>
                     <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                     <td>{checkNull(i.Item_Name)}</td>
                     <td>{checkNull(i.Category_Name)}</td>
-                    <td>{i.Item_Desc}</td>
+                    <td><div className="fixedHeight">{i.Item_Desc}</div></td>
                     <td>${i.Item_Value}</td>
-                    <td>{checkNull(i.ISH_Location)}</td>
+                    <td><div className="fixedHeight">{checkNull(i.ISH_Location)}</div></td>
                     <td>{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
                         {checkNull(i.User_Email)} <br/>
                         {checkNull(i.User_Phone)}</td>
