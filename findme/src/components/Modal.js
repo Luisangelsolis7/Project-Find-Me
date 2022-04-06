@@ -208,6 +208,28 @@ function Modal(props) {
             </div>
         )
     }
+    if (props.active === "Edit") {
+        return (
+            <div className="modal">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h4 className="modal-title">
+                            Edit
+                        </h4>
+                    </div>
+                    <div className="modal-body">
+                        <Container>
+
+                        </Container>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-success">Save</button>
+                        <button className="btn btn-success" onClick={props.onClose}>Close</button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
 }
 
