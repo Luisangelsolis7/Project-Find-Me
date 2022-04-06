@@ -15,6 +15,7 @@ const Reports = function() {
         <Row >
             <Col></Col>
             <Col md={11}>
+                <br />
                 <div className="input-group">
                     <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                         <option value="N" selected>Notify</option>
@@ -22,6 +23,7 @@ const Reports = function() {
                     </select>
                     <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
                 </div>
+                <br />
                 { error  && <div> {error}</div>}
                 { isPending && <div> Loading ... </div> }
                 { items && <ItemList items={items} active="R"/>}
