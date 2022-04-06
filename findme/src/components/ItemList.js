@@ -34,6 +34,7 @@ const ItemList = function (props) {
         tableHeader = ["", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", ""];
     }
     const [show, setShow] = useState(false);
+    const [style1, setStyle1] = useState("fixedHeight");
     return (
         <>
             <table className="table">
@@ -57,14 +58,14 @@ const ItemList = function (props) {
                         <td>{checkNull(i.Item_Name)}</td>
                         <td>{checkNull(i.Category_Name)}</td>
                         <td>
-                            <div className="fixedHeight">{i.Item_Desc}</div>
+                            <div className={style1}>{i.Item_Desc}</div>
                         </td>
                         <td>${i.Item_Value}</td>
                         <td>
-                            <div className="fixedHeight">{checkNull(i.ISH_Location)}</div>
+                            <div className={style1}>{checkNull(i.ISH_Location)}</div>
                         </td>
                         <td>
-                            <div className="fixedHeight">{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
+                            <div className={style1}>{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
                                 {checkNull(i.User_Phone)}<br/>
                                 {checkNull(i.User_Email)} </div>
                         </td>
