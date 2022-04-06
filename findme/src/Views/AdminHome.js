@@ -27,7 +27,8 @@ const[show,setShow] = useState(false);
                                 <option value="destroy">Destroy</option>
 
                             </select>
-                            <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
+                            <button className="openClaimedForm" onClick={() => this.setShow(true)}  >Apply to ALL</button>
+                            <Modal onClose={() => setShow(false)} show={show} active="C" />
                         </div>
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
@@ -36,7 +37,7 @@ const[show,setShow] = useState(false);
                     <Col>
          
                   <br />
-                        <Button onClick={() => setShow(true)}>Add Item</Button>
+                        <Button className="openAddUnclaimed" onClick={() => this.setShow(true)} >Add Item</Button>
                         <Modal onClose={() => setShow(false)} show={show} active="H" />
 
                     </Col>
