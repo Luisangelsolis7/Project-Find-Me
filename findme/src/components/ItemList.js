@@ -25,13 +25,13 @@ const ItemList = function (props) {
     }
 
     if (props.active == "H") {
-        tableHeader = ["", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", ""];
+        tableHeader = ["", "ID", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", ""];
     }
     if (props.active == "C") {
-        tableHeader = ["", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", ""];
+        tableHeader = ["", "ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", ""];
     }
     if (props.active == "R") {
-        tableHeader = ["", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", ""];
+        tableHeader = ["", "ID","Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", ""];
     }
     const [show, setShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
@@ -54,6 +54,7 @@ const ItemList = function (props) {
                                        aria-label="Checkbox for following text input"></input>
                             </div>
                         </td>
+                        <td>{i.Item_ID}</td>
                         <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                         <td>{checkNull(i.Item_Name)}</td>
                         <td>{checkNull(i.Category_Name)}</td>
