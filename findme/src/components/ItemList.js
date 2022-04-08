@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "react-bootstrap/Button";
 import Modal from "./Modal";
 
@@ -34,22 +34,23 @@ const ItemList = function (props) {
     }
     const [show, setShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
-    const [itemInfo, setItemInfo] = useState({}/*{
-        id: null,
+    const [itemInfo, setItemInfo] = useState({
+        id: "",
         name: "",
-        status: null,
-        value: null,
+        status: "",
+        value: "",
         desc: "",
-        location: null,
-        userId: null,
-        userFName: null,
-        userLName: null,
-        phone: null,
-        email: null,
-        date: null,
-        time: null,
-        officer: null
-    }*/);
+        location: "",
+        userId: "",
+        userFName: "",
+        userLName: "",
+        phone: "",
+        email: "",
+        date: "",
+        time: "",
+        officer: ""
+        }
+    );
     let count = 0;
     function generateKey(i){
         let key = i
@@ -68,12 +69,17 @@ const ItemList = function (props) {
         }
         return key;
     }
+    useEffect(() => {
+        console.log(itemInfo);
+    }, [itemInfo]);
     const toggleHandler = (i) => () => {
+
         setItemInfo((state) => ({
             ...state,
             [i.Item_ID]: state[i.Item_ID]
-                ? console.log(itemInfo[i.Item_ID])
+                ? null
                 : {
+
                     id: i.Item_ID,
                     name: i.Item_Name,
                     status: i.Status_FK,
@@ -108,6 +114,7 @@ const ItemList = function (props) {
                 {props.items.map((i) => (
                     <tr key={generateKey(i.Item_ID)}>
                         <td>
+                            {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
                             <div className="input-group-text">
                                 <input
                                     onClick={toggleHandler(i)}

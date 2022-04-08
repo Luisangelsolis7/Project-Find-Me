@@ -79,9 +79,7 @@ function Modal(props) {
         function getCurrentTime(){
 
             let newDate = new Date()
-            let time = newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
-
-            return time;
+            return newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();;
         }
 
 
