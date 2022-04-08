@@ -1,13 +1,13 @@
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import useFetch from "../useFetch";
 import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 import Modal from "./Modal";
 
+
+
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
     let tableHeader = [];
+
 
     function checkNull(item) {
         if (item !== null) {
@@ -24,25 +24,24 @@ const ItemList = function (props) {
 
     }
 
-    if (props.active == "H") {
+    if (props.active === "H") {
         tableHeader = ["", "ID", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", ""];
     }
-    if (props.active == "C") {
+    if (props.active === "C") {
         tableHeader = ["", "ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", ""];
     }
-    if (props.active == "R") {
+    if (props.active === "R") {
         tableHeader = ["", "ID","Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", ""];
     }
     const [show, setShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
+    const [itemInfo, setItemInfo] = useState({});
     return (
         <>
             <table className="table">
                 <thead className="table-dark">
                 <tr scope="row">
-                    {tableHeader.map((i) => (
-                        <td key={i}>{i}</td>
-                    ))}
+
                 </tr>
                 </thead>
                 <tbody>
@@ -50,8 +49,23 @@ const ItemList = function (props) {
                     <tr key={i.Item_ID}>
                         <td>
                             <div className="input-group-text">
-                                <input className="form-check-input mt-0" type="checkbox" value={i.Item_ID}
-                                       aria-label="Checkbox for following text input"></input>
+                                <input
+                                    onChange={() => {
+                                        setItemInfo((state) => ({
+                                            ...state, // <-- shallow copy previous state
+                                            [i.Item_ID]: state[i.Item_ID] // <-- update value by id
+                                                ? null
+                                                : {
+                                                    id: i.Item_ID
+
+                                                }
+                                        }));
+                                    }}
+                                    checked={itemInfo[i.Item_ID]} // <-- use checked prop, retrieve value by id
+                                    style={{ margin: "20px" }}
+                                    type="checkbox"
+                                />
+
                             </div>
                         </td>
                         <td>{i.Item_ID}</td>

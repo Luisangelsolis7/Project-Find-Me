@@ -8,10 +8,10 @@ import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
 
+
 function Modal(props) {
     const navigate = useNavigate;
     const [cat, setCat] = useState("");
-    const [id, setID] = useState("");
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [emailAdd, setEmailAdd] = useState("");
