@@ -34,9 +34,29 @@ const ItemList = function (props) {
     }
     const [show, setShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
-    const [itemInfo, setItemInfo] = useState({});
+    const [itemInfo, setItemInfo] = useState({}/*{
+        id: null,
+        name: "",
+        status: null,
+        value: null,
+        desc: "",
+        location: null,
+        userId: null,
+        userFName: null,
+        userLName: null,
+        phone: null,
+        email: null,
+        date: null,
+        time: null,
+        officer: null
+    }*/);
+    let count = 0;
     function generateKey(i){
-        let key = i.Item_ID;
+        let key = i
+        if(i == ""){
+            count++;
+            return count;
+        }
         if(i.Status_FK === 'Lost'){
             key += "L"
         }
@@ -52,7 +72,7 @@ const ItemList = function (props) {
         setItemInfo((state) => ({
             ...state,
             [i.Item_ID]: state[i.Item_ID]
-                ? null
+                ? console.log(itemInfo[i.Item_ID])
                 : {
                     id: i.Item_ID,
                     name: i.Item_Name,
@@ -69,7 +89,7 @@ const ItemList = function (props) {
                     time: i.ISH_Time,
                     officer: i.Officer_FK
                 }
-        }));console.log(itemInfo[i.Item_ID])
+        }));
     };
 
     return (
@@ -77,6 +97,7 @@ const ItemList = function (props) {
             <table className="table">
                 <thead className="table-dark">
                 <tr scope="row">
+
                     {tableHeader.map((i) => (
                         <td key={generateKey(i)}>{i}</td>
 
@@ -85,12 +106,13 @@ const ItemList = function (props) {
                 </thead>
                 <tbody>
                 {props.items.map((i) => (
-                    <tr key={generateKey(i)}>
+                    <tr key={generateKey(i.Item_ID)}>
                         <td>
                             <div className="input-group-text">
                                 <input
-                                    onChange={toggleHandler(i)}
-                                    checked={itemInfo[i.Item_ID]} // <-- use checked prop, retrieve value by id
+                                    onClick={toggleHandler(i)}
+                                    checked={itemInfo[i.Item_ID]}
+                                    // <-- use checked prop, retrieve value by id
                                     type="checkbox"
                                 />
 
