@@ -2,22 +2,20 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl, NavItem} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 function AdminNavBar(props){
     let Home, Claimed, Reports = "nav-link";
-    if(props.active == "H"){
+    if(props.active === "H"){
         Home = "nav-link active";
         Claimed = "nav-link";
         Reports = "nav-link";
-    }if(props.active == "C"){
+    }if(props.active === "C"){
         Home = "nav-link";
         Claimed = "nav-link active";
         Reports = "nav-link";
-    }if(props.active == "R"){
+    }if(props.active === "R"){
         Home = "nav-link";
         Claimed = "nav-link";
         Reports = "nav-link active";
@@ -26,7 +24,7 @@ function AdminNavBar(props){
         <Navbar bg="light" expand="lg" className="justify-content-end">
             <Container>
 
-                <Navbar.Brand href="/"><img src={require("../imgs/Aurora_University_logo.jpg")} />
+                <Navbar.Brand href="/"><img src={require("../imgs/Aurora_University_logo.jpg")} alt="AU Logo" />
                     </Navbar.Brand>
 
 

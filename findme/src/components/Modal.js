@@ -8,10 +8,10 @@ import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
 
+
 function Modal(props) {
     const navigate = useNavigate;
     const [cat, setCat] = useState("");
-    const [id, setID] = useState("");
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [emailAdd, setEmailAdd] = useState("");
@@ -79,9 +79,7 @@ function Modal(props) {
         function getCurrentTime(){
 
             let newDate = new Date()
-            let time = newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
-
-            return time;
+            return newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();;
         }
 
 
@@ -93,7 +91,7 @@ function Modal(props) {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({
-                    itemId : 129,
+                    itemId : null,
                     firstName : fName,
                     lastName : lName,
                     email : emailAdd,

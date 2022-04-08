@@ -18,7 +18,7 @@ const Reports = function() {
                 <br />
                 <div className="input-group">
                     <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                        <option value="N" selected>Notify</option>
+                        <option defaultValue="N">Notify</option>
                         <option value="D">Delete</option>
                     </select>
                     <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
