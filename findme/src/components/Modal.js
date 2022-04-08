@@ -93,7 +93,7 @@ function Modal(props) {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({
-                    itemId : 129,
+                    itemId : null,
                     firstName : fName,
                     lastName : lName,
                     email : emailAdd,

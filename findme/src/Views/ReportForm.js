@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import NavBar from "../components/NavBar";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl, FormGroup} from "react-bootstrap";
@@ -9,15 +9,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 
-import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import {logDOM} from "@testing-library/react";
 
 
 
 
 class ReportForm extends React.Component {
-    constructor(props) {
+    constructor() {
         super();
         this.state = {
             input: {itemName:"", category:"", value:"",  desc:"",
@@ -129,7 +126,7 @@ class ReportForm extends React.Component {
         }
         if (typeof input["value"] !== "undefined") {
 
-            var pattern = new RegExp(/^[0-9\b]+$/);
+            const pattern = new RegExp(/^[0-9\b]+$/);
             if (!pattern.test(input["value"])) {
                 isValid = false;
                 errors["value"] = "Please enter only numbers without any characters.";
@@ -154,7 +151,7 @@ class ReportForm extends React.Component {
 
         if (typeof input["email"] !== "undefined") {
 
-            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            const pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(input["email"])) {
                 isValid = false;
                 errors["email"] = "Please enter valid email address.";
@@ -169,10 +166,6 @@ class ReportForm extends React.Component {
         return isValid;
     }
 
-    submitToObject() {
-
-        return null;
-    }
 
     render() {
         return (
@@ -203,7 +196,7 @@ class ReportForm extends React.Component {
                                                 name="category"
                                                 onChange={this.handleChange}
                                                 aria-label="Example select with button addon">
-                                            <option default value="">---Categories---</option>
+                                            <option defaultValue="">---Categories---</option>
                                             <option value="electronic">Electronic</option>
                                             <option value="clothing">Clothing</option>
                                             <option value="accessory">Accessory</option>
