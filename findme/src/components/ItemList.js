@@ -6,6 +6,7 @@ import Modal from "./Modal";
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
     let tableHeader = [];
+    let inputGroup = ''
 
 
     function checkNull(item) {
@@ -28,6 +29,7 @@ const ItemList = function (props) {
     }
     if (props.active === "C") {
         tableHeader = ["", "ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", ""];
+
     }
     if (props.active === "R") {
         tableHeader = ["", "ID","Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", ""];
@@ -37,6 +39,7 @@ const ItemList = function (props) {
     const [itemInfo, setItemInfo] = useState({
         id: "",
         name: "",
+        category: "",
         status: "",
         value: "",
         desc: "",
@@ -82,6 +85,7 @@ const ItemList = function (props) {
 
                     id: i.Item_ID,
                     name: i.Item_Name,
+                    category: i.Category_Name,
                     status: i.Status_FK,
                     value: i.Item_Value,
                     desc: i.Item_Desc,
@@ -99,6 +103,7 @@ const ItemList = function (props) {
     };
 
     return (
+
         <div className="itemTable">
             <table className="table">
                 <thead className="table-dark">
@@ -117,8 +122,8 @@ const ItemList = function (props) {
                             {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
                             <div className="input-group-text">
                                 <input
-                                    onClick={toggleHandler(i)}
-                                    checked={itemInfo[i.Item_ID]}
+                                    onChange={toggleHandler(i)}
+                                    checked={!!itemInfo[i.Item_ID]}
                                     // <-- use checked prop, retrieve value by id
                                     type="checkbox"
                                 />
@@ -142,8 +147,8 @@ const ItemList = function (props) {
                                 {checkNull(i.User_Email)} </div>
                         </td>
                         <td>{checkNull(i.Officer_Badge)}</td>
-                        <td><Button className="btn btn-success" onClick={() => setShow(true)}>Edit</Button>
-                            <Modal onClose={() => setShow(false)} show={show} active="Edit"/></td>
+                        <td><Button className="btn btn-success" onClick={() => setShow(true) && toggleHandler(i)}  >Edit</Button>
+                            <Modal itemId = {i.Item_ID} onClose={() => setShow(false)}  show={show} active="Edit"/></td>
                     </tr>
                 ))}
                 </tbody>

@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl, NavItem} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import ItemList from "../components/ItemList";
+import AdminHome from "../Views/AdminHome";
 function AdminNavBar(props){
+    const [q, setQ] = useState("");
     let Home, Claimed, Reports = "nav-link";
     if(props.active === "H"){
         Home = "nav-link active";
@@ -34,18 +37,6 @@ function AdminNavBar(props){
                         <NavItem><Nav.Link className={Reports} href="/Reports">Lost Reports</Nav.Link></NavItem>
                         <NavItem><Nav.Link className={Home} href="/Home">Found Items</Nav.Link></NavItem>
                         <NavItem><Nav.Link className={Claimed} href="/Claimed">Claimed Items</Nav.Link></NavItem>
-                        <NavItem>
-                            <InputGroup >
-                                <FormControl
-                                    placeholder="Search"
-                                    aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2"
-                                />
-                                <Button variant="primary" type="submit">
-                                    search
-                                </Button>
-                            </InputGroup>
-                        </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

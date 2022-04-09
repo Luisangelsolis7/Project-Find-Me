@@ -28,8 +28,6 @@ function Modal(props) {
     if (!props.show) {
         return null;
     }
-
-
     if(props.active === "Claim"){
         const handleInput = (e) => {
             // this is where we'll call our future formatPhoneNumber function that we haven't written yet.
@@ -91,7 +89,8 @@ function Modal(props) {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({
-                    itemId : null,
+                    itemId : props.id,
+                    category: cat,
                     firstName : fName,
                     lastName : lName,
                     email : emailAdd,
@@ -313,6 +312,28 @@ function Modal(props) {
         )
     }
     if (props.active === "Edit") {
+        const handleSubmit = (e) => {
+            e.preventDefault(); // prevent page from auto refresh
+            setIsPending(true);
+            fetch("http://localhost:3001/api/edit", {
+                method: 'POST',
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify({
+                    itemId: props.itemid,
+                    status: 'Unclaimed',
+                    itemName: name,
+                    category: cat,
+                    desc : des,
+                    value: val,
+                    location : loc,
+                    date : dat,
+                    time : tim
+                })
+            }).then(() => {
+                setIsPending(false);
+                navigate('/Home'); // adding go back 1 page-
+            })
+        }
         return (
             <div className="modal">
                 <div className="modal-content">
@@ -323,11 +344,67 @@ function Modal(props) {
                     </div>
                     <div className="modal-body">
                         <Container>
+                            <Row>
+                                Item Name:<input value={name} onChange={(event => setName(event.target.value))}
+                                                 type="text"/>
+                            </Row>
+                            <Row>
+                                Item Category:<select className="form-select" id="inputGroupSelect04"
+                                                      value={cat}
+                                                      onChange={(event => setCat(event.target.value))}
+                                                      aria-label="Example select with button addon">
+                                <option value="">--Category--</option>
+                                <option value="electronic">Electronic</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="currency">Currency</option>
+                                <option value="accessory">Accessory</option>
+                                <option value="id">Identification</option>
+                                <option value="misc">Misc</option>
+                            </select>
+                            </Row>
+                            <Row>
+                                Description:
+                                <input value={des} onChange={(event => setDesc(event.target.value))}
+                                       type="textarea"/>
+                            </Row>
+                            <Row>
+                                <Form.Label>Value</Form.Label>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Text>$</InputGroup.Text>
+                                    <FormControl name="value" value={val}
+                                                 onChange={(event => setValue(event.target.value))}
+                                                 aria-label="Amount (to the nearest dollar)"/>
+                                    <InputGroup.Text>.00</InputGroup.Text>
+                                </InputGroup>
+                            </Row>
+                            <Row>
+                                Location Found:
+                                <input value={loc} onChange={(event => setLocation(event.target.value))}
+                                       type="text"/>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Select Date</Form.Label>
+                                        <Form.Control type="date" name="date"
+                                                      onChange={event => setDate(event.target.value)} value={dat}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Time Lost</Form.Label>
+                                        <Form.Control type="time" name="time"
+                                                      onChange={(e) => setTime(e.target.value)}
+                                                      value={tim}></Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+
 
                         </Container>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-success">Save</button>
+                        <button className="btn btn-success" onClick={handleSubmit}>Save</button>
                         <button className="btn btn-success" onClick={props.onClose}>Close</button>
                     </div>
                 </div>
