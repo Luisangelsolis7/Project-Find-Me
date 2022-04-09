@@ -148,7 +148,7 @@ const ItemList = function (props) {
                         </td>
                         <td>{checkNull(i.Officer_Badge)}</td>
                         <td><Button className="btn btn-success" onClick={() => setShow(true) && toggleHandler(i)}  >Edit</Button>
-                            <Modal itemId = {i.Item_ID} onClose={() => setShow(false)}  show={show} active="Edit"/></td>
+                            <Modal item={i} onClose={() => setShow(false)}  show={show} active="Edit"/></td>
                     </tr>
                 ))}
                 </tbody>

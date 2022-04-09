@@ -28,13 +28,12 @@ const Claimed = function() {
     }
     return (
         <>
-            <AdminNavBar active="C"/>
+            <AdminNavBar active="C" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
             <Container>
                 <Row >
                     <Col md={11}>
                         <br/>
                     <div className="input-group">
-                        <input type="text" placeholder='Search' value={q} onChange={(e) => setQ(e.target.value)} />
                     </div>
                         <br/>
 

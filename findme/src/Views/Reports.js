@@ -27,14 +27,13 @@ const Reports = function() {
     }
     return (
         <>
-            <AdminNavBar active="R"/>
-    <Container>
+            <AdminNavBar active="R" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
+            <Container>
         <Row >
             <Col></Col>
             <Col md={11}>
                 <br />
                 <div className="input-group">
-                    <input type="text" placeholder='Search' value={q} onChange={(e) => setQ(e.target.value)} />
                     <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                         <option defaultValue="N">Notify</option>
                         <option value="D">Delete</option>

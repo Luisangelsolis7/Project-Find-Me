@@ -25,63 +25,47 @@ function Modal(props) {
     const [driverLicense, setDriverLicense] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
     const [isPending, setIsPending] = useState(false);
+
+    function formatPhoneNumber(value) {
+        // if input value is falsy eg if the user deletes the input, then just return
+        if (!value) return value;
+        const phoneNumber = value.replace(/[^\d]/g, '');
+        const phoneNumberLength = phoneNumber.length;
+        if (phoneNumberLength < 4) return phoneNumber;
+        if (phoneNumberLength < 7) {
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+        }
+        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+            3,
+            6
+        )}-${phoneNumber.slice(6, 10)}`;
+    }
+
+    function getCurrentDate(separator = '-') {
+        let newDate = new Date()
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
+    }
+
+    function getCurrentTime() {
+        let newDate = new Date();
+        return newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
+
+    }
+
+
     if (!props.show) {
         return null;
     }
-    if(props.active === "Claim"){
+    if (props.active === "Claim") {
         const handleInput = (e) => {
             // this is where we'll call our future formatPhoneNumber function that we haven't written yet.
             const formattedPhoneNumber = formatPhoneNumber(e.target.value);
             // we'll set the input value using our setInputValue
             setPhoneNum(formattedPhoneNumber);
         };
-
-        function formatPhoneNumber(value) {
-            // if input value is falsy eg if the user deletes the input, then just return
-            if (!value) return value;
-
-            // clean the input for any non-digit values.
-            const phoneNumber = value.replace(/[^\d]/g, '');
-
-            // phoneNumberLength is used to know when to apply our formatting for the phone number
-            const phoneNumberLength = phoneNumber.length;
-
-            // we need to return the value with no formatting if its less then four digits
-            // this is to avoid weird behavior that occurs if you  format the area code to early
-
-            if (phoneNumberLength < 4) return phoneNumber;
-
-            // if phoneNumberLength is greater than 4 and less the 7 we start to return
-            // the formatted number
-            if (phoneNumberLength < 7) {
-                return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-            }
-
-            // finally, if the phoneNumberLength is greater then seven, we add the last
-            // bit of formatting and return it.
-            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
-                3,
-                6
-            )}-${phoneNumber.slice(6, 10)}`;
-        }
-        function getCurrentDate(separator='-'){
-
-            let newDate = new Date()
-            let date = newDate.getDate();
-            let month = newDate.getMonth() + 1;
-            let year = newDate.getFullYear();
-
-            return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`
-        }
-
-        function getCurrentTime(){
-
-            let newDate = new Date()
-            return newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();;
-        }
-
-
-
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
@@ -89,16 +73,16 @@ function Modal(props) {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({
-                    itemId : props.id,
+                    itemId: props.id,
                     category: cat,
-                    firstName : fName,
-                    lastName : lName,
-                    email : emailAdd,
-                    phone : phoneNum,
-                    dob : dob,
-                    driverLicense : driverLicense,
-                    date : getCurrentDate(),
-                    time : getCurrentTime()
+                    firstName: fName,
+                    lastName: lName,
+                    email: emailAdd,
+                    phone: phoneNum,
+                    dob: dob,
+                    driverLicense: driverLicense,
+                    date: getCurrentDate(),
+                    time: getCurrentTime()
                 })
             }).then(() => {
                 setIsPending(false);
@@ -150,7 +134,8 @@ function Modal(props) {
                                 <Col md={5}>
                                     <Form.Group>
                                         <Form.Label>Phone</Form.Label>
-                                        <Form.Control type="input" name="phone" onChange={(e) => handleInput(e)} value={phoneNum}  placeholder="(###)###-####"/>
+                                        <Form.Control type="input" name="phone" onChange={(e) => handleInput(e)}
+                                                      value={phoneNum} placeholder="(###)###-####"/>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -159,9 +144,9 @@ function Modal(props) {
                                     <Form.Label>Driver's License</Form.Label>
                                     <Form.Control type="text"
                                                   name="driverLicense"
-                                                    value={driverLicense}
-                                                    onChange={event => setDriverLicense(event.target.value)}
-                                                    placeholder="Driver's License"></Form.Control>
+                                                  value={driverLicense}
+                                                  onChange={event => setDriverLicense(event.target.value)}
+                                                  placeholder="Driver's License"></Form.Control>
                                 </Col>
                                 <Col md={4}>
                                     <Form.Label>Date of Birth</Form.Label>
@@ -169,7 +154,7 @@ function Modal(props) {
                                                   name="dob"
                                                   value={dob}
                                                   onChange={event => setDOB(event.target.value)}
-                                                  ></Form.Control>
+                                    ></Form.Control>
                                 </Col>
                             </Row>
                         </Container>
@@ -189,13 +174,14 @@ function Modal(props) {
             fetch("http://localhost:3001/api/insertUnclaimed", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
-                body: JSON.stringify({itemName: name,
+                body: JSON.stringify({
+                    itemName: name,
                     category: cat,
-                    desc : des,
+                    desc: des,
                     value: val,
-                    location : loc,
-                    date : dat,
-                    time : tim
+                    location: loc,
+                    date: dat,
+                    time: tim
                 })
             }).then(() => {
                 setIsPending(false);
@@ -312,6 +298,10 @@ function Modal(props) {
         )
     }
     if (props.active === "Edit") {
+        function setCurrentValues(){
+            
+
+        }
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
@@ -323,11 +313,11 @@ function Modal(props) {
                     status: 'Unclaimed',
                     itemName: name,
                     category: cat,
-                    desc : des,
+                    desc: des,
                     value: val,
-                    location : loc,
-                    date : dat,
-                    time : tim
+                    location: loc,
+                    date: dat,
+                    time: tim
                 })
             }).then(() => {
                 setIsPending(false);
@@ -350,7 +340,7 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Item Category:<select className="form-select" id="inputGroupSelect04"
-                                                      value={cat}
+                                                      value={props.item.category}
                                                       onChange={(event => setCat(event.target.value))}
                                                       aria-label="Example select with button addon">
                                 <option value="">--Category--</option>

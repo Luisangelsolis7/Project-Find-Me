@@ -5,6 +5,17 @@
 #nav-link {
     color: blue;
 }
+.NavItem{
+    display: flex;
+    align-items: center;
+
+
+}
+.searchBar {
+    display: flex;
+    align-items: center;
+    margin-left: 350px;
+}
 
 header {
     font-size: 40px;
