@@ -32,46 +32,50 @@ const ItemList = function (props) {
 
     }
     if (props.active === "R") {
-        tableHeader = ["", "ID","Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", ""];
+        tableHeader = ["", "ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", ""];
     }
     const [show, setShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
-    const [itemInfo, setItemInfo] = useState({
-        id: "",
-        name: "",
-        category: "",
-        status: "",
-        value: "",
-        desc: "",
-        location: "",
-        userId: "",
-        userFName: "",
-        userLName: "",
-        phone: "",
-        email: "",
-        date: "",
-        time: "",
-        officer: ""
-        }
+    const [currentItem, setCurrentItem] = useState({});
+    const [itemInfo, setItemInfo] = useState([]
+        // {
+        //     id: "",
+        //     name: "",
+        //     category: "",
+        //     status: "",
+        //     value: "",
+        //     desc: "",
+        //     location: "",
+        //     userId: "",
+        //     userFName: "",
+        //     userLName: "",
+        //     phone: "",
+        //     email: "",
+        //     date: "",
+        //     time: "",
+        //     officer: ""
+        // }
     );
     let count = 0;
-    function generateKey(i){
+
+    function generateKey(i) {
         let key = i
-        if(i == ""){
+        if (i == "") {
             count++;
             return count;
         }
-        if(i.Status_FK === 'Lost'){
+        if (i.Status_FK === 'Lost') {
             key += "L"
         }
-        if(i.Status_FK === 'Unclaimed'){
+        if (i.Status_FK === 'Unclaimed') {
             key += 'F'
         }
-        if(i.Status_FK === 'Claimed'){
+        if (i.Status_FK === 'Claimed') {
             key += 'C'
         }
         return key;
     }
+
     useEffect(() => {
         console.log(itemInfo);
     }, [itemInfo]);
@@ -101,7 +105,6 @@ const ItemList = function (props) {
                 }
         }));
     };
-
     return (
 
         <div className="itemTable">
@@ -118,17 +121,14 @@ const ItemList = function (props) {
                 <tbody>
                 {props.items.map((i) => (
                     <tr key={generateKey(i.Item_ID)}>
-                        <td>
+                        <td className="input-group-text">
                             {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
-                            <div className="input-group-text">
-                                <input
-                                    onChange={toggleHandler(i)}
-                                    checked={!!itemInfo[i.Item_ID]}
-                                    // <-- use checked prop, retrieve value by id
-                                    type="checkbox"
-                                />
-
-                            </div>
+                            <input
+                                onChange={toggleHandler(i)}
+                                checked={!!itemInfo[i.Item_ID]}
+                                // <-- use checked prop, retrieve value by id
+                                type="checkbox"
+                            />
                         </td>
                         <td>{i.Item_ID}</td>
                         <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
@@ -147,12 +147,16 @@ const ItemList = function (props) {
                                 {checkNull(i.User_Email)} </div>
                         </td>
                         <td>{checkNull(i.Officer_Badge)}</td>
-                        <td><Button className="btn btn-success" onClick={() => setShow(true) && toggleHandler(i)}  >Edit</Button>
-                            <Modal item={i} onClose={() => setShow(false)}  show={show} active="Edit"/></td>
+                        <td><Button className="btn btn-success" onClick={() => {
+                            setCurrentItem(i);
+                            setShow(true);
+                        }}>Edit</Button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
+            <Modal onClose={() => setShow(false)} itemInfo={currentItem} show={show} active="Edit"/>
         </div>
 
     )

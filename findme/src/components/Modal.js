@@ -7,10 +7,12 @@ import Button from "react-bootstrap/Button";
 import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
+import useFetch from "../useFetch";
 
 
 function Modal(props) {
     const navigate = useNavigate;
+    let item = props.itemInfo;
     const [cat, setCat] = useState("");
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
@@ -298,10 +300,7 @@ function Modal(props) {
         )
     }
     if (props.active === "Edit") {
-        function setCurrentValues(){
-            
 
-        }
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
@@ -324,6 +323,22 @@ function Modal(props) {
                 navigate('/Home'); // adding go back 1 page-
             })
         }
+
+        // const {data: itemInfo, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
+        console.log(props.itemInfo);
+            // Category_Name: "Accessory"
+            // ISH_Date: "2022-04-03T05:00:00.000Z"
+            // ISH_Location: "Parking Garage"
+            // ISH_Time: "18:59:00"
+            // Item_Desc: " "
+            // Item_ID: 128
+            // Item_Name: "Silver Bracelet"
+            // Item_Value: 50
+            // Officer_Badge: 999
+            // Officer_Fname: "Test"
+            // Officer_Lname: "Officer"
+            // Status_FK: "Unclaimed"
+
         return (
             <div className="modal">
                 <div className="modal-content">
@@ -340,7 +355,7 @@ function Modal(props) {
                             </Row>
                             <Row>
                                 Item Category:<select className="form-select" id="inputGroupSelect04"
-                                                      value={props.item.category}
+                                                      value={cat}
                                                       onChange={(event => setCat(event.target.value))}
                                                       aria-label="Example select with button addon">
                                 <option value="">--Category--</option>
@@ -389,8 +404,6 @@ function Modal(props) {
                                     </Form.Group>
                                 </Col>
                             </Row>
-
-
                         </Container>
                     </div>
                     <div className="modal-footer">
