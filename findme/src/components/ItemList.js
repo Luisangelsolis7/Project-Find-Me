@@ -9,6 +9,9 @@ const ItemList = function (props) {
     let tableHeader = [];
     let inputGroup = ''
 
+    function checkedItems(){
+
+    }
 
     function checkNull(item) {
         if (item !== null) {
@@ -38,25 +41,6 @@ const ItemList = function (props) {
     const [show, setShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
     const [currentItem, setCurrentItem] = useState("","","","","","","","","","","","");
-    const [itemInfo, setItemInfo] = useState([]
-        // {
-        //     id: "",
-        //     name: "",
-        //     category: "",
-        //     status: "",
-        //     value: "",
-        //     desc: "",
-        //     location: "",
-        //     userId: "",
-        //     userFName: "",
-        //     userLName: "",
-        //     phone: "",
-        //     email: "",
-        //     date: "",
-        //     time: "",
-        //     officer: ""
-        // }
-    );
     let count = 0;
 
     function generateKey(i) {
@@ -77,32 +61,6 @@ const ItemList = function (props) {
         return key;
     }
 
-    const toggleHandler = (i) => () => {
-
-        setItemInfo((state) => ({
-            ...state,
-            [i.Item_ID]: state[i.Item_ID]
-                ? null
-                : {
-
-                    id: i.Item_ID,
-                    name: i.Item_Name,
-                    category: i.Category_Name,
-                    status: i.Status_FK,
-                    value: i.Item_Value,
-                    desc: i.Item_Desc,
-                    location: i.Item_Location,
-                    userId: i.User_FK,
-                    userFName: i.User_Fname,
-                    userLName: i.User_Lname,
-                    phone: i.User_Phone,
-                    email: i.User_email,
-                    date: i.ISH_Date,
-                    time: i.ISH_Time,
-                    officer: i.Officer_FK
-                }
-        }));
-    };
     return (
 
         <div className="itemTable">
@@ -122,8 +80,23 @@ const ItemList = function (props) {
                         <td className="input-group-text">
                             {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
                             <input
-                                onChange={toggleHandler(i)}
-                                checked={!!itemInfo[i.Item_ID]}
+                                onChange={(e) => {
+                                    // add to list
+                                    if (e.target.checked) {
+                                        props.setItemInfo([
+                                            ...props.itemInfo,
+                                                 i.Item_ID,
+
+
+                                        ]);
+                                    } else {
+                                        // remove from list
+                                        props.setItemInfo(
+                                            props.itemInfo.filter(item => item !== i.Item_ID),
+                                        );
+                                    }
+                                }}
+                                value={props.itemInfo}
                                 // <-- use checked prop, retrieve value by id
                                 type="checkbox"
                             />

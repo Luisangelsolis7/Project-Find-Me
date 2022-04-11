@@ -26,7 +26,6 @@ function EditModal(props) {
     const [driverLicense, setDriverLicense] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
     const [isPending, setIsPending] = useState(false);
-    const [item, setItem] = useState(props.itemInfo);
 
     function formatPhoneNumber(value) {
         // if input value is falsy eg if the user deletes the input, then just return
@@ -85,8 +84,10 @@ function EditModal(props) {
                 time: tim
             })
         }).then(() => {
-            setIsPending(false);
+            alert('Saved')
             navigate('/Home'); // adding go back 1 page-
+            setIsPending(false);
+
         })
     }
     // const {data: itemInfo, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
