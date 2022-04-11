@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Button from "react-bootstrap/Button";
 import Modal from "./Modal";
+import EditModal from "./EditModal";
 
 
 const ItemList = function (props) {
@@ -36,7 +37,7 @@ const ItemList = function (props) {
     }
     const [show, setShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
-    const [currentItem, setCurrentItem] = useState({});
+    const [currentItem, setCurrentItem] = useState("","","","","","","","","","","","");
     const [itemInfo, setItemInfo] = useState([]
         // {
         //     id: "",
@@ -76,9 +77,6 @@ const ItemList = function (props) {
         return key;
     }
 
-    useEffect(() => {
-        console.log(itemInfo);
-    }, [itemInfo]);
     const toggleHandler = (i) => () => {
 
         setItemInfo((state) => ({
@@ -156,7 +154,7 @@ const ItemList = function (props) {
                 ))}
                 </tbody>
             </table>
-            <Modal onClose={() => setShow(false)} itemInfo={currentItem} show={show} active="Edit"/>
+            <EditModal onClose={() => setShow(false)} itemInfo={currentItem} show={show}/>
         </div>
 
     )
