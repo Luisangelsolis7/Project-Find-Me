@@ -11,7 +11,7 @@ import useFetch from "../useFetch";
 
 
 function EditModal(props) {
-    const navigate = useNavigate;
+    const navigate = useNavigate();
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [emailAdd, setEmailAdd] = useState("");
@@ -43,24 +43,25 @@ function EditModal(props) {
         )}-${phoneNumber.slice(6, 10)}`;
     }
 
-    function getCurrentDate(separator = '-') {
-        let newDate = new Date()
-        let date = newDate.getDate();
-        let month = newDate.getMonth() + 1;
-        let year = newDate.getFullYear();
-        return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
-    }
 
-    function getCurrentTime() {
-        let newDate = new Date();
-        return newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
+    function formatDate(inputDate) {
+        let date = new Date(inputDate);
+        if (!isNaN(date.getTime())) {
+            // Months use 0 index.
+            return date.toISOString().split('T')[0];
+        }
 
     }
     useEffect(() => {
         setName(props.itemInfo.Item_Name);
         setCat(props.itemInfo.Category_Name);
         setValue(props.itemInfo.Item_Value);
-        console.log(cat);
+        setLocation(props.itemInfo.ISH_Location);
+        setDesc(props.itemInfo.Item_Desc);
+        setDate(formatDate(props.itemInfo.ISH_Date));
+        setTime(props.itemInfo.ISH_Time);
+
+        console.log(props.itemInfo);
     },[props.show]);
     if (!props.show) {
         return null;
@@ -73,8 +74,8 @@ function EditModal(props) {
             method: 'POST',
             headers: {"Content-type": "application/json"},
             body: JSON.stringify({
-                itemId: props.itemid,
-                status: 'Unclaimed',
+                itemId: props.itemInfo.Item_ID,
+                status: props.itemInfo.Status_FK,
                 itemName: name,
                 category: cat,
                 desc: des,
@@ -112,11 +113,28 @@ function EditModal(props) {
                 <div className="modal-body">
                     <Container>
                         <Row>
-                            Item Name:<input value={name} onChange={(event => setName(event.target.value))}
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Select Date</Form.Label>
+                                    <Form.Control type="date" name="date"
+                                                  onChange={event => setDate(event.target.value)} value={dat}/>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Time</Form.Label>
+                                    <Form.Control type="time" name="time"
+                                                  onChange={(e) => setTime(e.target.value)}
+                                                  value={tim}></Form.Control>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Form.Label>Item Name</Form.Label><input value={name} onChange={(event => setName(event.target.value))}
                                              type="text"/>
                         </Row>
                         <Row>
-                            Item Category:<select className="form-select" id="inputGroupSelect04"
+                            <Form.Label>Item Category</Form.Label><select className="form-select" id="inputGroupSelect04"
                                                   value={cat}
                                                   onChange={(event => setCat(event.target.value))}
                                                   aria-label="Example select with button addon">
@@ -131,7 +149,7 @@ function EditModal(props) {
                         </select>
                         </Row>
                         <Row>
-                            Description:
+                            <Form.Label>Description</Form.Label>
                             <input value={des} onChange={(event => setDesc(event.target.value))}
                                    type="textarea"/>
                         </Row>
@@ -146,26 +164,9 @@ function EditModal(props) {
                             </InputGroup>
                         </Row>
                         <Row>
-                            Location Found:
+                            <Form.Label>Location Found</Form.Label>
                             <input value={loc} onChange={(event => setLocation(event.target.value))}
                                    type="text"/>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>Select Date</Form.Label>
-                                    <Form.Control type="date" name="date"
-                                                  onChange={event => setDate(event.target.value)} value={dat}/>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>Time Lost</Form.Label>
-                                    <Form.Control type="time" name="time"
-                                                  onChange={(e) => setTime(e.target.value)}
-                                                  value={tim}></Form.Control>
-                                </Form.Group>
-                            </Col>
                         </Row>
                     </Container>
                 </div>
