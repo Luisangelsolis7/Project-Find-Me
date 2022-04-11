@@ -34,9 +34,16 @@ form {
     margin: auto;
     padding-bottom: 0;
 }
-.fixedHeight{
+.table tr .fixedHeight{
     height:50px;
     overflow:hidden
+}
+.table tr:hover .fixedHeight{
+    height: fit-content;
+    overflow: visible;
+}
+.table tr:hover {
+background-color: #5ced85;
 }
 .submitButton{
     padding-bottom: 1rem;
