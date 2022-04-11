@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "react-bootstrap/Button";
 import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -12,12 +12,11 @@ import useFetch from "../useFetch";
 
 function Modal(props) {
     const navigate = useNavigate;
-    let item = props.itemInfo;
-    const [cat, setCat] = useState("");
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [emailAdd, setEmailAdd] = useState("");
     const [name, setName] = useState("");
+    const [cat, setCat] = useState("");
     const [val, setValue] = useState("");
     const [des, setDesc] = useState("");
     const [loc, setLocation] = useState("");
@@ -27,7 +26,7 @@ function Modal(props) {
     const [driverLicense, setDriverLicense] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
     const [isPending, setIsPending] = useState(false);
-
+    const [item, setItem] = useState(props.itemInfo);
     function formatPhoneNumber(value) {
         // if input value is falsy eg if the user deletes the input, then just return
         if (!value) return value;
@@ -50,13 +49,11 @@ function Modal(props) {
         let year = newDate.getFullYear();
         return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
     }
-
     function getCurrentTime() {
         let newDate = new Date();
         return newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
 
     }
-
 
     if (!props.show) {
         return null;
@@ -300,7 +297,6 @@ function Modal(props) {
         )
     }
     if (props.active === "Edit") {
-
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
@@ -323,9 +319,15 @@ function Modal(props) {
                 navigate('/Home'); // adding go back 1 page-
             })
         }
-
+        const init = (e) => {
+            setName("poop");
+            console.log(name);
+        }
         // const {data: itemInfo, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
         console.log(props.itemInfo);
+        console.log(props.editOpen);
+        console.log(item);
+        console.log(name);
             // Category_Name: "Accessory"
             // ISH_Date: "2022-04-03T05:00:00.000Z"
             // ISH_Location: "Parking Garage"
@@ -338,9 +340,8 @@ function Modal(props) {
             // Officer_Fname: "Test"
             // Officer_Lname: "Officer"
             // Status_FK: "Unclaimed"
-
         return (
-            <div className="modal">
+            <div className="modal" onLoad={init}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">
