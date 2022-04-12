@@ -23,16 +23,17 @@ function AdminNavBar(props){
         Reports = "nav-link active";
     }
     return(
-        <Navbar bg="light" expand="lg" className="justify-content-end">
+        <Navbar bg="light"  variant="light"  expand="lg" className="justify-content-end">
             <Container>
 
-                <Navbar.Brand href="/"><img src={require("../imgs/Aurora_University_logo.jpg")} alt="AU Logo" />
-                    </Navbar.Brand>
+                <Navbar.Brand href="/"><img src={require("../imgs/Aurora_University_logo.jpg")} alt="AU Logo"  width="150px" height="auto" className="aulogo"/>
+                </Navbar.Brand>
+
 
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav>
+                    <Nav variant="tabs">
                         <NavItem className="NavItem"><Nav.Link className={Reports} href="/Reports">Lost Reports</Nav.Link></NavItem>
                         <NavItem className="NavItem"><Nav.Link className={Home} href="/Home">Found Items</Nav.Link></NavItem>
                         <NavItem className="NavItem"><Nav.Link className={Claimed} href="/Claimed">Claimed Items</Nav.Link></NavItem>

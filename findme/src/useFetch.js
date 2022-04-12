@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 const useFetch = ( url ) => {
-    const [ data, setData] = useState( null ); // make this generic so its reusable
+    const [ data, setData] = useState( [] ); // make this generic so its reusable
     const [ isPending, setPending] = useState( true );
     const [ error, setError] = useState( null );
     useEffect(() => {

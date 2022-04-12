@@ -5,10 +5,17 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import useFetch from "../useFetch";
+import Pagination from "../components/Pagination";
 
 const Reports = function() {
     const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getLost');
     const [q, setQ] = useState("");
+    const[currentPage, setCurrentPage] = useState(1);
+    const[itemsPerPage, setItemsPerPage] = useState(20);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     function search(rows){
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
             row.Item_Name?.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -44,7 +51,8 @@ const Reports = function() {
                 <br />
                 { error  && <div> {error}</div>}
                 { isPending && <div> Loading ... </div> }
-                { items && <ItemList items={search(items)} active="R"/>}
+                { items && <ItemList items={search(currentItems)} active="R"/>}
+                <Pagination itemsPerPage={itemsPerPage} totalItems={items.length} paginate={paginate}/>
 
             </Col>
             <Col></Col>

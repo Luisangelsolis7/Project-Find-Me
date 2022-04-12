@@ -146,7 +146,7 @@ app.post("/api/edit", (req, res) => {
 });
 
 app.post("/api/delete", (req, res) => {
-    const sql = `Delete FROM Item_Status_History Where Item_ID = ? and Status_FK = ?`
+    const sql = `Delete FROM Item_Status_History Where Item_FK = ? and Status_FK = ?`
     db.query(sql, [req.body.itemId, req.body.status], (err, result) =>{
         if(err){
             console.log(err)
