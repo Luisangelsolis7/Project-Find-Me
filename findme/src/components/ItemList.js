@@ -15,7 +15,7 @@ const ItemList = function (props) {
 
     function checkNull(item) {
         if (item !== null) {
-            return (<>{item}</>)
+            return (<>{item}<br/></>)
         }
     }
 
@@ -104,19 +104,21 @@ const ItemList = function (props) {
                         </td>
                         <td>{i.Item_ID}</td>
                         <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
-                        <td>{checkNull(i.Item_Name)}</td>
-                        <td>{checkNull(i.Category_Name)}</td>
+                        <td>{i.Item_Name}</td>
+                        <td>{i.Category_Name}</td>
                         <td>
                             <div className={style1}>{i.Item_Desc}</div>
                         </td>
                         <td>${i.Item_Value}</td>
                         <td>
-                            <div className={style1}>{checkNull(i.ISH_Location)}</div>
+                            <div className={style1}>{i.ISH_Location}</div>
                         </td>
                         <td>
-                            <div className={style1}>{checkNull(i.User_Fname)} {checkNull(i.User_Lname)} <br/>
-                                {checkNull(i.User_Phone)}<br/>
-                                {checkNull(i.User_Email)} </div>
+                            <div className={style1}> {i.User_Fname} {i.User_Lname}<br/>
+                                {checkNull(i.User_Phone)}
+                                {checkNull(i.User_Email)}
+                                {checkNull(i.User_DL)}
+                                {checkNull(i.User_AUID)}</div>
                         </td>
                         <td>{checkNull(i.Officer_Badge)}</td>
                         <td><Button variant="secondary" size="sm" onClick={() => {
