@@ -52,7 +52,7 @@ const Reports = function() {
                 { error  && <div> {error}</div>}
                 { isPending && <div> Loading ... </div> }
                 { items && <ItemList items={search(currentItems)} active="R"/>}
-                <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate}/>
+                <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate} currentPage={currentPage}/>
 
             </Col>
             <Col></Col>
