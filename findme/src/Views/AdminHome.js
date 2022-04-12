@@ -21,7 +21,7 @@ const Home = function () {
     const[itemsPerPage, setItemsPerPage] = useState(20);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
 
     function search(rows) {
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -66,7 +66,7 @@ const Home = function () {
                         {error && <div> {error}</div>}
                         {isPending && <div> Loading ... </div>}
                         {items &&<ItemList items={search(currentItems)} itemInfo={itemInfo}  setItemInfo={setItemInfo} active="H"/>}
-                        <Pagination itemsPerPage={itemsPerPage} totalItems={items.length}  paginate={paginate}/>
+                        <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length}  paginate={paginate}/>
 
                     </Col>
                     <Col>
