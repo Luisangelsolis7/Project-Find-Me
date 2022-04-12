@@ -65,7 +65,7 @@ const Home = function () {
 
                         {error && <div> {error}</div>}
                         {isPending && <div> Loading ... </div>}
-                        {items &&<ItemList items={search(currentItems)} itemInfo={itemInfo}  setItemInfo={setItemInfo} active="H"/>}
+                        {items && <ItemList items={search(currentItems)} itemInfo={itemInfo}  setItemInfo={setItemInfo} active="H"/>}
                         <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length}  paginate={paginate}/>
 
                     </Col>
