@@ -5,10 +5,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ItemList from "../components/ItemList";
 import useFetch from "../useFetch";
+import Pagination from "../components/Pagination";
 const Claimed = function() {
 
     const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getClaimed');
     const [q, setQ] = useState("");
+    const[currentPage, setCurrentPage] = useState(1);
+    const[itemsPerPage, setItemsPerPage] = useState(20);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     function search(rows){
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
             row.Item_Name?.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -39,7 +46,8 @@ const Claimed = function() {
 
                         { error  && <div> {error}</div>}
                         { isPending && <div> Loading ... </div> }
-                        { items && <ItemList items={search(items)} active="C"/>}
+                        { items && <ItemList items={search(currentItems)} active="C"/>}
+                        <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate} currentPage={currentPage}/>
                     </Col>
                     <Col>
 

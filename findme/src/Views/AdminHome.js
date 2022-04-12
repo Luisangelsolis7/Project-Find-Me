@@ -9,6 +9,7 @@ import Modal from "../components/Modal";
 import ClaimModal from "../components/ClaimModal";
 import useFetch from "../useFetch";
 import {useState} from "react";
+import Pagination from "../components/Pagination";
 
 const Home = function () {
     const [showAdd, setAddShow] = useState(false);
@@ -16,6 +17,11 @@ const Home = function () {
     const [itemInfo, setItemInfo] = useState([]);
     const {data: items, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
     const [q, setQ] = useState("");
+    const[currentPage, setCurrentPage] = useState(1);
+    const[itemsPerPage, setItemsPerPage] = useState(20);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
 
     function search(rows) {
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -31,6 +37,8 @@ const Home = function () {
         )
     }
 
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <>
             <AdminNavBar active="H" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
@@ -40,7 +48,7 @@ const Home = function () {
                     <Col md={11}>
                         <br/>
 
-                        <div className="input-group">
+                        <div className="input-group" >
                             <select className="form-select" defaultValue="claim" id="inputGroupSelect04"
                                     aria-label="Example select with button addon">
                                 <option value="claim">Claim</option>
@@ -50,13 +58,16 @@ const Home = function () {
                             <button className="openClaimedForm" onClick={() => setClaimShow(true)}>Apply to ALL</button>
                             <ClaimModal onClose={() => setClaimShow(false)} itemInfo={itemInfo}  show={showClaim}  />
 
+
                         </div>
                         <br/>
 
 
                         {error && <div> {error}</div>}
                         {isPending && <div> Loading ... </div>}
-                        {items && <ItemList items={search(items)} itemInfo={itemInfo} setItemInfo={setItemInfo} active="H"/>}
+                        {items && <ItemList items={search(currentItems)} itemInfo={itemInfo}  setItemInfo={setItemInfo} active="H"/>}
+                        <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length}  paginate={paginate} currentPage={currentPage}/>
+
                     </Col>
                     <Col>
 
@@ -66,7 +77,10 @@ const Home = function () {
 
                     </Col>
                 </Row>
+
+
             </Container>
+
         </>
     )
 }

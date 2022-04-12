@@ -18,7 +18,7 @@ class ReportForm extends React.Component {
         super();
         this.state = {
             input: {itemName:"", category:"", value:"",  desc:"",
-                firstName:"", lastName:"", date:"", phone:"", time:"", email:""},
+                firstName:"", lastName:"", date:"", phone:"", time:"", email:"", ID:"", AUID:""},
             errors: {},
             inputValue : ''
         };
@@ -299,7 +299,7 @@ class ReportForm extends React.Component {
                                                   name="email"
                                                   value={this.state.input.email}
                                                   onChange={this.handleChange}
-                                                  placeholder="Email"></Form.Control>
+                                                  placeholder="Enter Email"></Form.Control>
                                     <div className="text-danger">{this.state.errors.email}</div>
                                 </Col>
                                 <Col md={3}>
@@ -309,6 +309,20 @@ class ReportForm extends React.Component {
                                         <div className="text-danger">{this.state.errors.phone}</div>
                                     </Form.Group>
                                 </Col>
+                                <Row>
+                                <Col md={3}>
+                                    <Form.Group>
+                                        <Form.Label>Driver's License/State ID</Form.Label>
+                                        <Form.Control type="input" name="ID" onChange={this.handleChange} value={this.state.input.ID} placeholder="Enter Driver's License/State ID"/>
+                                    </Form.Group>
+                                </Col>
+                                    <Col md={3}>
+                                        <Form.Group>
+                                            <Form.Label>AU ID</Form.Label>
+                                            <Form.Control type="input" name="AUID" onChange={this.handleChange} value={this.state.input.AUID} placeholder="Enter AU ID"/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
                             </Row>
                             <Row md={1}>
                                 <Col className="submitButton">

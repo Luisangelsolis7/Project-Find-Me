@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.get("/api/getLost", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, 
-                        u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Email, u.User_Phone
+                        u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Email, u.User_Phone, u.User_AUID
                   FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time 
                         From Item_Status_History h, (Select Item_FK, MAX(ISH_Date) as mdate, MAX(ISH_Time) as mtime 
                         from Item_Status_History Group by Item_FK) t where t.Item_FK = h.Item_FK and t.mdate = h.ISH_date and t.mtime = h.ISH_Time) ish 
@@ -49,7 +49,7 @@ app.get("/api/getUnclaimed", (req, res) => {
 app.get("/api/getClaimed", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, 
-                        u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email,
+                        u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
                         o.Officer_Badge, o.Officer_Fname, o.Officer_Lname 
                   FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time, h.Officer_FK 
                          From Item_Status_History h, (Select Item_FK, MAX(ISH_Date) as mdate, MAX(ISH_Time) as mtime from Item_Status_History Group by Item_FK) t 
@@ -68,13 +68,13 @@ app.get("/api/getClaimed", (req, res) => {
 });
 
 app.post("/api/insertLost", (req, res) => {
-    const sql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email) values (?, ?, ?, ?);
+    const sql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email, User_DL, User_AUID) values (?, ?, ?, ?, ?, ?);
                     SET @user_id = LAST_INSERT_ID();
                  INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);
                     SET @item_id = LAST_INSERT_ID();
                  INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) 
                         values (@item_id, @user_id, 'Lost', ?, ?, ?);`
-    db.query(sql,  [req.body.firstName, req.body.lastName, req.body.phone, req.body.email,
+    db.query(sql,  [req.body.firstName, req.body.lastName, req.body.phone, req.body.email, req.body.ID, req.body.AUID,
                     req.body.itemName, req.body.category, req.body.value, req.body.desc,
                     req.body.date, req.body.time, req.body.location], (err, result) =>{
        if(err){
@@ -146,7 +146,7 @@ app.post("/api/edit", (req, res) => {
 });
 
 app.post("/api/delete", (req, res) => {
-    const sql = `Delete FROM Item_Status_History Where Item_ID = ? and Status_FK = ?`
+    const sql = `Delete FROM Item_Status_History Where Item_FK = ? and Status_FK = ?`
     db.query(sql, [req.body.itemId, req.body.status], (err, result) =>{
         if(err){
             console.log(err)
