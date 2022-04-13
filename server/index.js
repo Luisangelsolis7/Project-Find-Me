@@ -133,6 +133,20 @@ app.post("/api/insertDonated", (req, res) => {
 
 });
 
+app.post("/api/insertDestroyed", (req, res) => {
+    const idArr = req.body.itemId;
+    const sql = `INSERT INTO Item_Status_History (Item_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
+                        values (?, 'Destroyed', ?, ?, '999');`
+    idArr.forEach(item => {
+        db.query(sql, [item, req.body.date, req.body.time], (err, result) => {
+            if (err) {
+                console.log(err)
+            }
+        })
+    })
+
+});
+
 app.post("/api/edit", (req, res) => {
     const sql = `UPDATE Item
                  SET Item_Name = ?, Category_FK = ?, Item_Value = ?, Item_Desc = ?

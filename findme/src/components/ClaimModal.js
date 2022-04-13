@@ -47,9 +47,6 @@ function ClaimModal(props) {
 
     }
 
-    if (!props.show) {
-        return null;
-    }
     {
         const handleInput = (e) => {
             // this is where we'll call our future formatPhoneNumber function that we haven't written yet.
@@ -79,7 +76,9 @@ function ClaimModal(props) {
                 navigate('/Home'); // adding go back 1 page-
             })
         }
-        const itemIdArr = [];
+        if (!props.show) {
+            return null;
+        }
 
         console.log(props.itemInfo);
         return (
