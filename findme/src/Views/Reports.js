@@ -37,7 +37,12 @@ const Reports = function() {
             <AdminNavBar active="R" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
             <Container>
         <Row >
-            <Col></Col>
+            <Col md={1}>
+                <br /><br /><br /><br />
+                <div className="counter">
+                    {search(items).length} Items
+                </div>
+            </Col>
             <Col md={11}>
                 <br />
                 <div className="input-group">
@@ -55,7 +60,7 @@ const Reports = function() {
                 <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate} currentPage={currentPage}/>
 
             </Col>
-            <Col></Col>
+            <Col md={1}></Col>
         </Row>
     </Container>
             </>

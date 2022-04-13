@@ -14,32 +14,6 @@ function DeleteModal(props) {
     const navigate = useNavigate();
     const [isPending, setIsPending] = useState(false);
 
-    function formatPhoneNumber(value) {
-        // if input value is falsy eg if the user deletes the input, then just return
-        if (!value) return value;
-        const phoneNumber = value.replace(/[^\d]/g, '');
-        const phoneNumberLength = phoneNumber.length;
-        if (phoneNumberLength < 4) return phoneNumber;
-        if (phoneNumberLength < 7) {
-            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-        }
-        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
-            3,
-            6
-        )}-${phoneNumber.slice(6, 10)}`;
-    }
-    function getCurrentDate(separator = '-') {
-        let newDate = new Date()
-        let date = newDate.getDate();
-        let month = newDate.getMonth() + 1;
-        let year = newDate.getFullYear();
-        return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
-    }
-    function getCurrentTime() {
-        let newDate = new Date();
-        return newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
-
-    }
 
     if (!props.show) {
         return null;
