@@ -116,6 +116,37 @@ app.post("/api/insertClaimed", (req, res) => {
 
 });
 
+app.post("/api/insertDonated", (req, res) => {
+    const idArr = req.body.itemId;
+    const sql = `INSERT INTO Charity (Charity_Name, Charity_Address, Charity_City, Charity_State, Charity_Zip, Charity_Contact, Charity_Phone) values (?, ?, ?, ?, ?, ?, ?);
+                    SET @charity_id = LAST_INSERT_ID();
+                 INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
+                        values (?, @charity_id, 'Donated', ?, ?, '999');`
+    idArr.forEach(item => {
+        db.query(sql, [req.body.name, req.body.address, req.body.city, req.body.state, req.body.zip, req.body.contact, req.body.phone,
+            item, req.body.date, req.body.time], (err, result) => {
+            if (err) {
+                console.log(err)
+            }
+        })
+    })
+
+});
+
+app.post("/api/insertDestroyed", (req, res) => {
+    const idArr = req.body.itemId;
+    const sql = `INSERT INTO Item_Status_History (Item_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
+                        values (?, 'Destroyed', ?, ?, '999');`
+    idArr.forEach(item => {
+        db.query(sql, [item, req.body.date, req.body.time], (err, result) => {
+            if (err) {
+                console.log(err)
+            }
+        })
+    })
+
+});
+
 app.post("/api/edit", (req, res) => {
     const sql = `UPDATE Item
                  SET Item_Name = ?, Category_FK = ?, Item_Value = ?, Item_Desc = ?
