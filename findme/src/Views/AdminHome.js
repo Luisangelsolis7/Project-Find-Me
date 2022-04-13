@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AdminNavBar from "../components/AdminNavBar";
 import ItemList from "../components/ItemList";
 import Container from "react-bootstrap/Container";
@@ -19,8 +19,9 @@ const Home = function () {
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
 
+    const { data: items, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
+
     const [itemInfo, setItemInfo] = useState([]);
-    const {data: items, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
     const [q, setQ] = useState("");
     const [action, setAction] = useState("claim");
     const [currentPage, setCurrentPage] = useState(1);
@@ -94,11 +95,13 @@ const Home = function () {
 
                         <br /><br /><br />
                         <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
+                        {/*<Button>Add Item</Button>*/}
+                        {/*<Button>Add Item</Button>*/}
 
                     </Col>
                 </Row>
 
-                <Modal onClose={() => setAddShow(false)} show={showAdd} active="Add"/>
+                <Modal onClose={() => setAddShow(false)} show={showAdd}/>
                 <ClaimModal onClose={() => setClaimShow(false)} itemInfo={itemInfo} show={showClaim}/>
                 <DestroyModal onClose={() => setDestroyShow(false)} itemInfo={itemInfo} show={showDestroy}/>
                 <DonateModal onClose={() => setDonateShow(false)} itemInfo={itemInfo} show={showDonate}/>
