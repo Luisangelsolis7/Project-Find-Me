@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Button from "react-bootstrap/Button";
-import Modal from "./Modal";
+import AddModal from "./AddModal";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import {Pagination} from "react-bootstrap";

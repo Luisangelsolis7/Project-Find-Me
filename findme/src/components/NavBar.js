@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
-import Modal from "./Modal";
 import Navbar from "react-bootstrap/Navbar";
+import LoginModal from "./LoginModal";
 function NavBar(){
     const[show,setShow] = useState(false);
     return(
@@ -13,7 +13,7 @@ function NavBar(){
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <Button className="btn btn-success" onClick={() => setShow(true)}>Log In</Button>
-                                <Modal onClose={() => setShow(false)} show={show} active="L" />
+                                <LoginModal onClose={() => setShow(false)} show={show} />
                             </li>
                         </ul>
                     </div>

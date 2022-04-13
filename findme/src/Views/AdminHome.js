@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Modal from "../components/Modal";
+import AddModal from "../components/AddModal";
 import ClaimModal from "../components/ClaimModal";
 import useFetch from "../useFetch";
 import {useState} from "react";
@@ -101,7 +101,7 @@ const Home = function () {
                     </Col>
                 </Row>
 
-                <Modal onClose={() => setAddShow(false)} show={showAdd}/>
+                <AddModal onClose={() => setAddShow(false)} show={showAdd}/>
                 <ClaimModal onClose={() => setClaimShow(false)} itemInfo={itemInfo} show={showClaim}/>
                 <DestroyModal onClose={() => setDestroyShow(false)} itemInfo={itemInfo} show={showDestroy}/>
                 <DonateModal onClose={() => setDonateShow(false)} itemInfo={itemInfo} show={showDonate}/>
