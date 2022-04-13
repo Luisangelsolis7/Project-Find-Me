@@ -38,7 +38,13 @@ const Claimed = function() {
             <AdminNavBar active="C" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
             <Container>
                 <Row >
-                    <Col md={11}>
+                    <Col md={1}>
+                        <br /><br /><br /><br />
+                        <div className="counter">
+                            {search(items).length} Items
+                        </div>
+                    </Col>
+                    <Col md={10}>
                         <br/>
                     <div className="input-group">
                     </div>
@@ -49,7 +55,7 @@ const Claimed = function() {
                         { items && <ItemList items={search(currentItems)} active="C"/>}
                         <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate} currentPage={currentPage}/>
                     </Col>
-                    <Col>
+                    <Col md={1}>
 
                     </Col>
                 </Row>

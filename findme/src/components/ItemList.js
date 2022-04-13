@@ -9,7 +9,6 @@ import useFetch from "../useFetch";
 
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
-
     let tableHeader = [];
     let inputGroup = ''
 
@@ -42,13 +41,13 @@ const ItemList = function (props) {
     const [showDelete, setShowDelete] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
     const [currentItem, setCurrentItem] = useState("","","","","","","","","","","","");
-    let count = 0;
 
+    let counter = 0;
     function generateKey(i) {
         let key = i
         if (i == "") {
-            count++;
-            return count;
+            counter++;
+            return counter;
         }
         if (i.Status_FK === 'Lost') {
             key += "L"
@@ -59,9 +58,9 @@ const ItemList = function (props) {
         if (i.Status_FK === 'Claimed') {
             key += 'C'
         }
+
         return key;
     }
-
     return (
 
         <div className="itemTable">
@@ -104,7 +103,7 @@ const ItemList = function (props) {
                         </td>
                         <td>{i.Item_ID}</td>
                         <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
-                        <td>{i.Item_Name}</td>
+                        <td className={style1}>{i.Item_Name}</td>
                         <td>{i.Category_Name}</td>
                         <td>
                             <div className={style1}>{i.Item_Desc}</div>
