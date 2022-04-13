@@ -10,10 +10,15 @@ import ClaimModal from "../components/ClaimModal";
 import useFetch from "../useFetch";
 import {useState} from "react";
 import Pagination from "../components/Pagination";
+import DestroyModal from "../components/DestroyModal";
+import DonateModal from "../components/DonateModal";
 
 const Home = function () {
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
+    const [showDestroy, setDestroyShow] = useState(false);
+    const [showDonate, setDonateShow] = useState(false);
+
     const [itemInfo, setItemInfo] = useState([]);
     const {data: items, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
     const [q, setQ] = useState("");
@@ -43,6 +48,12 @@ const Home = function () {
     function openModal(e) {
         if(e == "claim"){
             setClaimShow(true);
+        }
+        if(e == "destroy"){
+            setDestroyShow(true);
+        }
+        if(e == "donate"){
+            setDonateShow(true);
         }
     }
 
@@ -89,6 +100,8 @@ const Home = function () {
 
                 <Modal onClose={() => setAddShow(false)} show={showAdd} active="Add"/>
                 <ClaimModal onClose={() => setClaimShow(false)} itemInfo={itemInfo} show={showClaim}/>
+                <DestroyModal onClose={() => setDestroyShow(false)} itemInfo={itemInfo} show={showDestroy}/>
+                <DonateModal onClose={() => setDonateShow(false)} itemInfo={itemInfo} show={showDonate}/>
             </Container>
 
         </>
