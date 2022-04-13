@@ -4,6 +4,9 @@ import {Link} from "react-router-dom";
 import React from "react";
 
 function LoginModal(props) {
+    if(!props.show){
+        return null;
+    }
     return (
         <div className="modal">
             <div className="modal-content">

@@ -83,12 +83,9 @@ function EditModal(props) {
                 date: dat,
                 time: tim
             })
-        }).then(() => {
-            alert('Saved')
-            navigate('/Home'); // adding go back 1 page-
-            setIsPending(false);
-
         })
+        setIsPending(false);
+        navigate(0);
     }
     // const {data: itemInfo, isPending, error} = useFetch('http://localhost:3001/api/getUnclaimed');
     // Category_Name: "Accessory"
