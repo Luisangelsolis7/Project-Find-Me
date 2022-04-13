@@ -23,19 +23,20 @@ function DestroyModal(props) {
             <div className="modal-content">
                 <div className="modal-header">
                     <h4 className="modal-title">
-                        Disposal Information
+                        Destroy Item(s)
                     </h4>
+                    <Button size="sm" variant="outline-primary" onClick={props.onClose} style={{float:"right", marginLeft: "-50%"}}>X</Button>
                 </div>
                 <div className="modal-body">
                     <Container>
                         <Row>
-                            Enter information
+                            <h5>Are you sure you want to mark these items as destroyed?</h5>
                         </Row>
                     </Container>
                 </div>
                 <div className="modal-footer">
-                    <button>Remove Items</button>
-                    <button onClick={props.onClose}>Close</button>
+                    <button>Confirm</button>
+                    <button onClick={props.onClose}>Cancel</button>
                 </div>
             </div>
         </div>
