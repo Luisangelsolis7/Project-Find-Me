@@ -79,11 +79,11 @@ function Modal(props) {
                 date: dat,
                 time: tim
             })
-        });
-        console.log("closing")
-        setIsPending(false);
-        props.onClose();
-        navigate(0);
+        })
+            console.log("closing")
+            setIsPending(false);
+            props.onClose();
+            navigate(0);
     }
     return (
         <div className="modal">
