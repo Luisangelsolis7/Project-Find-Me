@@ -87,8 +87,9 @@ function ClaimModal(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">
-                            Release an Item
+                            Release Item(s)
                         </h4>
+                        <Button size="sm" variant="outline-primary" onClick={props.onClose} style={{float:"right", marginLeft: "-50%"}}>X</Button>
                     </div>
                     <div className="modal-body">
                         <Container>
