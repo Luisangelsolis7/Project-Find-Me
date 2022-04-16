@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
-import AddModal from "./AddModal";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
-import {Pagination} from "react-bootstrap";
-import useFetch from "../useFetch";
+
 
 
 const ItemList = function (props) {
@@ -16,6 +14,28 @@ const ItemList = function (props) {
         if (item !== null) {
             return (<>{item}<br/></>)
         }
+        else{
+            return null;
+        }
+    }
+
+    function returnDOB(item){
+        if(item !== null){
+            return(<>DOB: {formatDate(item)}<br/></>)
+        }
+
+    }
+    function returnDL(item){
+        if(item !== null){
+            return(<>DL: {item}<br/></>)
+        }
+
+    }
+    function returnAUID(item){
+        if(item !== null){
+            return(<>AUID: {item}<br/></>)
+        }
+
     }
 
     function formatDate(inputDate) {
@@ -116,8 +136,10 @@ const ItemList = function (props) {
                             <div className={style1}> {i.User_Fname} {i.User_Lname}<br/>
                                 {checkNull(i.User_Phone)}
                                 {checkNull(i.User_Email)}
-                                {checkNull(i.User_DL)}
-                                {checkNull(i.User_AUID)}</div>
+                                {returnDOB(i.User_DOB)}
+                                {returnDL(i.User_DL)}
+                                {returnAUID(i.User_AUID)}
+                                </div>
                         </td>
                         <td>{checkNull(i.Officer_Badge)}</td>
                         <td><Button variant="secondary" size="sm" onClick={() => {

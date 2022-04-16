@@ -195,9 +195,9 @@ app.post("/api/edit", (req, res) => {
         }
         if (req.body.status === 'Lost' || req.body.status === 'Claimed') {
             const uSql = `UPDATE User
-                          SET User_Fname = ?, User_Lname = ?, User_Phone = ?, User_Email = ?
+                          SET User_Fname = ?, User_Lname = ?, User_Phone = ?, User_Email = ?, User_DOB = ?, User_DL = ?
                           Where User_ID = ?`
-            db.query(uSql, [req.body.firstName, req.body.lastName, req.body.phone, req.body.email, req.body.userId]), (err, result) => {
+            db.query(uSql, [req.body.firstName, req.body.lastName, req.body.phone, req.body.email, req.body.dob, req.body.dl, req.body.userId]), (err, result) => {
                 if (err) {
                     console.log(err);
                 }
