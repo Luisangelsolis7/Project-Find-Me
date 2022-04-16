@@ -67,6 +67,44 @@ app.get("/api/getClaimed", (req, res) => {
     });
 });
 
+app.get("/api/getDonated", (req, res) => {
+    const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
+                        ish.Status_FK, ish.ISH_Date, ish.ISH_Time,
+                        o.Officer_Badge
+                  FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time, h.Officer_FK 
+                         From Item_Status_History h, (Select Item_FK, MAX(ISH_Date) as mdate, MAX(ISH_Time) as mtime from Item_Status_History Group by Item_FK) t 
+                         where t.Item_FK = h.Item_FK and t.mdate = h.ISH_date and t.mtime = h.ISH_Time) ish 
+                         Join Item i on i.Item_ID = ish.Item_FK 
+                         Left Join Officer o on o.Officer_Badge = ish.Officer_FK join Category c on i.Category_FK = c.Category_Name 
+                            Where ish.Status_FK = 'Donated' 
+                         Order by ish.ISH_Date DESC, ish.ISH_Time DESC`;
+    db.query(sql, (err, result)=>{
+        if(err){
+            console.log(err)
+        }
+        res.send(result);
+    });
+});
+
+app.get("/api/getDestroyed", (req, res) => {
+    const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
+                        ish.Status_FK, ish.ISH_Date, ish.ISH_Time,
+                        o.Officer_Badge
+                  FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time, h.Officer_FK 
+                         From Item_Status_History h, (Select Item_FK, MAX(ISH_Date) as mdate, MAX(ISH_Time) as mtime from Item_Status_History Group by Item_FK) t 
+                         where t.Item_FK = h.Item_FK and t.mdate = h.ISH_date and t.mtime = h.ISH_Time) ish 
+                         Join Item i on i.Item_ID = ish.Item_FK 
+                         Left Join Officer o on o.Officer_Badge = ish.Officer_FK join Category c on i.Category_FK = c.Category_Name 
+                            Where ish.Status_FK = 'Destroyed' 
+                         Order by ish.ISH_Date DESC, ish.ISH_Time DESC`;
+    db.query(sql, (err, result)=>{
+        if(err){
+            console.log(err)
+        }
+        res.send(result);
+    });
+});
+
 app.post("/api/insertLost", (req, res) => {
     const sql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email, User_DL, User_AUID) values (?, ?, ?, ?, ?, ?);
                     SET @user_id = LAST_INSERT_ID();
