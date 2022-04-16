@@ -30,6 +30,16 @@ const Home = function () {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
 
+
+    function formatDate(inputDate) {
+        let date = new Date(inputDate);
+        if (!isNaN(date.getTime())) {
+            // Months use 0 index.
+            return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+        }
+
+    }
+
     function search(rows) {
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
             row.Item_Name?.toLowerCase().indexOf(q.toLowerCase()) > -1 ||

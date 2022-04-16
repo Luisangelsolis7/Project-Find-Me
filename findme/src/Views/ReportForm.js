@@ -98,7 +98,7 @@ class ReportForm extends React.Component {
                 body: JSON.stringify(this.state.input)
             })
             this.setState({input: input});
-            alert('Demo Form is submitted');
+            alert('Item has been submitted!');
         }
     }
 
