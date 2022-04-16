@@ -20,35 +20,30 @@ const ItemList = function (props) {
     }
 
     function returnDOB(item){
-        if(item === null){
+        if(item === null || item === '0000-00-00'){
             return null;
-        }
-        if(item !== '0000-00-00' || item !== null){
-            return(<>DOB: {formatDate(item)}<br/></>)
         }
         else{
-            return null;
+            return(<>DOB: {formatDate(item)}<br/></>)
         }
 
     }
     function returnDL(item){
-        if (item === ''){
-            return (<></>);
+        if (item === '' || item === null){
+            return null;
         }
-        else if(item !== null){
+        else{
             return(<>DL: {item}<br/></>)
         }
-        else return null;
 
     }
     function returnAUID(item){
-        if(item === '') {
+        if(item === '' || item === null) {
             return null
         }
-        else if(item !== null ){
+        else{
             return(<>AUID: {item}<br/></>)
         }
-        else return  null;
 
 
     }
