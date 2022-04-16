@@ -197,8 +197,10 @@ function EditModal(props) {
                         <Col md={5}>
                             <Form.Group>
                                 <Form.Label>Phone</Form.Label>
-                                <Form.Control type="input" name="phone" onChange={(e) => formatPhoneNumber(e)}
-                                              value={phoneNum} placeholder="(###)###-####"/>
+                                <Form.Control type="input" name="phone"
+                                              onChange={(e) => formatPhoneNumber(e)}
+                                              value={phoneNum}
+                                              placeholder="(###)###-####"/>
                             </Form.Group>
                         </Col>
                     </Row>
@@ -206,8 +208,7 @@ function EditModal(props) {
             )
         }
     }
-    console.log(props.itemInfo.Category_Name);
-
+    
     return (
         <div className="modal">
             <div className="modal-content">
@@ -222,22 +223,27 @@ function EditModal(props) {
                             <Col>
                                 <Form.Group>
                                     <Form.Label>Select Date</Form.Label>
-                                    <Form.Control type="date" name="date"
-                                                  onChange={event => setDate(event.target.value)} value={dat}/>
+                                    <Form.Control type="date"
+                                                  name="date"
+                                                  onChange={event => setDate(event.target.value)}
+                                                  value={dat}/>
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group>
                                     <Form.Label>Time</Form.Label>
-                                    <Form.Control type="time" name="time"
+                                    <Form.Control type="time"
+                                                  name="time"
                                                   onChange={(e) => setTime(e.target.value)}
                                                   value={tim}></Form.Control>
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Row>
-                            <Form.Label>Item Name</Form.Label><input value={name} onChange={(event => setName(event.target.value))}
-                                             type="text"/>
+                            <Form.Label>Item Name</Form.Label>
+                                <input value={name}
+                                       onChange={(event => setName(event.target.value))}
+                                       type="text"/>
                         </Row>
                         <Row>
                             <Form.Label>Item Category</Form.Label><select className="form-select" id="inputGroupSelect04"

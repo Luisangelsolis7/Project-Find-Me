@@ -184,6 +184,7 @@ class ReportForm extends React.Component {
                                                      name="itemName"
                                                      value={this.state.input.itemName}
                                                      onChange={this.handleChange}
+                                                     maxLength="50"
                                                      placeholder="Ex: Black Iphone, Red Beanie"/>
                                         <div className="text-danger">{this.state.errors.itemName}</div>
                                     </FormGroup>
@@ -195,6 +196,7 @@ class ReportForm extends React.Component {
                                         <select className="form-select" id="inputGroupSelect04"
                                                 name="category"
                                                 onChange={this.handleChange}
+                                                maxLength="35"
                                                 aria-label="Example select with button addon">
                                             <option defaultValue="">---Categories---</option>
                                             <option value="electronic">Electronic</option>
@@ -235,6 +237,7 @@ class ReportForm extends React.Component {
                                         <Form.Label>Description</Form.Label>
                                         <Form.Control as="textarea" value={this.state.input.desc}
                                                       name="desc"
+                                                      maxLength="255"
                                                       onChange={this.handleChange} rows={4}
                                                       className="col-md-6"></Form.Control>
 
@@ -275,6 +278,7 @@ class ReportForm extends React.Component {
                                                      name="firstName"
                                                      value={this.state.input.firstName}
                                                      onChange={this.handleChange}
+                                                     maxLength="35"
                                                      placeholder="Enter First Name"/>
                                         <div className="text-danger">{this.state.errors.firstName}</div>
                                     </Form.Group>
@@ -284,6 +288,7 @@ class ReportForm extends React.Component {
                                         <Form.Label>Last Name</Form.Label>
                                         <FormControl type="text"
                                                      name="lastName"
+                                                     maxLength="35"
                                                      value={this.state.input.lastName}
                                                      onChange={this.handleChange}
                                                      placeholder="Enter Last Name"/>
@@ -299,6 +304,7 @@ class ReportForm extends React.Component {
                                                   name="email"
                                                   value={this.state.input.email}
                                                   onChange={this.handleChange}
+                                                  maxLength="50"
                                                   placeholder="Enter Email"></Form.Control>
                                     <div className="text-danger">{this.state.errors.email}</div>
                                 </Col>
@@ -313,13 +319,22 @@ class ReportForm extends React.Component {
                                 <Col md={3}>
                                     <Form.Group>
                                         <Form.Label>Driver's License/State ID</Form.Label>
-                                        <Form.Control type="input" name="ID" onChange={this.handleChange} value={this.state.input.ID} placeholder="Enter Driver's License/State ID"/>
+                                        <Form.Control type="input" name="ID"
+                                                      onChange={this.handleChange}
+                                                      value={this.state.input.ID}
+                                                      maxLength="20"
+                                                      placeholder="Enter Driver's License/State ID"/>
                                     </Form.Group>
                                 </Col>
                                     <Col md={3}>
                                         <Form.Group>
                                             <Form.Label>AU ID</Form.Label>
-                                            <Form.Control type="input" name="AUID" onChange={this.handleChange} value={this.state.input.AUID} placeholder="Enter AU ID"/>
+                                            <Form.Control type="input"
+                                                          name="AUID"
+                                                          onChange={this.handleChange}
+                                                          maxLength="20"
+                                                          value={this.state.input.AUID}
+                                                          placeholder="Enter AU ID"/>
                                         </Form.Group>
                                     </Col>
                                 </Row>
