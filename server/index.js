@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/api/getLost", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
-                        ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, 
+                        ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Email, u.User_Phone, u.User_AUID
                   FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time 
                         From Item_Status_History h, (Select Item_FK, MAX(ISH_Date) as mdate, MAX(ISH_Time) as mtime 
@@ -48,7 +48,7 @@ app.get("/api/getUnclaimed", (req, res) => {
 
 app.get("/api/getClaimed", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
-                        ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, 
+                        ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
                         o.Officer_Badge, o.Officer_Fname, o.Officer_Lname 
                   FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time, h.Officer_FK 
@@ -155,7 +155,7 @@ app.post("/api/edit", (req, res) => {
         if (err) {
             console.log(err);
         }
-        if (req.body.category === 'Lost' || req.body.category === 'Claimed') {
+        if (req.body.status === 'Lost' || req.body.status === 'Claimed') {
             const uSql = `UPDATE User
                           SET User_Fname = ?, User_Lname = ?, User_Phone = ?, User_Email = ?
                           Where User_ID = ?`
