@@ -148,6 +148,25 @@ function EditModal(props) {
                             </Form.Group>
                         </Col>
                     </Row>
+
+                <Row>
+                    <Col md={7}>
+                        <Form.Label>Driver's License</Form.Label>
+                        <Form.Control type="text"
+                                      name="driverLicense"
+                                      value={driverLicense}
+                                      onChange={event => setDriverLicense(event.target.value)}
+                                      placeholder="Driver's License"></Form.Control>
+                    </Col>
+                    <Col md={5}>
+                        <Form.Label>Date of Birth</Form.Label>
+                        <Form.Control type="date"
+                                      name="dob"
+                                      value={dob}
+                                      onChange={event => setDOB(event.target.value)}
+                        ></Form.Control>
+                    </Col>
+                </Row>
             </Container>
             )
         }
