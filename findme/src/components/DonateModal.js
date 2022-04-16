@@ -71,10 +71,9 @@ function DonateModal(props) {
                     date: getCurrentDate(),
                     time: getCurrentTime()
                 })
-            }).then(() => {
-                setIsPending(false);
-                navigate('/Home'); // adding go back 1 page-
             })
+            setIsPending(false);
+            navigate(0);
         }
 
     if (!props.show) {
@@ -127,6 +126,7 @@ function DonateModal(props) {
                                     <Form.Label>State</Form.Label>
                                     <Form.Control type="text"
                                                   name="state"
+                                                  maxLength = "2"
                                                   value={state}
                                                   onChange={event => setState(event.target.value)}
                                                   ></Form.Control>
@@ -135,6 +135,7 @@ function DonateModal(props) {
                                 <Form.Label>Zip</Form.Label>
                                 <Form.Control type="text"
                                               name="zip"
+                                              maxLength = "5"
                                               value={zip}
                                               onChange={event => setZip(event.target.value)}
                                 ></Form.Control>

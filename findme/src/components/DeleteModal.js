@@ -30,10 +30,9 @@ function DeleteModal(props) {
                     status: props.itemInfo.Status_FK
 
                 })
-            }).then(() => {
-                setIsPending(false);
-                navigate('/Home'); // adding go back 1 page-
             })
+            setIsPending(false);
+            navigate(0);
         }
 
         console.log(props.itemInfo);

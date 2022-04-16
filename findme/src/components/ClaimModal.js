@@ -71,10 +71,9 @@ function ClaimModal(props) {
                     date: getCurrentDate(),
                     time: getCurrentTime()
                 })
-            }).then(() => {
-                setIsPending(false);
-                navigate('/Home'); // adding go back 1 page-
             })
+            setIsPending(false);
+            navigate(0);
         }
         if (!props.show) {
             return null;
