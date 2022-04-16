@@ -11,7 +11,7 @@ const ItemList = function (props) {
     let inputGroup = ''
 
     function checkNull(item) {
-        if (item !== null) {
+        if (item !== '') {
             return (<>{item}<br/></>)
         }
         else{
@@ -23,18 +23,23 @@ const ItemList = function (props) {
         if(item !== null){
             return(<>DOB: {formatDate(item)}<br/></>)
         }
+        else{
+            return null;
+        }
 
     }
     function returnDL(item){
         if(item !== null){
             return(<>DL: {item}<br/></>)
         }
+        else return null;
 
     }
     function returnAUID(item){
         if(item !== null){
             return(<>AUID: {item}<br/></>)
         }
+        else return null;
 
     }
 

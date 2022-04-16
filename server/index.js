@@ -139,12 +139,12 @@ app.post("/api/insertUnclaimed", (req, res) => {
 
 app.post("/api/insertClaimed", (req, res) => {
     const idArr = req.body.itemId;
-    const sql = `INSERT INTO User (User_Fname, User_Lname, User_DOB, User_Phone, User_Email, User_DL) values (?, ?, ?, ?, ?, ?);
+    const sql = `INSERT INTO User (User_Fname, User_Lname, User_DOB, User_Phone, User_Email, User_AUID, User_DL, User_DLState) values (?, ?, ?, ?, ?, ?, ?);
                     SET @user_id = LAST_INSERT_ID();
                  INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
                         values (?, @user_id, 'Claimed', ?, ?, '999');`
     idArr.forEach(item => {
-        db.query(sql, [req.body.firstName, req.body.lastName, req.body.dob, req.body.phone, req.body.email, req.body.driverlicense,
+        db.query(sql, [req.body.firstName, req.body.lastName, req.body.dob, req.body.phone, req.body.email, req.body.AUID, req.body.driverlicense, req.body.dlState,
             item, req.body.date, req.body.time], (err, result) => {
             if (err) {
                 console.log(err)
