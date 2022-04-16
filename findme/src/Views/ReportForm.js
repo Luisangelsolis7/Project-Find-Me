@@ -202,6 +202,7 @@ class ReportForm extends React.Component {
                                             <option value="electronic">Electronic</option>
                                             <option value="clothing">Clothing</option>
                                             <option value="accessory">Accessory</option>
+                                            <option value="key">Key</option>
                                             <option value="id">Identification</option>
                                             <option value="misc">Misc</option>
                                         </select>

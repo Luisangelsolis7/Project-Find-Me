@@ -3,11 +3,10 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import React, {useEffect, useState} from 'react';
-import Button from "react-bootstrap/Button";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
-import useFetch from "../useFetch";
+
 
 
 function EditModal(props) {
@@ -63,9 +62,11 @@ function EditModal(props) {
         setLName(props.itemInfo.User_Lname);
         setEmailAdd(props.itemInfo.User_Email);
         setPhoneNum(props.itemInfo.User_Phone);
+        setDriverLicense(props.itemInfo.User_DL);
+        setDOB(props.itemInfo.User_DOB);
 
         console.log(props.itemInfo);
-    },[props.show]);
+    },[props.show, props.itemInfo]);
     if (!props.show) {
         return null;
     }
@@ -90,6 +91,8 @@ function EditModal(props) {
                 lastName: lName,
                 phone: phoneNum,
                 email: emailAdd,
+                dob: dob,
+                dl: driverLicense,
                 userId: props.itemInfo.User_FK
             })
         })
@@ -204,6 +207,24 @@ function EditModal(props) {
                             </Form.Group>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col md={7}>
+                            <Form.Label>Driver's License</Form.Label>
+                            <Form.Control type="text"
+                                          name="driverLicense"
+                                          value={driverLicense}
+                                          onChange={event => setDriverLicense(event.target.value)}
+                                          placeholder="Driver's License"></Form.Control>
+                        </Col>
+                        <Col md={5}>
+                            <Form.Label>Date of Birth</Form.Label>
+                            <Form.Control type="date"
+                                          name="dob"
+                                          value={dob}
+                                          onChange={event => setDOB(event.target.value)}
+                            ></Form.Control>
+                        </Col>
+                    </Row>
                 </Container>
             )
         }
@@ -263,7 +284,7 @@ function EditModal(props) {
                         <Row>
                             <Form.Label>Description</Form.Label>
                             <textarea value={des} onChange={(event => setDesc(event.target.value))}
-                                          rows="3"></textarea>
+                                          rows="4"></textarea>
                         </Row>
                         <Row>
                             <Form.Label>Value</Form.Label>

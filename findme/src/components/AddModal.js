@@ -2,20 +2,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import React, {useEffect, useState} from 'react';
-import Button from "react-bootstrap/Button";
-import {Link, useNavigate} from "react-router-dom";
-import { useHistory } from 'react-router'
+import React, {useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
-import useFetch from "../useFetch";
 
 
 function AddModal(props) {
     const navigate = useNavigate();
-    const [fName, setFName] = useState("");
-    const [lName, setLName] = useState("");
-    const [emailAdd, setEmailAdd] = useState("");
     const [name, setName] = useState("");
     const [cat, setCat] = useState("");
     const [val, setValue] = useState("");
@@ -23,11 +17,7 @@ function AddModal(props) {
     const [loc, setLocation] = useState("");
     const [dat, setDate] = useState("");
     const [tim, setTime] = useState("");
-    const [dob, setDOB] = useState("");
-    const [driverLicense, setDriverLicense] = useState("");
-    const [phoneNum, setPhoneNum] = useState('');
     const [isPending, setIsPending] = useState(false);
-    const [item, setItem] = useState(props.itemInfo);
 
 
         const handleSubmit = (e) => {
@@ -74,6 +64,7 @@ function AddModal(props) {
                                 <option value="">--Category--</option>
                                 <option value="electronic">Electronic</option>
                                 <option value="clothing">Clothing</option>
+                                <option value="key">Key</option>
                                 <option value="currency">Currency</option>
                                 <option value="accessory">Accessory</option>
                                 <option value="id">Identification</option>
@@ -82,8 +73,8 @@ function AddModal(props) {
                             </Row>
                             <Row>
                                 Description:
-                                <input value={des} onChange={(event => setDesc(event.target.value))}
-                                       type="textarea"/>
+                                <textarea value={des} onChange={(event => setDesc(event.target.value))}
+                                          rows="4"></textarea>
                             </Row>
                             <Row>
                                 <Form.Label>Value</Form.Label>

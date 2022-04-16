@@ -2,12 +2,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
-import {Link, useNavigate} from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
+import {useNavigate} from "react-router-dom";
 import {FormControl} from "react-bootstrap";
-import useFetch from "../useFetch";
+
 
 
 function ClaimModal(props) {
@@ -17,7 +16,9 @@ function ClaimModal(props) {
     const [emailAdd, setEmailAdd] = useState("");
     const [dob, setDOB] = useState("");
     const [driverLicense, setDriverLicense] = useState("");
+    const [dlState, setDlState] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
+    const [AUID, setAUID] = useState('');
     const [isPending, setIsPending] = useState(false);
 
     function formatPhoneNumber(value) {
@@ -68,6 +69,8 @@ function ClaimModal(props) {
                     phone: phoneNum,
                     dob: dob,
                     driverLicense: driverLicense,
+                    dlState: dlState,
+                    AUID: AUID,
                     date: getCurrentDate(),
                     time: getCurrentTime()
                 })
@@ -132,8 +135,33 @@ function ClaimModal(props) {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={8}>
-                                    <Form.Label>Driver's License</Form.Label>
+                                <Col md={5}>
+                                    <Form.Group>
+                                        <Form.Label>AU ID</Form.Label>
+                                        <Form.Control type="input"
+                                                      name="AUID"
+                                                      onChange={event => setAUID(event.target.value)}
+                                                      maxLength="20"
+                                                      value={AUID}
+                                                      placeholder="Enter AU ID"/>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="smallLabel"><Form.Label>Driver's License</Form.Label></Col>
+                            </Row>
+                            <Row>
+                            <Col md={2}>
+                                <Form.Label>State</Form.Label>
+                                <Form.Control type="text"
+                                              name="state"
+                                              maxLength = "2"
+                                              value={dlState}
+                                              onChange={event => setDlState(event.target.value)}
+                                ></Form.Control>
+                            </Col>
+                                <Col md={5}>
+                                    <Form.Label>Number</Form.Label>
                                     <Form.Control type="text"
                                                   name="driverLicense"
                                                   value={driverLicense}
@@ -141,7 +169,7 @@ function ClaimModal(props) {
                                                   placeholder="Driver's License"></Form.Control>
                                 </Col>
                                 <Col md={4}>
-                                    <Form.Label>Date of Birth</Form.Label>
+                                    <Form.Label>DOB</Form.Label>
                                     <Form.Control type="date"
                                                   name="dob"
                                                   value={dob}
@@ -152,7 +180,7 @@ function ClaimModal(props) {
                         </Container>
                     </div>
                     <div className="modal-footer">
-                        <button onClick={handleSubmit}>Add</button>
+                        <button onClick={handleSubmit}>Release</button>
                         <button onClick={props.onClose}>Close</button>
                     </div>
                 </div>
