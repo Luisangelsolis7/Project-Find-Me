@@ -175,9 +175,9 @@ class ReportForm extends React.Component {
                     <br />
                     <form onSubmit={this.handleSubmit}>
                         <h1 className="ReportTitle" > Lost Item Form</h1>
-                        <Row className="justify-content-md-center">
-                            <Row>
-                                <Col md={6}>
+                        <Row>
+                            <Row className="centered">
+                                <Col md={5}>
                                     <FormGroup>
                                         <Form.Label>Item Name</Form.Label>
                                         <FormControl type="text"
@@ -210,10 +210,10 @@ class ReportForm extends React.Component {
                                     </FormGroup>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col md={4}>
+                            <Row className="centered">
+                                <Col md={5}>
                                     <Form.Label>Value</Form.Label>
-                                    <InputGroup className="mb-3">
+                                    <InputGroup>
                                         <InputGroup.Text>$</InputGroup.Text>
                                         <FormControl name="value" value={this.state.input.value}
                                                      onChange={this.handleChange}
@@ -221,7 +221,8 @@ class ReportForm extends React.Component {
                                         <InputGroup.Text>.00</InputGroup.Text>
                                     </InputGroup>
                                     <div className="text-danger">{this.state.errors.value}</div>
-                                    <Form.Group>
+                                </Col>
+                                <Col md={5}>
                                         <Form.Label>Location Lost</Form.Label>
                                         <select className="form-select" id="inputGroupSelect05"
                                                 name="location"
@@ -231,8 +232,25 @@ class ReportForm extends React.Component {
                                                 <option key={i} value={i}>{i}</option>
                                             ))}
                                         </select>
+                                </Col>
+                            </Row>
+                            <Row className="centered">
+                                <Col md={4}>
+                                    <Form.Group>
+                                        <Form.Label>Select Date</Form.Label>
+                                        <Form.Control type="date" name="date" onChange={this.handleChange} value={this.state.input.date}/>
+                                        <div className="text-danger">{this.state.errors.date}</div>
                                     </Form.Group>
                                 </Col>
+                                <Col md={4}>
+                                    <Form.Group>
+                                        <Form.Label>Time Lost</Form.Label>
+                                        <Form.Control type="time" name="time" onChange={this.handleChange}
+                                                      value={this.state.input.time}></Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row className="centered">
                                 <Col md={7}>
                                     <Form.Group>
                                         <Form.Label>Description</Form.Label>
@@ -245,34 +263,14 @@ class ReportForm extends React.Component {
                                         <div className="text-danger">{this.state.errors.desc}</div>
                                     </Form.Group>
                                 </Col>
-
-                            </Row>
-                            <Row>
-                                <Col md={2}>
-                                    <Form.Group>
-                                        <Form.Label>Select Date</Form.Label>
-                                        <Form.Control type="date" name="date" onChange={this.handleChange} value={this.state.input.date}/>
-                                        <div className="text-danger">{this.state.errors.date}</div>
-                                    </Form.Group>
-                                </Col>
-                                <Col md={2}>
-                                    <Form.Group>
-                                        <Form.Label>Time Lost</Form.Label>
-                                        <Form.Control type="time" name="time" onChange={this.handleChange}
-                                                      value={this.state.input.time}></Form.Control>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <Row>
-
                             </Row>
 
                             <div></div>
-                            <Row>
+                            <Row className="centered">
                                 <Col className="smallLabel"><Form.Label>Reporter Information</Form.Label></Col>
                             </Row>
-                            <Row>
-                                <Col md={4}>
+                            <Row className="centered">
+                                <Col md={5}>
                                     <Form.Group>
                                         <Form.Label>First Name</Form.Label>
                                         <FormControl type="text"
@@ -284,7 +282,7 @@ class ReportForm extends React.Component {
                                         <div className="text-danger">{this.state.errors.firstName}</div>
                                     </Form.Group>
                                 </Col>
-                                <Col md={4}>
+                                <Col md={5}>
                                     <Form.Group>
                                         <Form.Label>Last Name</Form.Label>
                                         <FormControl type="text"
@@ -298,8 +296,8 @@ class ReportForm extends React.Component {
                                 </Col>
                             </Row>
 
-                            <Row>
-                                <Col md={5}>
+                            <Row className="centered">
+                                <Col md={6}>
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control type="email"
                                                   name="email"
@@ -309,15 +307,15 @@ class ReportForm extends React.Component {
                                                   placeholder="Enter Email"></Form.Control>
                                     <div className="text-danger">{this.state.errors.email}</div>
                                 </Col>
-                                <Col md={3}>
+                                <Col md={4}>
                                     <Form.Group>
                                         <Form.Label>Phone Number</Form.Label>
                                         <Form.Control type="input" name="phone" onChange={this.handleInput} value={this.state.input.phone} placeholder="(###)###-####"/>
                                         <div className="text-danger">{this.state.errors.phone}</div>
                                     </Form.Group>
                                 </Col>
-                                <Row>
-                                <Col md={3}>
+                                <Row className="centered">
+                                <Col md={5}>
                                     <Form.Group>
                                         <Form.Label>Driver's License/State ID</Form.Label>
                                         <Form.Control type="input" name="ID"
@@ -327,7 +325,7 @@ class ReportForm extends React.Component {
                                                       placeholder="Enter Driver's License/State ID"/>
                                     </Form.Group>
                                 </Col>
-                                    <Col md={3}>
+                                    <Col md={5}>
                                         <Form.Group>
                                             <Form.Label>AU ID</Form.Label>
                                             <Form.Control type="input"
@@ -340,7 +338,7 @@ class ReportForm extends React.Component {
                                     </Col>
                                 </Row>
                             </Row>
-                            <Row md={1}>
+                            <Row md={1} className="centered">
                                 <Col className="submitButton">
                                     <input type="submit" value="Submit" className="btn btn-success"/>
                                 </Col>
