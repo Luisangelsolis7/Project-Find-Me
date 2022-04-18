@@ -4,45 +4,45 @@ import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 
 
-
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
     let tableHeader = [];
     let inputGroup = ''
-
+    const [showEdit, setShowEdit] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
+    const [style1, setStyle1] = useState("fixedHeight");
+    const [currentItem, setCurrentItem] = useState("", "", "", "", "", "", "", "", "", "", "", "");
     function checkNull(item) {
         if (item !== null) {
             return (<>{item}<br/></>)
-        }
-        else{
+        } else {
             return (<></>);
         }
     }
 
-    function returnDOB(item){
-        if(item === null || item === '0000-00-00'){
+    function returnDOB(item) {
+        if (item === null || item === '0000-00-00') {
             return null;
-        }
-        else{
-            return(<>DOB: {formatDate(item)}<br/></>)
+        } else {
+            return (<>DOB: {formatDate(item)}<br/></>)
         }
 
     }
-    function returnDL(item){
-        if (item === '' || item === null){
+
+    function returnDL(item) {
+        if (item === '' || item === null) {
             return null;
-        }
-        else{
-            return(<>DL: {item}<br/></>)
+        } else {
+            return (<>DL: {item}<br/></>)
         }
 
     }
-    function returnAUID(item){
-        if(item === '' || item === null) {
+
+    function returnAUID(item) {
+        if (item === '' || item === null) {
             return null
-        }
-        else{
-            return(<>AUID: {item}<br/></>)
+        } else {
+            return (<>AUID: {item}<br/></>)
         }
 
 
@@ -67,12 +67,10 @@ const ItemList = function (props) {
     if (props.active === "R") {
         tableHeader = ["", "ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
     }
-    const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
-    const [style1, setStyle1] = useState("fixedHeight");
-    const [currentItem, setCurrentItem] = useState("","","","","","","","","","","","");
+
 
     let counter = 0;
+
     function generateKey(i) {
         let key = i
         if (i == "") {
@@ -91,6 +89,7 @@ const ItemList = function (props) {
 
         return key;
     }
+
     return (
 
         <div className="itemTable">
@@ -115,9 +114,7 @@ const ItemList = function (props) {
                                     if (e.target.checked) {
                                         props.setItemInfo([
                                             ...props.itemInfo,
-                                                 i.Item_ID,
-
-
+                                            i.Item_ID,
                                         ]);
                                     } else {
                                         // remove from list
@@ -149,7 +146,7 @@ const ItemList = function (props) {
                                 {returnDOB(i.User_DOB)}
                                 {returnDL(i.User_DL)}
                                 {returnAUID(i.User_AUID)}
-                                </div>
+                            </div>
                         </td>
                         <td>{checkNull(i.Officer_Badge)}</td>
                         <td><Button variant="secondary" size="sm" onClick={() => {
@@ -158,7 +155,7 @@ const ItemList = function (props) {
                         }}>Edit</Button>
                         </td>
 
-                        <td><Button className="btn btn-secondary" size="sm"  background-color="Red" onClick={() => {
+                        <td><Button className="btn btn-secondary" size="sm" background-color="Red" onClick={() => {
                             setCurrentItem(i);
                             setShowDelete(true);
                         }}>Delete</Button>
