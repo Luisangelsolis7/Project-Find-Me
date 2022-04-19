@@ -3,10 +3,12 @@ const app = express()
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./config/db');
+const {check, validationResult} = require('express-validator');
+const bcrypt = require('bcrypt');
 
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.get("/api/getLost", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
@@ -227,6 +229,84 @@ app.post("/api/delete", (req, res) => {
     });
 
 });
+
+app.post("/api/register",[check('email').isEmail().normalizeEmail(), check('password').isLength({min : 8})], async (req, res) => {
+    try{
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            console.log(errors);
+            return res.status(422).json({errors : errors.array()})
+        }
+        const {email, password, badge} = req.body;
+        const hash = await bcrypt.hash(password, 10);
+        const sql =`Insert into Officer (Officer_Email, Hash, Officer_Badge) values (?, ?, ?);`
+        await db.query(sql, [email, hash, badge], (err, result) => {
+            if(err){
+                console.log(err)
+            }
+        });
+        res.status(200).json('All good');
+    }catch (e){
+        console.log(e);
+        res.status(500).send('Error!')
+    }
+});
+
+app.post("/api/login", async (req, res) => {
+    //const request =req.query
+   // const sql="SELECT Hash from Officer where Officer_Email=?";
+    /*db.query(query,req.body.email,(err,rows) => {
+        if(err) throw err;
+        //
+        let output={}
+        if(rows.length!=0)
+        {
+            let password_hash=rows[0]["Hash"];
+            const verified = bcrypt.compareSync(req.password, password_hash);
+            if(verified)
+            {
+                output["status"]=1;
+                output["message"]="Valid Login";
+            }else{
+                output["status"]=0;
+                output["message"]="Invalid password";
+            }
+
+        }else{
+            output["status"]=0;
+            output["message"]="Invalid username and password";
+        }
+        res.json(output)
+
+    });*/
+    try{
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        console.log(errors);
+        return res.status(422).json({errors : errors.array()})
+    }
+    const {email, password} = req.body;
+    const sql="SELECT Hash from Officer where Officer_Email=?";
+    await db.query(sql, email, (err, result) => {
+        if(err){
+            console.log(err)
+        }
+        if(result.length!=0) {
+            let password_hash = result[0]["Hash"];
+            const verified = bcrypt.compareSync(password, password_hash);
+            if (verified) {
+                res.status(200).json('All good');
+            }
+        }
+    });
+
+}catch (e){
+    console.log(e);
+    res.status(500).send('Error!')
+}
+});
+
+
 
 
 
