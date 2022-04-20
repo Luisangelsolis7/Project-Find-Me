@@ -63,6 +63,15 @@ const Home = function () {
         }
     }
 
+    function addButton(toggle){
+        if(toggle === "H"){
+            return(
+            <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
+            )
+        }
+
+    }
+
     function search(rows) {
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
             row.Item_Name?.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -118,9 +127,7 @@ const Home = function () {
                     <Col md={1}>
 
                         <br /><br /><br />
-                        <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
-                        {/*<Button>Add Item</Button>*/}
-                        {/*<Button>Add Item</Button>*/}
+                        {addButton(toggle)}
 
                     </Col>
                 </Row>
