@@ -22,29 +22,30 @@ const Home = function () {
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
 
-    function convertToPDF() {
-        const employees = [
-            {"firstName": "John", "lastName": "Doe"},
-            {"firstName": "Anna", "lastName": "Smith"},
-            {"firstName": "Peter", "lastName": "Jones"}
-        ];
-        const doc = new jsPDF();
-        employees.forEach(function (employee, i) {
-            doc.text(20, 10 + (i * 10),
-                "First Name: " + employee.firstName +
-                "Last Name: " + employee.lastName);
-        });
-        doc.save('Test.pdf');
-    }
-
-
     let url;
     if (toggle === "H") url = 'http://localhost:3001/api/getUnclaimed'
     else if (toggle === "R") url = 'http://localhost:3001/api/getLost'
     else if (toggle === "C") url = 'http://localhost:3001/api/getClaimed';
     const {data: items, isPending, error} = useFetch(url);
 
+    function convertToPDF() {
+        let x = 10;
+        let y = 10;
+        const doc = new jsPDF();
 
+        items.forEach(function (item, i) {
+            if(i % 28 == 0 && i != 0){
+                y = 10;
+                doc.addPage();
+            }
+            doc.setFont('TimesNewRoman')
+            doc.setFontSize(10);
+            doc.text(x, y,
+                "Item Name"+item.Item_Name);
+            y = y + 10;
+        });
+        doc.save('Test.pdf');
+    }
     const [itemInfo, setItemInfo] = useState([]);
     const [q, setQ] = useState("H");
     const [action, setAction] = useState("claim");
@@ -86,7 +87,8 @@ const Home = function () {
             return (
                 <>
                     <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
-                    <Button className="openAddUnclaimed" onClick={() => convertToPDF()}>PDF</Button>
+                    <br />
+                    <br />
                 </>
 
             )
@@ -151,6 +153,7 @@ const Home = function () {
 
                         <br/><br/><br/>
                         {addButton(toggle)}
+                        <Button className="openAddUnclaimed" onClick={() => convertToPDF()}>Convert to PDF</Button>
 
                     </Col>
                 </Row>
