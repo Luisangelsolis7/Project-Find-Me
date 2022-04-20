@@ -12,6 +12,7 @@ import {useState} from "react";
 import Pagination from "../components/Pagination";
 import DestroyModal from "../components/DestroyModal";
 import DonateModal from "../components/DonateModal";
+import jsPDF from 'jspdf'
 import useAuth from "../Hooks/useAuth";
 
 const Home = function () {
@@ -21,11 +22,27 @@ const Home = function () {
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
 
+    function convertToPDF() {
+        const employees = [
+            {"firstName": "John", "lastName": "Doe"},
+            {"firstName": "Anna", "lastName": "Smith"},
+            {"firstName": "Peter", "lastName": "Jones"}
+        ];
+        const doc = new jsPDF();
+        employees.forEach(function (employee, i) {
+            doc.text(20, 10 + (i * 10),
+                "First Name: " + employee.firstName +
+                "Last Name: " + employee.lastName);
+        });
+        doc.save('Test.pdf');
+    }
+
+
     let url;
-    if(toggle === "H")  url = 'http://localhost:3001/api/getUnclaimed'
-    else if(toggle === "R")  url = 'http://localhost:3001/api/getLost'
-    else if(toggle === "C")  url = 'http://localhost:3001/api/getClaimed';
-    const { data: items, isPending, error} = useFetch(url);
+    if (toggle === "H") url = 'http://localhost:3001/api/getUnclaimed'
+    else if (toggle === "R") url = 'http://localhost:3001/api/getLost'
+    else if (toggle === "C") url = 'http://localhost:3001/api/getClaimed';
+    const {data: items, isPending, error} = useFetch(url);
 
 
     const [itemInfo, setItemInfo] = useState([]);
@@ -46,9 +63,10 @@ const Home = function () {
         }
 
     }
-    function selectBar(toggle){
-        if(toggle === "H"){
-            return(
+
+    function selectBar(toggle) {
+        if (toggle === "H") {
+            return (
                 <div className="input-group">
                     <select className="form-select" value={action} onChange={(e) => setAction(e.target.value)}
                             id="inputGroupSelect04"
@@ -63,10 +81,14 @@ const Home = function () {
         }
     }
 
-    function addButton(toggle){
-        if(toggle === "H"){
-            return(
-            <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
+    function addButton(toggle) {
+        if (toggle === "H") {
+            return (
+                <>
+                    <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
+                    <Button className="openAddUnclaimed" onClick={() => convertToPDF()}>PDF</Button>
+                </>
+
             )
         }
 
@@ -89,24 +111,25 @@ const Home = function () {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     function openModal(e) {
-        if(e === "claim"){
+        if (e === "claim") {
             setClaimShow(true);
         }
-        if(e === "destroy"){
+        if (e === "destroy") {
             setDestroyShow(true);
         }
-        if(e === "donate"){
+        if (e === "donate") {
             setDonateShow(true);
         }
     }
 
     return (
         <>
-            <AdminNavBar toggle={toggle} changeToggle={toggle => setToggle(toggle)} value={q} onChangeValue={(e) => setQ(e.target.value)}/>
+            <AdminNavBar toggle={toggle} changeToggle={toggle => setToggle(toggle)} value={q}
+                         onChangeValue={(e) => setQ(e.target.value)}/>
             <Container>
                 <Row>
                     <Col md={1}>
-                        <br /><br /><br /><br />
+                        <br/><br/><br/><br/>
                         <div className="counter">
                             {search(items).length} Items
                         </div>
@@ -126,7 +149,7 @@ const Home = function () {
                     </Col>
                     <Col md={1}>
 
-                        <br /><br /><br />
+                        <br/><br/><br/>
                         {addButton(toggle)}
 
                     </Col>

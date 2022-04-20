@@ -8,6 +8,8 @@ function LoginModal(props) {
 
     const{setAuth} = useAuth();
     const[errMsg, setErrMSg] = useState('');
+    const[isLogged, setIsLogged] = useState(false);
+
     const navigate = useNavigate();
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
@@ -38,6 +40,7 @@ function LoginModal(props) {
         setEmail('');
         setPassword('');
         setIsPending(false);
+        setIsLogged(true);
         navigate('/Home');
     }
     useEffect(() => {

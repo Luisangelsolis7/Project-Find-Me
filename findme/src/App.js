@@ -26,7 +26,8 @@ function App() {
   return (
           <Routes>
               <Route path="/" element={<Layout />}>
-            <Route path="/" element={<Report locations={locations}/>} />
+
+                  <Route path="/" element={<Report locations={locations}/>} />
 
              <Route element={<RequireAuth/>}>
               <Route path="/Home" element={<AdminHome />} />
