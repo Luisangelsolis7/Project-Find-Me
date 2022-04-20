@@ -1,6 +1,7 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import './CSS/App.css';
+import RequireAuth from "./components/RequireAuth";
 
 
 //imported views
@@ -9,6 +10,7 @@ import Claimed from "./Views/Claimed";
 import Report from "./Views/ReportForm";
 import AdminHome from "./Views/AdminHome";
 import Reports from "./Views/Reports";
+import Layout from "./components/Layout";
 function App() {
     let locations = ["N/A", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
         "Parking Garage", "Institute for Collaboration",
@@ -22,17 +24,19 @@ function App() {
         "Thornton Gymnasium", "Tru Blu Coffee", "University Banquet Hall", "University Communications", "Vago Field",
         "Wackerlin Center for Faith and Action", "Watkins Hall", "Wellness Center", "Wilkinson Hall"];
   return (
-      <div className="App">
-        <BrowserRouter>
           <Routes>
+              <Route path="/" element={<Layout />}>
             <Route path="/" element={<Report locations={locations}/>} />
+
+             <Route element={<RequireAuth/>}>
               <Route path="/Home" element={<AdminHome />} />
               <Route path="/Claimed" element={<Claimed />} />
               <Route path="/Reports" element={<Reports />} />
-            <Route path="*" element={<NoPage />} />
+             </Route>
+
+              <Route path="*" element={<NoPage />} />
+              </Route>
           </Routes>
-        </BrowserRouter>
-      </div>
   );
 }
 

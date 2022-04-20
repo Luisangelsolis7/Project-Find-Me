@@ -41,14 +41,14 @@ function DeleteModal(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">
-                            Release an Item
+                            Delete
                         </h4>
                         <Button size="sm" variant="outline-primary" onClick={props.onClose} style={{float:"right", marginLeft: "-50%"}}>X</Button>
                     </div>
                     <div className="modal-body">
                         <Container>
                             <Row>
-                                Are you Sure you want to Delete this entry?
+                                Confirm Delete?
                             </Row>
                         </Container>
                     </div>

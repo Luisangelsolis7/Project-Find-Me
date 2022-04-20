@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import ItemList from "../components/ItemList";
 import useFetch from "../useFetch";
 import Pagination from "../components/Pagination";
+import useAuth from "../Hooks/useAuth";
 const Claimed = function() {
 
     const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getClaimed');
