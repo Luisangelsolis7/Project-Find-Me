@@ -6,7 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl, NavItem} from "react-bootstrap";
 function AdminNavBar(props){
     let Home, Claimed, Reports = "nav-link";
-    if(props.active === "H"){
+    if(props.toggle === "H"){
         Home = "nav-link active";
         Claimed = "nav-link";
         Reports = "nav-link";
@@ -14,7 +14,7 @@ function AdminNavBar(props){
         Home = "nav-link";
         Claimed = "nav-link active";
         Reports = "nav-link";
-    }if(props.active === "R"){
+    }if(props.toggle === "R"){
         Home = "nav-link";
         Claimed = "nav-link";
         Reports = "nav-link active";
@@ -31,9 +31,9 @@ function AdminNavBar(props){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav variant="tabs">
-                        <NavItem className="NavItem"><Nav.Link className={Reports}  href="/Reports">Lost Reports</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Home} href="/Home">Found Items</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Claimed} href="/Claimed">Claimed Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Reports}  onClick={ () => props.changeToggle('R')}>Lost Reports</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Home} onClick={ () => props.changeToggle('H')}>Found Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Claimed} onClick={ () => props.changeToggle('C')}>Claimed Items</Nav.Link></NavItem>
                         <InputGroup className="searchBar">
                             <FormControl
                                 placeholder="Search"
