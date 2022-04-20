@@ -15,7 +15,7 @@ import DonateModal from "../components/DonateModal";
 import useAuth from "../Hooks/useAuth";
 
 const Home = function () {
-    const [toggle, setToggle] = useState("")
+    const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
     const [showDestroy, setDestroyShow] = useState(false);
@@ -89,13 +89,13 @@ const Home = function () {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     function openModal(e) {
-        if(e == "claim"){
+        if(e === "claim"){
             setClaimShow(true);
         }
-        if(e == "destroy"){
+        if(e === "destroy"){
             setDestroyShow(true);
         }
-        if(e == "donate"){
+        if(e === "donate"){
             setDonateShow(true);
         }
     }
