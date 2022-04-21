@@ -34,6 +34,8 @@ function LoginModal(props) {
                     setErrMSg('Missing Username or Password')
                 }else if(response?.status === 401){
                     setErrMSg('Invalid Login')
+                }else{
+                    setErrMSg('Login Failed')
                 }
             }).then((data) => {
                 console.log(data);
