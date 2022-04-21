@@ -302,7 +302,8 @@ app.get("/api/refresh", (req, res) => {
     const refreshToken = cookies.jwt;
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if(err) return res.status(403);
-            const accessToken = jwt.sign({"name":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+            console.log(decoded);
+            const accessToken = jwt.sign({"email":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
             res.json(accessToken);
         }
     )

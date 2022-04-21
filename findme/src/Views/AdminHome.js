@@ -7,15 +7,17 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import AddModal from "../components/AddModal";
 import ClaimModal from "../components/ClaimModal";
-import useFetch from "../useFetch";
+import useFetch from "../Hooks/useFetch";
 import {useState} from "react";
 import Pagination from "../components/Pagination";
 import DestroyModal from "../components/DestroyModal";
 import DonateModal from "../components/DonateModal";
 import jsPDF from 'jspdf'
 import useAuth from "../Hooks/useAuth";
+import useRefreshToken from "../Hooks/useRefreshToken";
 
 const Home = function () {
+    const refresh = useRefreshToken();
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
@@ -153,7 +155,8 @@ const Home = function () {
 
                         <br/><br/><br/>
                         {addButton(toggle)}
-                        <Button className="openAddUnclaimed" onClick={() => convertToPDF()}>Convert to PDF</Button>
+                        <Button className="openPDF" onClick={() => convertToPDF()}>Convert to PDF</Button>
+                        <Button onClick={ () => refresh()}>Refresh</Button>
 
                     </Col>
                 </Row>

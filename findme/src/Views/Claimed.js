@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ItemList from "../components/ItemList";
-import useFetch from "../useFetch";
+import useFetch from "../Hooks/useFetch";
 import Pagination from "../components/Pagination";
 import useAuth from "../Hooks/useAuth";
 const Claimed = function() {
