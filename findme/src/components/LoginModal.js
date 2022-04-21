@@ -11,14 +11,10 @@ function LoginModal(props) {
     const navigate = useNavigate();
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
-    const [isPending, setIsPending] = useState(false);
     const handleSubmit = async(e) => {
-
         e.preventDefault();
-
         try {
-            setIsPending(true);
-            await fetch("http://localhost:3001/api/login", {
+            const response = await fetch("http://localhost:3001/api/login", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 credentials: 'include',
@@ -26,46 +22,51 @@ function LoginModal(props) {
                     email: email,
                     password: password
                 })
-            }).then((response) => {
-                console.log(JSON.stringify(response));
-                if(!response) {
-                    setErrMSg('No Server Response')
-                }else if(response?.status === 400){
-                    setErrMSg('Missing Username or Password')
-                }else if(response?.status === 401){
-                    setErrMSg('Invalid Login')
-                }else{
-                    setErrMSg('Login Failed')
-                }
-            }).then((data) => {
-                console.log(data);
+            })
+            if (!response) {
+                setErrMSg('No Server Response')
+            }else if(response?.status === 200){
+                setErrMSg('Login Success!')
+                let data = await response.json();
                 const accessToken = data?.accessToken;
                 setAuth({email, password, accessToken});
-                setIsPending(false);
+                console.log(data);
+                navigate('/Home');
+            }
+            else if(response?.status === 400) {
+                setErrMSg('Missing Username or Password')
+            } else if (response?.status === 401) {
+                setErrMSg('Invalid Login')
+            } else {
+                setErrMSg(('Login Failed'))
 
-            })
-
+            }
 
         }catch (err){
-            alert (err);
-
+            alert(err)
 
         }
 
     }
+
     useEffect(() => {
         setErrMSg('')
     }, [email, password])
+
     useEffect(() => {
         setEmail('');
         setPassword('');
     }, [props.show])
 
 
+
+
+
     if(!props.show){
         return null;
     }
     return (
+
         <div className="modal">
             <div className="modal-content">
                 <div className="modal-header">
@@ -77,11 +78,11 @@ function LoginModal(props) {
                     <Container>
                         <Form>
                             <Form.Group className="mb-3">
-                                <Form.Label>Email address</Form.Label>
+                                <Form.Label htmlFor="email">Email address</Form.Label>
                                 <Form.Control id="email" type="text"  value={email}  required onChange={(e) => setEmail(e.target.value)}/>
                             </Form.Group>
                             <Form.Group className="mb-3">
-                                <Form.Label>Password</Form.Label>
+                                <Form.Label htmlFor="password">Password</Form.Label>
                                 <Form.Control id="password" type="password"  value={password} required onChange={(e) => setPassword(e.target.value)}/>
                             </Form.Group>
                         </Form>
