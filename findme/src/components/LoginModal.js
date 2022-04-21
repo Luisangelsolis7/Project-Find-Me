@@ -18,7 +18,7 @@ function LoginModal(props) {
 
         try {
             setIsPending(true);
-            const response = await fetch("http://localhost:3001/api/login", {
+            await fetch("http://localhost:3001/api/login", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 credentials: 'include',
@@ -26,31 +26,27 @@ function LoginModal(props) {
                     email: email,
                     password: password
                 })
-            }).then((response) => response.json()).then((data) => {
+            }).then((response) => {
+                console.log(JSON.stringify(response));
+                if(!response) {
+                    setErrMSg('No Server Response')
+                }else if(response?.status === 400){
+                    setErrMSg('Missing Username or Password')
+                }else if(response?.status === 401){
+                    setErrMSg('Invalid Login')
+                }
+            }).then((data) => {
                 console.log(data);
                 const accessToken = data?.accessToken;
                 setAuth({email, password, accessToken});
-            })
-                console.log(JSON.stringify(response));
-
-
-                setEmail('');
-                setPassword('');
                 setIsPending(false);
-                navigate('/Home');
 
+            })
 
 
         }catch (err){
-            if(!err?.response) {
-                setErrMSg('No Server Response')
-            }else if(err.response?.status === 400){
-                setErrMSg('Missing Username or Password')
-            }else if(err.response?.status === 401){
-                setErrMSg('Unauthorized')
-            }else{
-                setErrMSg('Login Failed')
-            }
+            alert (err);
+
 
         }
 

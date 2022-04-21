@@ -262,25 +262,26 @@ app.post("/api/register",[check('email').isEmail().normalizeEmail(), check('pass
 });
 
 app.post("/api/login", async (req, res) => {
+    const {email, password} = req.body;
+    if(!email || !password) return res.status(400).send('No Email or Password');
     try{
-        const {email, password} = req.body;
-        if(!email || !password){ res.status(400)};
         const sql="SELECT * from Officer where Officer_Email= ? Limit 1";
         await db.query(sql, email, (err, result) => {
             if(err){
                 console.log(err)
             }
-            if(result.length > 0) {
+            if(result.length === 0){
+                return res.status(401).send("Invalid Login");
+            }
+            else if(result.length > 0) {
                 let passwordHash = result[0]["Hash"];
-                const user = {name: email, password: passwordHash};
                 const verified = bcrypt.compareSync(password, passwordHash);
                 if (verified) {
+                    const user = {name: email, password: passwordHash};
                     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
                     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'});
                     res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'none', secure: true, maxAge: 24*60*60*1000});
                     res.status(200).json({accessToken: accessToken, result: result[0]});
-                }else{
-                    res.status(401);
                 }
             }
         });
