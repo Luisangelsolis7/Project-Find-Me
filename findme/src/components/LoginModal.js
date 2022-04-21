@@ -29,10 +29,11 @@ function LoginModal(props) {
             }).then((response) => response.json()).then((data) => {
                 console.log(data);
                 const accessToken = data?.accessToken;
+                setAuth({email, password, accessToken});
             })
                 console.log(JSON.stringify(response));
 
-                setAuth({email, password, accessToken});
+
                 setEmail('');
                 setPassword('');
                 setIsPending(false);
