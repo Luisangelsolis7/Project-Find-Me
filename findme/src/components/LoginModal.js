@@ -8,8 +8,6 @@ function LoginModal(props) {
 
     const{setAuth} = useAuth();
     const[errMsg, setErrMSg] = useState('');
-    const[isLogged, setIsLogged] = useState(false);
-
     const navigate = useNavigate();
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
@@ -20,28 +18,41 @@ function LoginModal(props) {
 
         try {
             setIsPending(true);
-            await fetch("http://localhost:3001/api/login", {
+            const response = await fetch("http://localhost:3001/api/login", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
+                credentials: 'include',
                 body: JSON.stringify({
                     email: email,
                     password: password
                 })
+            }).then((response) => response.json()).then((data) => {
+                console.log(data);
+                const accessToken = data?.accessToken;
             })
-        }catch (e){
-            if(!e?.response) {
+                console.log(JSON.stringify(response));
+
+                setAuth({email, password, accessToken});
+                setEmail('');
+                setPassword('');
+                setIsPending(false);
+                navigate('/Home');
+
+
+
+        }catch (err){
+            if(!err?.response) {
                 setErrMSg('No Server Response')
+            }else if(err.response?.status === 400){
+                setErrMSg('Missing Username or Password')
+            }else if(err.response?.status === 401){
+                setErrMSg('Unauthorized')
             }else{
                 setErrMSg('Login Failed')
             }
 
         }
-        setAuth({email, password});
-        setEmail('');
-        setPassword('');
-        setIsPending(false);
-        setIsLogged(true);
-        navigate('/Home');
+
     }
     useEffect(() => {
         setErrMSg('')
@@ -68,11 +79,11 @@ function LoginModal(props) {
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control id="email" type="email" placeholder="Enter email" value={email}  required onChange={(e) => setEmail(e.target.value)}/>
+                                <Form.Control id="email" type="text"  value={email}  required onChange={(e) => setEmail(e.target.value)}/>
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control id="password" type="password" placeholder="Password" value={password} required onChange={(e) => setPassword(e.target.value)}/>
+                                <Form.Control id="password" type="password"  value={password} required onChange={(e) => setPassword(e.target.value)}/>
                             </Form.Group>
                         </Form>
                     </Container>
