@@ -37,7 +37,7 @@ function AddModal(props) {
                 })
             });
             setIsPending(false);
-            navigate(0);
+            props.setShow(false);
         }
         useEffect(() => {
             setName('');

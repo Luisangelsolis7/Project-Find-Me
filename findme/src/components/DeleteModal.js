@@ -32,7 +32,7 @@ function DeleteModal(props) {
                 })
             })
             setIsPending(false);
-            navigate(0);
+            props.setShow(false);
         }
 
         console.log(props.itemInfo);

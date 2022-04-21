@@ -96,8 +96,7 @@ function EditModal(props) {
                 userId: props.itemInfo.User_FK
             })
         })
-            alert('Saved')
-            navigate(0); // adding go back 1 page-
+            props.setShow(false); // adding go back 1 page-
             setIsPending(false);
     }
     function Options(i){
