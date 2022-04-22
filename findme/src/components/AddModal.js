@@ -37,7 +37,8 @@ function AddModal(props) {
                 })
             });
             setIsPending(false);
-            props.setShow(false);
+            props.setShow(false)
+            navigate("/Home", {replace: true});
         }
         useEffect(() => {
             setName('');

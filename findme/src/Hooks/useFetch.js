@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
-import axios from '../api/axios';
+import useAxiosPrivate from "./useAxiosPrivate";
 
 const useFetch = ( url ) => {
+    const axiosPrivate = useAxiosPrivate();
     const [ data, setData] = useState( [] ); // make this generic so its reusable
     const [ isPending, setPending] = useState( true );
     const [ error, setError] = useState( null );
@@ -9,7 +10,7 @@ const useFetch = ( url ) => {
         setTimeout(() => {
             const fetchPosts = async () =>{
                 try{
-                    const response = await axios.get( url );
+                    const response = await axiosPrivate.get( url );
                     setData(response.data);
                     setPending(false);
                 } catch(err){
