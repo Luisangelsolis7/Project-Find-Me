@@ -24,9 +24,9 @@ const Home = function () {
     const [showDonate, setDonateShow] = useState(false);
 
     let url;
-    if (toggle === "H") url = 'http://localhost:3001/api/getUnclaimed'
-    else if (toggle === "R") url = 'http://localhost:3001/api/getLost'
-    else if (toggle === "C") url = 'http://localhost:3001/api/getClaimed';
+    if (toggle === "H") url = '/api/getUnclaimed'
+    else if (toggle === "R") url = '/api/getLost'
+    else if (toggle === "C") url = '/api/getClaimed';
     const {data: items, isPending, error} = useFetch(url);
 
     function convertToPDF() {

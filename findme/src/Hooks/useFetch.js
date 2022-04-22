@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import axios from '../api/axios';
 
 const useFetch = ( url ) => {
     const [ data, setData] = useState( [] ); // make this generic so its reusable

@@ -1,12 +1,11 @@
 import useAuth from "./useAuth";
-import useFetch from "./useFetch";
-import axios from "axios";
+import axios from '../api/axios';
 
 const useRefreshToken = () => {
     const {setAuth} = useAuth()
 
     const refresh = async () => {
-        const response = await axios.get('http://localhost:3001/api/refresh', {
+        const response = await axios.get('/api/refresh', {
             withCredentials: true
         });
         setAuth(prev => {
