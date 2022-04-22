@@ -6,12 +6,22 @@ import DeleteModal from "./DeleteModal";
 
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
-    let tableHeader = [];
-    let inputGroup = ''
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
     const [currentItem, setCurrentItem] = useState("", "", "", "", "", "", "", "", "", "", "", "");
+    let tableHeader = [];
+    if (props.active === "H") {
+        tableHeader = ["", "ID", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", "", ""];
+    }
+    if (props.active === "C") {
+        tableHeader = ["", "ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", "", ""];
+    }
+    if (props.active === "R") {
+        tableHeader = ["", "ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
+    }
+
+
     function checkNull(item) {
         if (item !== null) {
             return (<>{item}<br/></>)
@@ -57,16 +67,6 @@ const ItemList = function (props) {
 
     }
 
-    if (props.active === "H") {
-        tableHeader = ["", "ID", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", "", ""];
-    }
-    if (props.active === "C") {
-        tableHeader = ["", "ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", "", ""];
-
-    }
-    if (props.active === "R") {
-        tableHeader = ["", "ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
-    }
 
 
     let counter = 0;
@@ -89,6 +89,7 @@ const ItemList = function (props) {
 
         return key;
     }
+
 
     return (
 
@@ -164,8 +165,8 @@ const ItemList = function (props) {
                 ))}
                 </tbody>
             </table>
-            <EditModal onClose={() => setShowEdit(false)} itemInfo={currentItem} show={showEdit}/>
-            <DeleteModal onClose={() => setShowDelete(false)} itemInfo={currentItem} show={showDelete}/>
+            <EditModal onClose={() => setShowEdit(false)} itemInfo={currentItem} setShow={setShowEdit} show={showEdit}/>
+            <DeleteModal onClose={() => setShowDelete(false)} itemInfo={currentItem} setShow={setShowDelete} show={showDelete}/>
 
 
         </div>

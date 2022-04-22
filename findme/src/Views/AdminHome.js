@@ -7,16 +7,20 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import AddModal from "../components/AddModal";
 import ClaimModal from "../components/ClaimModal";
-import useFetch from "../useFetch";
+import useFetch from "../Hooks/useFetch";
 import {useState} from "react";
 import Pagination from "../components/Pagination";
 import DestroyModal from "../components/DestroyModal";
 import DonateModal from "../components/DonateModal";
-import jsPDF from 'jspdf';
+
+
 import 'jspdf-autotable';
-import useAuth from "../Hooks/useAuth";
+import jsPDF from 'jspdf'
+import useRefreshToken from "../Hooks/useRefreshToken";
+
 
 const Home = function () {
+    const refresh = useRefreshToken();
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
@@ -24,7 +28,6 @@ const Home = function () {
     const [showDonate, setDonateShow] = useState(false);
 
     let url;
-    let title = "";
     let colWidths = {};
     let styles = {};
     if (toggle === "H") {
@@ -38,8 +41,7 @@ const Home = function () {
             columnWidth: 'wrap',
             overflowColumns: 'linebreak'
         }
-        title = "List of Unclaimed Items";
-        url = 'http://localhost:3001/api/getUnclaimed'
+        url = '/api/getUnclaimed'
     } else if (toggle === "R") {
         colWidths = {
             0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
@@ -51,9 +53,9 @@ const Home = function () {
             columnWidth: 'wrap',
             overflowColumns: 'linebreak'
         }
-        url = 'http://localhost:3001/api/getLost';
+        url = '/api/getLost';
     } else if (toggle === "C") {
-        url = 'http://localhost:3001/api/getClaimed';
+        url = '/api/getClaimed';
         styles = {
             overflow: 'linebreak',
             columnWidth: 'wrap',
@@ -65,6 +67,7 @@ const Home = function () {
             10: {cellWidth: 1}, 11: {cellWidth: 1}
         }
     }
+
     const {data: items, isPending, error} = useFetch(url);
 
     function convertToPDF() {
@@ -157,6 +160,7 @@ const Home = function () {
         }
     }
 
+
     return (
         <>
             <AdminNavBar toggle={toggle} changeToggle={toggle => setToggle(toggle)} value={q}
@@ -186,15 +190,17 @@ const Home = function () {
 
                         <br/><br/><br/>
                         {addButton(toggle)}
-                        <Button className="openAddUnclaimed" onClick={() => convertToPDF()}>Convert to PDF</Button>
+                        <Button className="openPDF" onClick={() => convertToPDF()}>Convert to PDF</Button>
+                        <br/> <br/>
+                        <Button className="refresh" onClick={() => refresh()}>Refresh</Button>
 
                     </Col>
                 </Row>
 
-                <AddModal onClose={() => setAddShow(false)} show={showAdd}/>
-                <ClaimModal onClose={() => setClaimShow(false)} itemInfo={itemInfo} show={showClaim}/>
-                <DestroyModal onClose={() => setDestroyShow(false)} itemInfo={itemInfo} show={showDestroy}/>
-                <DonateModal onClose={() => setDonateShow(false)} itemInfo={itemInfo} show={showDonate}/>
+                <AddModal onClose={() => setAddShow(false)} setShow={setAddShow} show={showAdd}/>
+                <ClaimModal onClose={() => setClaimShow(false)} itemInfo={itemInfo} setShow={setClaimShow} show={showClaim}/>
+                <DestroyModal onClose={() => setDestroyShow(false)} itemInfo={itemInfo} setShow={setDestroyShow} show={showDestroy}/>
+                <DonateModal onClose={() => setDonateShow(false)} itemInfo={itemInfo} setShow={setDonateShow} show={showDonate}/>
             </Container>
 
         </>

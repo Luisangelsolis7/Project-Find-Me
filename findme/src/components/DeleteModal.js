@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
-import useFetch from "../useFetch";
+import useFetch from "../Hooks/useFetch";
 
 
 function DeleteModal(props) {
@@ -32,7 +32,7 @@ function DeleteModal(props) {
                 })
             })
             setIsPending(false);
-            navigate(0);
+            props.setShow(false);
         }
 
         console.log(props.itemInfo);

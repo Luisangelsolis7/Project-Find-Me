@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors');
@@ -5,32 +6,18 @@ const bodyParser = require('body-parser');
 const db = require('./config/db');
 const {check, validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const credentials = require('./credentials');
+const corsOptions = require('./config/corsOptions')
 
-app.use(cors());
+
+app.use(credentials);
+app.use(cookieParser());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.post("/api/get", (req, res) => {
-
-    const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
-                        ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
-                        u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
-                        o.Officer_Badge, o.Officer_Fname, o.Officer_Lname 
-                  FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time, h.Officer_FK 
-                         From Item_Status_History h, (Select Item_FK, MAX(ISH_Date) as mdate, MAX(ISH_Time) as mtime from Item_Status_History Group by Item_FK) t 
-                         where t.Item_FK = h.Item_FK and t.mdate = h.ISH_date and t.mtime = h.ISH_Time) ish 
-                         Join Item i on i.Item_ID = ish.Item_FK 
-                         Left Join User u on u.User_ID = ish.User_FK 
-                         Left Join Officer o on o.Officer_Badge = ish.Officer_FK join Category c on i.Category_FK = c.Category_Name 
-                            Where ish.Status_FK = ? 
-                         Order by ish.ISH_Date DESC, ish.ISH_Time DESC`;
-    db.query(sql, req.body.status, (err, result)=>{
-        if(err){
-            console.log(err)
-        }
-        res.send(result);
-    });
-});
 
 app.get("/api/getLost", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
@@ -275,37 +262,84 @@ app.post("/api/register",[check('email').isEmail().normalizeEmail(), check('pass
 });
 
 app.post("/api/login", async (req, res) => {
-    try{
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-        console.log(errors);
-        return res.status(422).json({errors : errors.array()})
-    }
     const {email, password} = req.body;
-    const sql="SELECT Hash from Officer where Officer_Email=?";
-    await db.query(sql, email, (err, result) => {
-        if(err){
-            console.log(err)
-        }
-        if(result.length!=0) {
-            let password_hash = result[0]["Hash"];
-            const verified = bcrypt.compareSync(password, password_hash);
-            if (verified) {
-                res.status(200).json('All good');
+    if(!email || !password) return res.status(400).send('No Email or Password');
+    try{
+        const sql="SELECT * from Officer where Officer_Email= ? Limit 1";
+        await db.query(sql, email, (err, result) => {
+            if(err){
+                console.log(err)
             }
-        }
-    });
+            if(result.length != 0) {
+                let passwordHash = result[0]["Hash"];
+                const verified = bcrypt.compareSync(password, passwordHash);
+                if (verified) {
+                    const user = {name: email, password: passwordHash};
+                    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+                    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'});
+                    res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'none', secure: true, maxAge: 24*60*60*1000});
+                    res.status(200).json({accessToken: accessToken, result: result[0]});
+                }
+                else{
+                     res.status(401).send("Invalid Login");
+                }
 
-}catch (e){
-    console.log(e);
-    res.status(500).send();
-}
+            }else{
+                 res.status(401).send("Invalid Login");
+            }
+        });
+    }catch{
+        return res.status(500).send();
+    }
 });
+
+app.get("/api/refresh", (req, res) => {
+
+    const cookies = req.cookies;
+    if (!cookies?.jwt){
+        res.status(401).send();
+    }
+    const refreshToken = cookies.jwt;
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+            if(err) return res.status(403);
+            console.log(decoded);
+            const accessToken = jwt.sign({"email":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+            res.json(accessToken);
+        }
+    )
+
+});
+
+app.get("/api/clear", async (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt){
+        res.status(204).send();
+    }
+    res.clearCookie('jwt', {httpOnly: true, sameSite: 'none', secure: true, maxAge: 24*60*60*1000})
+    res.status(204).send();
+    //const refreshToken = cookies.jwt;
+
+});
+
+
+
+
+function authenticateToken(req, res, next){
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if(token == null) return res.sendStatus(401)
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if(err) return res.sendStatus(403)
+        req.user = user
+        next();
+    })
+
+}
 
 
 
 
 
 app.listen(3001, () => {
-    console.log("running on port 3001")
+    console.log("Running on port 3001")
 });

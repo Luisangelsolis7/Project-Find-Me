@@ -11,6 +11,7 @@ import Report from "./Views/ReportForm";
 import AdminHome from "./Views/AdminHome";
 import Reports from "./Views/Reports";
 import Layout from "./components/Layout";
+import Login from "./Views/Login";
 function App() {
     let locations = ["N/A", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
         "Parking Garage", "Institute for Collaboration",
@@ -28,6 +29,7 @@ function App() {
               <Route path="/" element={<Layout />}>
 
                   <Route path="/" element={<Report locations={locations}/>} />
+                  <Route path="/Login" element={<Login />}/>
 
              <Route element={<RequireAuth/>}>
               <Route path="/Home" element={<AdminHome />} />
