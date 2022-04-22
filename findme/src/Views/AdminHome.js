@@ -21,9 +21,12 @@ const Home = function () {
     const [showClaim, setClaimShow] = useState(false);
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
-
+    
     let url;
-    if (toggle === "H") url = 'http://localhost:3001/api/getUnclaimed'
+    let title = "";
+    if (toggle === "H") {
+        title = "List of Unclaimed Items";
+        url = 'http://localhost:3001/api/getUnclaimed'}
     else if (toggle === "R") url = 'http://localhost:3001/api/getLost'
     else if (toggle === "C") url = 'http://localhost:3001/api/getClaimed';
     const {data: items, isPending, error} = useFetch(url);
@@ -32,7 +35,9 @@ const Home = function () {
         let x = 10;
         let y = 10;
         const doc = new jsPDF();
-
+            doc.setFont("TimesNewRoman");
+            doc.setFontSize(15);
+            doc.text(250,5,title);
         items.forEach(function (item, i) {
             if(i % 28 == 0 && i != 0){
                 y = 10;
