@@ -12,8 +12,12 @@ import {useState} from "react";
 import Pagination from "../components/Pagination";
 import DestroyModal from "../components/DestroyModal";
 import DonateModal from "../components/DonateModal";
+
+
+import 'jspdf-autotable';
 import jsPDF from 'jspdf'
 import useRefreshToken from "../Hooks/useRefreshToken";
+
 
 const Home = function () {
     const refresh = useRefreshToken();
@@ -24,29 +28,60 @@ const Home = function () {
     const [showDonate, setDonateShow] = useState(false);
 
     let url;
-    if (toggle === "H") url = '/api/getUnclaimed'
-    else if (toggle === "R") url = '/api/getLost'
-    else if (toggle === "C") url = '/api/getClaimed';
+    let colWidths = {};
+    let styles = {};
+    if (toggle === "H") {
+        colWidths = {
+            0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
+            5: {cellWidth: "auto"}, 6: {cellWidth: 15}, 7: {cellWidth: "auto"}, 8: {cellWidth: 1}, 9: {cellWidth: 15},
+            10: {cellWidth: 1}, 11: {cellWidth: 1}
+        }
+        styles = {
+            overflow: 'hidden',
+            columnWidth: 'wrap',
+            overflowColumns: 'linebreak'
+        }
+        url = '/api/getUnclaimed'
+    } else if (toggle === "R") {
+        colWidths = {
+            0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
+            5: {cellWidth: "auto"}, 6: {cellWidth: 15}, 7: {cellWidth: "auto"}, 8: {cellWidth: 1}, 9: {cellWidth: 1},
+            10: {cellWidth: 1}, 11: {cellWidth: 1}
+        }
+        styles = {
+            overflow: 'hidden',
+            columnWidth: 'wrap',
+            overflowColumns: 'linebreak'
+        }
+        url = '/api/getLost';
+    } else if (toggle === "C") {
+        url = '/api/getClaimed';
+        styles = {
+            overflow: 'linebreak',
+            columnWidth: 'wrap',
+            overflowColumns: 'hidden'
+        }
+        colWidths = {
+            0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
+            5: {cellWidth: 40}, 6: {cellWidth: 10}, 7: {cellWidth: 1}, 8: {cellWidth: 30}, 9: {cellWidth: 10},
+            10: {cellWidth: 1}, 11: {cellWidth: 1}
+        }
+    }
+
     const {data: items, isPending, error} = useFetch(url);
 
     function convertToPDF() {
-        let x = 10;
-        let y = 10;
         const doc = new jsPDF();
 
-        items.forEach(function (item, i) {
-            if(i % 28 == 0 && i != 0){
-                y = 10;
-                doc.addPage();
-            }
-            doc.setFont('TimesNewRoman')
-            doc.setFontSize(10);
-            doc.text(x, y,
-                "Item Name"+item.Item_Name);
-            y = y + 10;
+        doc.autoTable({
+            html: '.table',
+            columnStyles: colWidths,
+            styles: styles
         });
+
         doc.save('Test.pdf');
     }
+
     const [itemInfo, setItemInfo] = useState([]);
     const [q, setQ] = useState("H");
     const [action, setAction] = useState("claim");
@@ -90,8 +125,8 @@ const Home = function () {
             return (
                 <>
                     <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
-                    <br />
-                    <br />
+                    <br/>
+                    <br/>
                 </>
 
             )
