@@ -265,7 +265,7 @@ app.post("/api/login", async (req, res) => {
     const {email, password} = req.body;
     if(!email || !password) return res.status(400).send('No Email or Password');
     try{
-        const sql="SELECT * from Officer where Officer_Email= ? Limit 1";
+        let sql="SELECT * from Officer where Officer_Email= ? Limit 1";
         await db.query(sql, email, (err, result) => {
             if(err){
                 console.log(err)
@@ -274,11 +274,12 @@ app.post("/api/login", async (req, res) => {
                 let passwordHash = result[0]["Hash"];
                 const verified = bcrypt.compareSync(password, passwordHash);
                 if (verified) {
-                    const user = {name: email, password: passwordHash};
+                    const user = {email: email, badge:result[0]["Officer_Badge"]};
                     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
                     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'});
                     res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'none', secure: true, maxAge: 24*60*60*1000});
-                    res.status(200).json({accessToken: accessToken, result: result[0]});
+                    res.status(200).json({badge:result[0]["Officer_Badge"], accessToken: accessToken});
+
                 }
                 else{
                      res.status(401).send("Invalid Login");
@@ -302,9 +303,8 @@ app.get("/api/refresh", (req, res) => {
     const refreshToken = cookies.jwt;
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if(err) return res.status(403);
-            console.log(decoded);
             const accessToken = jwt.sign({"email":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
-            res.json(accessToken);
+            res.json({accessToken: accessToken});
         }
     )
 

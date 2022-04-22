@@ -66,6 +66,8 @@ const Home = function () {
 
     }
 
+
+
     function selectBar(toggle) {
         if (toggle === "H") {
             return (
@@ -158,6 +160,7 @@ const Home = function () {
                         <Button className="openPDF" onClick={() => convertToPDF()}>Convert to PDF</Button>
                         <br/> <br/>
                         <Button className="refresh" onClick={() => refresh()}>Refresh</Button>
+
 
                     </Col>
                 </Row>

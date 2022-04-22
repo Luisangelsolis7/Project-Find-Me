@@ -3,16 +3,44 @@ import Form from "react-bootstrap/Form";
 import React, {useState, useEffect} from "react";
 import {Link,useNavigate, useLocation} from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
+import axios from "../api/axios";
 
-function Login(props) {
-
+function Login() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
     const{setAuth} = useAuth();
     const[errMsg, setErrMSg] = useState('');
-    const navigate = useNavigate();
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        try{
+            const response = await axios.post('/api/login', JSON.stringify({email, password}), {
+                headers: {'Content-Type': 'application/json'},
+                withCredentials: true
+            });
+            console.log(JSON.stringify(response?.data))
+            const accessToken = response?.data?.accessToken;
+            const badge = response?.data?.badge;
+            setAuth({email, password, badge, accessToken});
+            setEmail('');
+            setPassword('');
+            navigate(from, {replace: true});
+        }catch (err){
+            if (!err?.response){
+                setErrMSg('No Server Response')
+            }else if(err?.response.status === 400){
+                setErrMSg('Missing Username or Password')
+            }else if(err?.response.status === 401){
+                setErrMSg('Invalid Login')
+            }else{
+                setErrMSg('Login Failed')
+            }
+
+        }
+        /*
         try {
             const response = await fetch("http://localhost:3001/api/login", {
                 method: 'POST',
@@ -31,7 +59,7 @@ function Login(props) {
                 const accessToken = data?.accessToken;
                 setAuth({email, password, accessToken});
                 console.log(data);
-                navigate('/Home');
+                navigate('/Admin');
             }
             else if(response?.status === 400) {
                 setErrMSg('Missing Username or Password')
@@ -45,7 +73,7 @@ function Login(props) {
         }catch (err){
             alert(err)
 
-        }
+        }*/
 
     }
 
@@ -53,10 +81,6 @@ function Login(props) {
         setErrMSg('')
     }, [email, password])
 
-    useEffect(() => {
-        setEmail('');
-        setPassword('');
-    }, [])
 
 
     return (

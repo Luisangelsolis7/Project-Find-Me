@@ -37,7 +37,6 @@ function AddModal(props) {
                 })
             });
             setIsPending(false);
-            props.setShow(false)
             navigate(0);
         }
         useEffect(() => {

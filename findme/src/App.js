@@ -2,6 +2,7 @@ import React from 'react';
 import {Routes, Route} from "react-router-dom";
 import './CSS/App.css';
 import RequireAuth from "./components/RequireAuth";
+import PersistLogin from "./components/PersistLogin";
 
 
 //imported views
@@ -12,6 +13,7 @@ import AdminHome from "./Views/AdminHome";
 import Reports from "./Views/Reports";
 import Layout from "./components/Layout";
 import Login from "./Views/Login";
+
 function App() {
     let locations = ["N/A", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
         "Parking Garage", "Institute for Collaboration",
@@ -28,14 +30,16 @@ function App() {
           <Routes>
               <Route path="/" element={<Layout />}>
 
-                  <Route path="/" element={<Report locations={locations}/>} />
-                  <Route path="/Login" element={<Login />}/>
+                  <Route path="" element={<Report locations={locations}/>} />
+                  <Route path="login" element={<Login />}/>
 
-             <Route element={<RequireAuth/>}>
-              <Route path="/Home" element={<AdminHome />} />
-              <Route path="/Claimed" element={<Claimed />} />
-              <Route path="/Reports" element={<Reports />} />
-             </Route>
+                  <Route element={<PersistLogin/>}>
+                    <Route element={<RequireAuth/>}>
+                        <Route path="admin" element={<AdminHome />} />
+                        <Route path="claimed" element={<Claimed />} />
+                        <Route path="reports" element={<Reports />} />
+                    </Route>
+                  </Route>
 
               <Route path="*" element={<NoPage />} />
               </Route>
