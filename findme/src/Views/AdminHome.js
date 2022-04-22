@@ -12,7 +12,8 @@ import {useState} from "react";
 import Pagination from "../components/Pagination";
 import DestroyModal from "../components/DestroyModal";
 import DonateModal from "../components/DonateModal";
-import jsPDF from 'jspdf'
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import useAuth from "../Hooks/useAuth";
 
 const Home = function () {
@@ -21,36 +22,63 @@ const Home = function () {
     const [showClaim, setClaimShow] = useState(false);
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
-    
+
     let url;
     let title = "";
+    let colWidths = {};
+    let styles = {};
     if (toggle === "H") {
+        colWidths = {
+            0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
+            5: {cellWidth: "auto"}, 6: {cellWidth: 15}, 7: {cellWidth: "auto"}, 8: {cellWidth: 1}, 9: {cellWidth: 15},
+            10: {cellWidth: 1}, 11: {cellWidth: 1}
+        }
+        styles = {
+            overflow: 'hidden',
+            columnWidth: 'wrap',
+            overflowColumns: 'linebreak'
+        }
         title = "List of Unclaimed Items";
-        url = 'http://localhost:3001/api/getUnclaimed'}
-    else if (toggle === "R") url = 'http://localhost:3001/api/getLost'
-    else if (toggle === "C") url = 'http://localhost:3001/api/getClaimed';
+        url = 'http://localhost:3001/api/getUnclaimed'
+    } else if (toggle === "R") {
+        colWidths = {
+            0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
+            5: {cellWidth: "auto"}, 6: {cellWidth: 15}, 7: {cellWidth: "auto"}, 8: {cellWidth: 1}, 9: {cellWidth: 1},
+            10: {cellWidth: 1}, 11: {cellWidth: 1}
+        }
+        styles = {
+            overflow: 'hidden',
+            columnWidth: 'wrap',
+            overflowColumns: 'linebreak'
+        }
+        url = 'http://localhost:3001/api/getLost';
+    } else if (toggle === "C") {
+        url = 'http://localhost:3001/api/getClaimed';
+        styles = {
+            overflow: 'linebreak',
+            columnWidth: 'wrap',
+            overflowColumns: 'hidden'
+        }
+        colWidths = {
+            0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
+            5: {cellWidth: 40}, 6: {cellWidth: 10}, 7: {cellWidth: 1}, 8: {cellWidth: 30}, 9: {cellWidth: 10},
+            10: {cellWidth: 1}, 11: {cellWidth: 1}
+        }
+    }
     const {data: items, isPending, error} = useFetch(url);
 
     function convertToPDF() {
-        let x = 10;
-        let y = 10;
         const doc = new jsPDF();
-            doc.setFont("TimesNewRoman");
-            doc.setFontSize(15);
-            doc.text(250,5,title);
-        items.forEach(function (item, i) {
-            if(i % 28 == 0 && i != 0){
-                y = 10;
-                doc.addPage();
-            }
-            doc.setFont('TimesNewRoman')
-            doc.setFontSize(10);
-            doc.text(x, y,
-                "Item Name"+item.Item_Name);
-            y = y + 10;
+
+        doc.autoTable({
+            html: '.table',
+            columnStyles: colWidths,
+            styles: styles
         });
+
         doc.save('Test.pdf');
     }
+
     const [itemInfo, setItemInfo] = useState([]);
     const [q, setQ] = useState("H");
     const [action, setAction] = useState("claim");
@@ -92,8 +120,8 @@ const Home = function () {
             return (
                 <>
                     <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
-                    <br />
-                    <br />
+                    <br/>
+                    <br/>
                 </>
 
             )
