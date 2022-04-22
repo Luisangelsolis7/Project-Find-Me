@@ -1,21 +1,22 @@
 import useAuth from "./useAuth";
 import useFetch from "./useFetch";
+import axios from "axios";
 
 const useRefreshToken = () => {
     const {setAuth} = useAuth()
+
     const refresh = async () => {
-        const response = await fetch('http://localhost:3001/api/refresh', {
-            credentials: 'include'
-        })
-        let data = await response.json();
-        setAuth(prev => {
-           console.log(JSON.stringify(prev));
-           console.log(data);
-           return{ ...prev, accessToken: data}
+        const response = await axios.get('http://localhost:3001/api/refresh', {
+            withCredentials: true
         });
-        return data.accessToken;
+        setAuth(prev => {
+            console.log(JSON.stringify(prev));
+            console.log(response.data);
+            return { ...prev, accessToken: response.data}
+        });
+        return response.data;
     }
     return refresh;
-}
+};
 
 export default useRefreshToken;

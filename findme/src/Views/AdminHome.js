@@ -13,8 +13,10 @@ import Pagination from "../components/Pagination";
 import DestroyModal from "../components/DestroyModal";
 import DonateModal from "../components/DonateModal";
 import jsPDF from 'jspdf'
+import useRefreshToken from "../Hooks/useRefreshToken";
 
 const Home = function () {
+    const refresh = useRefreshToken();
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
@@ -154,6 +156,8 @@ const Home = function () {
                         <br/><br/><br/>
                         {addButton(toggle)}
                         <Button className="openPDF" onClick={() => convertToPDF()}>Convert to PDF</Button>
+                        <br/> <br/>
+                        <Button className="refresh" onClick={() => refresh()}>Refresh</Button>
 
                     </Col>
                 </Row>
