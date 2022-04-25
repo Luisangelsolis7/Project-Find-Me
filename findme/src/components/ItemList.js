@@ -15,10 +15,10 @@ const ItemList = function (props) {
         tableHeader = ["", "ID", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", "", ""];
     }
     if (props.active === "C") {
-        tableHeader = ["", "ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", "", ""];
+        tableHeader = ["ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", "", ""];
     }
     if (props.active === "R") {
-        tableHeader = ["", "ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
+        tableHeader = ["ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
     }
 
 
@@ -90,6 +90,34 @@ const ItemList = function (props) {
         return key;
     }
 
+    function toggleBox(i) {
+        if(props.active === "H")
+        return(
+        <td className="input-group-text">
+            {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
+            <input
+                onChange={(e) => {
+                    // add to list
+                    if (e.target.checked) {
+                        props.setItemInfo([
+                            ...props.itemInfo,
+                            i.Item_ID,
+                        ]);
+                    } else {
+                        // remove from list
+                        props.setItemInfo(
+                            props.itemInfo.filter(item => item !== i.Item_ID),
+                        );
+                    }
+                }}
+                value={props.itemInfo}
+                // <-- use checked prop, retrieve value by id
+                type="checkbox"
+            />
+        </td>
+        )
+    }
+
 
     return (
 
@@ -107,28 +135,7 @@ const ItemList = function (props) {
                 <tbody>
                 {props.items.map((i) => (
                     <tr key={generateKey(i.Item_ID)}>
-                        <td className="input-group-text">
-                            {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
-                            <input
-                                onChange={(e) => {
-                                    // add to list
-                                    if (e.target.checked) {
-                                        props.setItemInfo([
-                                            ...props.itemInfo,
-                                            i.Item_ID,
-                                        ]);
-                                    } else {
-                                        // remove from list
-                                        props.setItemInfo(
-                                            props.itemInfo.filter(item => item !== i.Item_ID),
-                                        );
-                                    }
-                                }}
-                                value={props.itemInfo}
-                                // <-- use checked prop, retrieve value by id
-                                type="checkbox"
-                            />
-                        </td>
+                        {toggleBox(i)}
                         <td>{i.Item_ID}</td>
                         <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                         <td className={style1}>{i.Item_Name}</td>

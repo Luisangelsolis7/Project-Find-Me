@@ -31,7 +31,7 @@ function LoginModal(props) {
                 const accessToken = data?.accessToken;
                 setAuth({email, password, accessToken});
                 console.log(data);
-                navigate('/Home');
+                navigate('/Admin');
             }
             else if(response?.status === 400) {
                 setErrMSg('Missing Username or Password')

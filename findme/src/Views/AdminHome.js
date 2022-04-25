@@ -165,7 +165,7 @@ const Home = function () {
 
     return (
         <>
-            <AdminNavBar toggle={toggle} changeToggle={toggle => setToggle(toggle)} value={q}
+            <AdminNavBar active={toggle} changeToggle={toggle => setToggle(toggle)} value={q}
                          onChangeValue={(e) => setQ(e.target.value)}/>
             <Container>
                 <Row>
@@ -184,8 +184,8 @@ const Home = function () {
                         {isPending && <div> Loading ... </div>}
                         {items && <ItemList items={search(currentItems)} itemInfo={itemInfo} setItemInfo={setItemInfo}
                                             active={toggle}/>}
-                        <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate}
-                                    currentPage={currentPage}/>
+                        {items && < Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate}
+                                    currentPage={currentPage}/>}
 
                     </Col>
                     <Col md={1}>

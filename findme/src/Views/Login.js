@@ -85,7 +85,7 @@ function Login() {
 
     return (
 
-        <div className="modal">
+        <div>
             <div className="modal-content">
                 <div className="modal-header">
                     <h4 className="modal-title">
