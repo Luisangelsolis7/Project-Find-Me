@@ -7,10 +7,8 @@ import PersistLogin from "./components/PersistLogin";
 
 //imported views
 import NoPage from "./Views/NoPageFound";
-import Claimed from "./Views/Claimed";
 import Report from "./Views/ReportForm";
 import AdminHome from "./Views/AdminHome";
-import Reports from "./Views/Reports";
 import Layout from "./components/Layout";
 import Login from "./Views/Login";
 
@@ -36,8 +34,6 @@ function App() {
                   <Route element={<PersistLogin/>}>
                     <Route element={<RequireAuth/>}>
                         <Route path="admin" element={<AdminHome />} />
-                        <Route path="claimed" element={<Claimed />} />
-                        <Route path="reports" element={<Reports />} />
                     </Route>
                   </Route>
 
