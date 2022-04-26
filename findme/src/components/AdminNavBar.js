@@ -4,7 +4,13 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl, NavItem} from "react-bootstrap";
+import useLogout from "../Hooks/useLogout";
+import {useNavigate} from "react-router-dom";
+import Button from "react-bootstrap/Button";
 function AdminNavBar(props){
+
+    const logout = useLogout();
+    const navigate = useNavigate();
     let Home, Claimed, Reports = "nav-link";
     if(props.active === "H"){
         Home = "nav-link active";
@@ -19,6 +25,10 @@ function AdminNavBar(props){
         Claimed = "nav-link";
         Reports = "nav-link active";
     }
+    const signOut = async () => {
+        await logout();
+        navigate("/")
+    }
     return(
         <Navbar bg="light"  variant="light"  expand="lg" className="justify-content-end">
             <Container>
@@ -31,9 +41,9 @@ function AdminNavBar(props){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav variant="tabs">
-                        <NavItem className="NavItem"><Nav.Link className={Reports} href="reports">Lost Reports</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Home} href="admin">Found Items</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Claimed} href="claimed">Claimed Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Reports} onClick={() => props.changeToggle("R")}>Lost Reports</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Home} onClick={() => props.changeToggle("H")}>Found Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Claimed} onClick={() => props.changeToggle("C")}>Claimed Items</Nav.Link></NavItem>
                         <InputGroup className="searchBar">
                             <FormControl
                                 placeholder="Search"
@@ -42,9 +52,13 @@ function AdminNavBar(props){
                                 value={props.q}
                                 onChange={props.onChangeValue}
                             />
-                            {/*<Button variant="primary" type="submit">*/}
-                            {/*    search*/}
-                            {/*</Button>*/}
+                            <br/>
+                            <div className="space"></div>
+                            <Button className="btn btn-primary">Register</Button>
+                            <div className="space"></div>
+                            <Button className="btn btn-primary" onClick={signOut}>Logout</Button>
+
+
                         </InputGroup>
                     </Nav>
                 </Navbar.Collapse>

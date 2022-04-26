@@ -8,7 +8,7 @@ import useFetch from "../Hooks/useFetch";
 import Pagination from "../components/Pagination";
 
 const Reports = function() {
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getLost');
+    const {data : items, isPending, error } = useFetch('/api/getLost');
     const [q, setQ] = useState("");
     const[currentPage, setCurrentPage] = useState(1);
     const[itemsPerPage, setItemsPerPage] = useState(20);

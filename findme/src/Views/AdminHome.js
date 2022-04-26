@@ -7,27 +7,30 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import AddModal from "../components/AddModal";
 import ClaimModal from "../components/ClaimModal";
-import useFetch from "../Hooks/useFetch";
 import {useState} from "react";
-import Pagination from "../components/Pagination";
 import DestroyModal from "../components/DestroyModal";
 import DonateModal from "../components/DonateModal";
 
 
 import 'jspdf-autotable';
 import jsPDF from 'jspdf'
-import useRefreshToken from "../Hooks/useRefreshToken";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 
 const Home = function () {
-    const refresh = useRefreshToken();
+    let url;
+    const axiosPrivate = useAxiosPrivate();
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
+    const [showEdit, setEditShow] = useState(false);
+    const [showDelete, setDeleteShow] = useState(false);
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
+    const [items, setItems] = useState([]);
 
-    let url;
+
+
     let colWidths = {};
     let styles = {};
     if (toggle === "H") {
@@ -41,7 +44,8 @@ const Home = function () {
             columnWidth: 'wrap',
             overflowColumns: 'linebreak'
         }
-        url = '/api/getUnclaimed'
+        url = '/api/getUnclaimed';
+
     } else if (toggle === "R") {
         colWidths = {
             0: {cellWidth: 1}, 1: {cellWidth: 10}, 2: {cellWidth: 20}, 3: {cellWidth: 20}, 4: {cellWidth: 20},
@@ -55,7 +59,6 @@ const Home = function () {
         }
         url = '/api/getLost';
     } else if (toggle === "C") {
-        url = '/api/getClaimed';
         styles = {
             overflow: 'linebreak',
             columnWidth: 'wrap',
@@ -66,9 +69,17 @@ const Home = function () {
             5: {cellWidth: 40}, 6: {cellWidth: 10}, 7: {cellWidth: 1}, 8: {cellWidth: 30}, 9: {cellWidth: 10},
             10: {cellWidth: 1}, 11: {cellWidth: 1}
         }
+        url = '/api/getClaimed';
     }
 
-    const {data: items, isPending, error} = useFetch(url);
+    const getItems = async () => {
+        try {
+            const response = await axiosPrivate(url);
+            setItems(response.data);
+        } catch (e){
+            console.error(e)
+        }
+    }
 
     function convertToPDF() {
         const doc = new jsPDF();
@@ -85,11 +96,7 @@ const Home = function () {
     const [itemInfo, setItemInfo] = useState([]);
     const [q, setQ] = useState("H");
     const [action, setAction] = useState("claim");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(25);
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
+
 
 
     function formatDate(inputDate) {
@@ -120,19 +127,6 @@ const Home = function () {
         }
     }
 
-    function addButton(toggle) {
-        if (toggle === "H") {
-            return (
-                <>
-                    <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>
-                    <br/>
-                    <br/>
-                </>
-
-            )
-        }
-
-    }
 
     function search(rows) {
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -148,7 +142,7 @@ const Home = function () {
         )
     }
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
     function openModal(e) {
         if (e === "claim") {
@@ -161,6 +155,10 @@ const Home = function () {
             setDonateShow(true);
         }
     }
+
+    useEffect(() => {
+        getItems();
+    },[showAdd, showClaim, showDonate, showDestroy, url])
 
 
     return (
@@ -180,21 +178,20 @@ const Home = function () {
                         {selectBar(toggle)}
                         <br/>
 
-                        {error && <div> {error}</div>}
-                        {isPending && <div> Loading ... </div>}
-                        {items && <ItemList items={search(currentItems)} itemInfo={itemInfo} setItemInfo={setItemInfo}
-                                            active={toggle}/>}
-                        {items && < Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate}
-                                    currentPage={currentPage}/>}
+
+                        {items && <ItemList items={search(items)} itemInfo={itemInfo} setItemInfo={setItemInfo}
+                                            active={toggle} />}
+
 
                     </Col>
                     <Col md={1}>
 
                         <br/><br/><br/>
-                        {addButton(toggle)}
-                        <Button className="openPDF" onClick={() => convertToPDF()}>Convert to PDF</Button>
+                        {toggle === "H" && <Button className="openAddUnclaimed" onClick={() => setAddShow(true)}>Add Item</Button>}
+                        <br/>
+                        <br/>
+                        {toggle === "H" && <Button className="openPDF" onClick={() => convertToPDF()}>Convert to PDF</Button>}
                         <br/> <br/>
-                        <Button className="refresh" onClick={() => refresh()}>Refresh</Button>
 
 
                     </Col>

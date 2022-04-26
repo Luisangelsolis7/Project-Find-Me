@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
+import Pagination from "./Pagination";
 
 
 const ItemList = function (props) {
@@ -9,6 +10,11 @@ const ItemList = function (props) {
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(25);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = props.items.slice(indexOfFirstItem, indexOfLastItem);
     const [currentItem, setCurrentItem] = useState("", "", "", "", "", "", "", "", "", "", "", "");
     let tableHeader = [];
     if (props.active === "H") {
@@ -21,6 +27,8 @@ const ItemList = function (props) {
         tableHeader = ["ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
     }
 
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     function checkNull(item) {
         if (item !== null) {
@@ -172,6 +180,8 @@ const ItemList = function (props) {
                 ))}
                 </tbody>
             </table>
+            < Pagination itemsPerPage={itemsPerPage} totalItems={props.items.length} paginate={paginate}
+                         currentPage={currentPage}/>}
             <EditModal onClose={() => setShowEdit(false)} itemInfo={currentItem} setShow={setShowEdit} show={showEdit}/>
             <DeleteModal onClose={() => setShowDelete(false)} itemInfo={currentItem} setShow={setShowDelete} show={showDelete}/>
 
