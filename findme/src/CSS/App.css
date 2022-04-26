@@ -177,3 +177,6 @@ input {
     border-top: 1px solid #eeeeee;
     border-bottom: 1px solid #eeeeee;
 }
+.space {
+    width: 20px;
+}

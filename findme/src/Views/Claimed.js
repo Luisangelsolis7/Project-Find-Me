@@ -1,21 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AdminNavBar from "../components/AdminNavBar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ItemList from "../components/ItemList";
-import useFetch from "../useFetch";
+import useFetch from "../Hooks/useFetch";
 import Pagination from "../components/Pagination";
+import useAuth from "../Hooks/useAuth";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 const Claimed = function() {
 
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getClaimed');
+    const axiosPrivate = useAxiosPrivate();
+    const [items, setItems] = useState([]);
     const [q, setQ] = useState("");
-    const[currentPage, setCurrentPage] = useState(1);
-    const[itemsPerPage, setItemsPerPage] = useState(20);
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const getItems = async () => {
+        try {
+            const response = await axiosPrivate("/api/getClaimed");
+            setItems(response.data);
+        } catch (e){
+            console.error(e)
+        }
+    }
+
     function search(rows){
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
             row.Item_Name?.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -33,6 +40,11 @@ const Claimed = function() {
             row.Officer_FK?.toLowerCase().indexOf(q.toLowerCase()) > -1
         )
     }
+
+    useEffect(() => {
+        getItems();
+    },[])
+
     return (
         <>
             <AdminNavBar active="C" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
@@ -50,10 +62,7 @@ const Claimed = function() {
                     </div>
                         <br/>
 
-                        { error  && <div> {error}</div>}
-                        { isPending && <div> Loading ... </div> }
-                        { items && <ItemList items={search(currentItems)} active="C"/>}
-                        <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate} currentPage={currentPage}/>
+                        <ItemList items={search(items)} active="C"/>
                     </Col>
                     <Col md={1}>
 

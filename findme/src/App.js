@@ -1,14 +1,17 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import './CSS/App.css';
+import RequireAuth from "./components/RequireAuth";
+import PersistLogin from "./components/PersistLogin";
 
 
 //imported views
 import NoPage from "./Views/NoPageFound";
-import Claimed from "./Views/Claimed";
 import Report from "./Views/ReportForm";
 import AdminHome from "./Views/AdminHome";
-import Reports from "./Views/Reports";
+import Layout from "./components/Layout";
+import Login from "./Views/Login";
+
 function App() {
     let locations = ["N/A", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
         "Parking Garage", "Institute for Collaboration",
@@ -22,17 +25,21 @@ function App() {
         "Thornton Gymnasium", "Tru Blu Coffee", "University Banquet Hall", "University Communications", "Vago Field",
         "Wackerlin Center for Faith and Action", "Watkins Hall", "Wellness Center", "Wilkinson Hall"];
   return (
-      <div className="App">
-        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Report locations={locations}/>} />
-              <Route path="/Home" element={<AdminHome />} />
-              <Route path="/Claimed" element={<Claimed />} />
-              <Route path="/Reports" element={<Reports />} />
-            <Route path="*" element={<NoPage />} />
+              <Route path="/" element={<Layout />}>
+
+                  <Route path="" element={<Report locations={locations}/>} />
+                  <Route path="login" element={<Login />}/>
+
+                  <Route element={<PersistLogin/>}>
+                    <Route element={<RequireAuth/>}>
+                        <Route path="admin" element={<AdminHome />} />
+                    </Route>
+                  </Route>
+
+              <Route path="*" element={<NoPage />} />
+              </Route>
           </Routes>
-        </BrowserRouter>
-      </div>
   );
 }
 

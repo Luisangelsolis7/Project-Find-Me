@@ -2,16 +2,34 @@ import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
+import Pagination from "./Pagination";
 
 
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
-    let tableHeader = [];
-    let inputGroup = ''
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(25);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = props.items.slice(indexOfFirstItem, indexOfLastItem);
     const [currentItem, setCurrentItem] = useState("", "", "", "", "", "", "", "", "", "", "", "");
+    let tableHeader = [];
+    if (props.active === "H") {
+        tableHeader = ["", "ID", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", "", ""];
+    }
+    if (props.active === "C") {
+        tableHeader = ["ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", "", ""];
+    }
+    if (props.active === "R") {
+        tableHeader = ["ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
+    }
+
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     function checkNull(item) {
         if (item !== null) {
             return (<>{item}<br/></>)
@@ -57,16 +75,6 @@ const ItemList = function (props) {
 
     }
 
-    if (props.active === "H") {
-        tableHeader = ["", "ID", "Date Found", "Name", "Category", "Description", "Value", "Location Found", "", "Officer Badge", "", ""];
-    }
-    if (props.active === "C") {
-        tableHeader = ["", "ID", "Date Claimed", "Name", "Category", "Description", "Value", "", "Claimant", "Officer Badge", "", ""];
-
-    }
-    if (props.active === "R") {
-        tableHeader = ["", "ID", "Date Lost", "Item", "Category", "Description", "Value", "Location Lost", "Reported by", "", "", ""];
-    }
 
 
     let counter = 0;
@@ -90,6 +98,35 @@ const ItemList = function (props) {
         return key;
     }
 
+    function toggleBox(i) {
+        if(props.active === "H")
+        return(
+        <td className="input-group-text">
+            {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
+            <input
+                onChange={(e) => {
+                    // add to list
+                    if (e.target.checked) {
+                        props.setItemInfo([
+                            ...props.itemInfo,
+                            i.Item_ID,
+                        ]);
+                    } else {
+                        // remove from list
+                        props.setItemInfo(
+                            props.itemInfo.filter(item => item !== i.Item_ID),
+                        );
+                    }
+                }}
+                value={props.itemInfo}
+                // <-- use checked prop, retrieve value by id
+                type="checkbox"
+            />
+        </td>
+        )
+    }
+
+
     return (
 
         <div className="itemTable">
@@ -106,28 +143,7 @@ const ItemList = function (props) {
                 <tbody>
                 {props.items.map((i) => (
                     <tr key={generateKey(i.Item_ID)}>
-                        <td className="input-group-text">
-                            {/*<CheckBox item={i} handlechange={toggleHandler(i)} />*/}
-                            <input
-                                onChange={(e) => {
-                                    // add to list
-                                    if (e.target.checked) {
-                                        props.setItemInfo([
-                                            ...props.itemInfo,
-                                            i.Item_ID,
-                                        ]);
-                                    } else {
-                                        // remove from list
-                                        props.setItemInfo(
-                                            props.itemInfo.filter(item => item !== i.Item_ID),
-                                        );
-                                    }
-                                }}
-                                value={props.itemInfo}
-                                // <-- use checked prop, retrieve value by id
-                                type="checkbox"
-                            />
-                        </td>
+                        {toggleBox(i)}
                         <td>{i.Item_ID}</td>
                         <td>{formatDate(i.ISH_Date)} {i.ISH_Time}</td>
                         <td className={style1}>{i.Item_Name}</td>
@@ -164,8 +180,10 @@ const ItemList = function (props) {
                 ))}
                 </tbody>
             </table>
-            <EditModal onClose={() => setShowEdit(false)} itemInfo={currentItem} show={showEdit}/>
-            <DeleteModal onClose={() => setShowDelete(false)} itemInfo={currentItem} show={showDelete}/>
+            < Pagination itemsPerPage={itemsPerPage} totalItems={props.items.length} paginate={paginate}
+                         currentPage={currentPage}/>}
+            <EditModal onClose={() => setShowEdit(false)} itemInfo={currentItem} setShow={setShowEdit} show={showEdit}/>
+            <DeleteModal onClose={() => setShowDelete(false)} itemInfo={currentItem} setShow={setShowDelete} show={showDelete}/>
 
 
         </div>

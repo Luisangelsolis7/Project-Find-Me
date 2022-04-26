@@ -2,13 +2,15 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
-
+import axios, {axiosPrivate} from "../api/axios";
+import useAuth from "../Hooks/useAuth";
 
 function AddModal(props) {
+    const {auth} = useAuth()
     const navigate = useNavigate();
     const [name, setName] = useState("");
     const [cat, setCat] = useState("");
@@ -24,6 +26,7 @@ function AddModal(props) {
             e.preventDefault(); // prevent page from auto refresh
             setIsPending(true);
             fetch("http://localhost:3001/api/insertUnclaimed", {
+                credentials: "include",
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({
@@ -36,9 +39,19 @@ function AddModal(props) {
                     time: tim
                 })
             });
+            props.setShow(false);
             setIsPending(false);
-            navigate(0);
+            //navigate(0);
         }
+
+        useEffect(() => {
+            setName('');
+            setDesc('');
+            setTime('');
+            setCat('');
+            setLocation('');
+            setValue('');
+        },[props.show])
         if(!props.show){
             return null;
         }

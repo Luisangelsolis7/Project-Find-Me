@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
-import useFetch from "../useFetch";
+import useFetch from "../Hooks/useFetch";
 
 
 function DeleteModal(props) {
@@ -32,7 +32,7 @@ function DeleteModal(props) {
                 })
             })
             setIsPending(false);
-            navigate(0);
+            props.setShow(false);
         }
 
         console.log(props.itemInfo);
@@ -41,14 +41,14 @@ function DeleteModal(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">
-                            Release an Item
+                            Delete
                         </h4>
                         <Button size="sm" variant="outline-primary" onClick={props.onClose} style={{float:"right", marginLeft: "-50%"}}>X</Button>
                     </div>
                     <div className="modal-body">
                         <Container>
                             <Row>
-                                Are you Sure you want to Delete this entry?
+                                Confirm Delete?
                             </Row>
                         </Container>
                     </div>

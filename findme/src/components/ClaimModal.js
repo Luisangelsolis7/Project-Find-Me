@@ -76,7 +76,7 @@ function ClaimModal(props) {
                 })
             })
             setIsPending(false);
-            navigate(0);
+            props.setShow(false);
         }
         if (!props.show) {
             return null;

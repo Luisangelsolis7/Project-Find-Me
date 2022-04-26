@@ -4,11 +4,11 @@ import ItemList from "../components/ItemList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import useFetch from "../useFetch";
+import useFetch from "../Hooks/useFetch";
 import Pagination from "../components/Pagination";
 
 const Reports = function() {
-    const {data : items, isPending, error } = useFetch('http://localhost:3001/api/getLost');
+    const {data : items, isPending, error } = useFetch('/api/getLost');
     const [q, setQ] = useState("");
     const[currentPage, setCurrentPage] = useState(1);
     const[itemsPerPage, setItemsPerPage] = useState(20);
@@ -32,6 +32,15 @@ const Reports = function() {
             row.User_Email?.toLowerCase().indexOf(q.toLowerCase()) > -1
         )
     }
+    /*
+    <div className="input-group">
+        <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+            <option defaultValue="N">Notify</option>
+            <option value="D">Delete</option>
+        </select>
+        <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
+
+    </div>*/
     return (
         <>
             <AdminNavBar active="R" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
@@ -45,14 +54,7 @@ const Reports = function() {
             </Col>
             <Col md={11}>
                 <br />
-                <div className="input-group">
-                    <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                        <option defaultValue="N">Notify</option>
-                        <option value="D">Delete</option>
-                    </select>
-                    <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
 
-                </div>
                 <br />
                 { error  && <div> {error}</div>}
                 { isPending && <div> Loading ... </div> }
