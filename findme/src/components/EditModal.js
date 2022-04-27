@@ -96,7 +96,8 @@ function EditModal(props) {
                 userId: props.itemInfo.User_FK
             })
         })
-        window.location.reload();
+        setIsPending(false);
+        props.setShow(false);
     }
     function Options(i){
         if(i.Status_FK === 'Lost'){
