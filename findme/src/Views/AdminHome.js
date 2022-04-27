@@ -23,8 +23,8 @@ const Home = function () {
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
-    const [showDelete, setDeleteShow] = useState(false);
     const [showEdit, setEditShow] = useState(false);
+    const [showDelete, setDeleteShow] = useState(false);
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
     const [items, setItems] = useState([]);
@@ -119,6 +119,7 @@ const Home = function () {
                             aria-label="Example select with button addon">
                         <option value="claim">Claim</option>
                         <option value="donate">Donate</option>
+                        <option value="destroy">Destroy</option>
                     </select>
                     <button className="btn btn-outline-dark" onClick={(e) => openModal(action)}>Apply</button>
                 </div>
@@ -179,12 +180,7 @@ const Home = function () {
 
 
                         {items && <ItemList items={search(items)} itemInfo={itemInfo} setItemInfo={setItemInfo}
-                                            active={toggle} onClose={() => {
-                            setDeleteShow(false);
-                            setEditShow(false);
-                        }}
-                                            showEdit={showEdit} showDelete={showDelete}
-                                            setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>}
+                                            active={toggle} />}
 
 
                     </Col>
