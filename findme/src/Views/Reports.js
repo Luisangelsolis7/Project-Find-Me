@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AdminNavBar from "../components/AdminNavBar";
 import ItemList from "../components/ItemList";
 import Container from "react-bootstrap/Container";
@@ -6,16 +6,24 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import useFetch from "../Hooks/useFetch";
 import Pagination from "../components/Pagination";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 const Reports = function() {
-    const {data : items, isPending, error } = useFetch('/api/getLost');
+    const axiosPrivate = useAxiosPrivate();
+    const [items, setItems] = useState([]);
     const [q, setQ] = useState("");
+
+    const [showEdit, setEditShow] = useState(false);
+    const [showDelete, setDeleteShow] = useState(false);
+    const [toggle, setToggle] = useState("R")
+    const [itemInfo, setItemInfo] = useState([]);
     const[currentPage, setCurrentPage] = useState(1);
-    const[itemsPerPage, setItemsPerPage] = useState(20);
+    const[itemsPerPage, setItemsPerPage] = useState(25);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     function search(rows){
         return rows.filter(row => row.Item_ID?.toString().toLowerCase().indexOf(q.toLowerCase()) > -1 ||
             row.Item_Name?.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -32,15 +40,18 @@ const Reports = function() {
             row.User_Email?.toLowerCase().indexOf(q.toLowerCase()) > -1
         )
     }
-    /*
-    <div className="input-group">
-        <select className="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-            <option defaultValue="N">Notify</option>
-            <option value="D">Delete</option>
-        </select>
-        <button className="btn btn-outline-secondary" type="button">Apply to ALL</button>
+    useEffect(() => {
+        getItems();
+    },[showEdit, showDelete])
 
-    </div>*/
+    const getItems = async () => {
+        try {
+            const response = await axiosPrivate("/api/getLost");
+            setItems(response.data);
+        } catch (e){
+            console.error(e)
+        }
+    }
     return (
         <>
             <AdminNavBar active="R" value={q} onChangeValue={(e) => setQ(e.target.value)}/>
@@ -56,9 +67,13 @@ const Reports = function() {
                 <br />
 
                 <br />
-                { error  && <div> {error}</div>}
-                { isPending && <div> Loading ... </div> }
-                { items && <ItemList items={search(currentItems)} active="R"/>}
+                {items && <ItemList items={search(currentItems)} itemInfo={itemInfo} setItemInfo={setItemInfo}
+                                    active={toggle} onClose={() => {
+                    setDeleteShow(false);
+                    setEditShow(false);
+                }}
+                                    showEdit={showEdit} showDelete={showDelete}
+                                    setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>}
                 <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate} currentPage={currentPage}/>
 
             </Col>

@@ -41,9 +41,9 @@ function AdminNavBar(props){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav variant="tabs">
-                        <NavItem className="NavItem"><Nav.Link className={Reports} onClick={() => props.changeToggle("R")}>Lost Reports</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Home} onClick={() => props.changeToggle("H")}>Found Items</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Claimed} onClick={() => props.changeToggle("C")}>Claimed Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Reports} href="reports" >Lost Reports</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Home} href="admin">Found Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Claimed} href="claimed">Claimed Items</Nav.Link></NavItem>
                         <InputGroup className="searchBar">
                             <FormControl
                                 placeholder="Search"

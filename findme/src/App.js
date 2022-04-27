@@ -11,6 +11,8 @@ import Report from "./Views/ReportForm";
 import AdminHome from "./Views/AdminHome";
 import Layout from "./components/Layout";
 import Login from "./Views/Login";
+import Claimed from "./Views/Claimed";
+import Reports from "./Views/Reports";
 
 function App() {
     let locations = ["N/A", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
@@ -34,6 +36,8 @@ function App() {
                   <Route element={<PersistLogin/>}>
                     <Route element={<RequireAuth/>}>
                         <Route path="admin" element={<AdminHome />} />
+                        <Route path="claimed" element={<Claimed />} />
+                        <Route path="reports" element={<Reports />} />
                     </Route>
                   </Route>
 

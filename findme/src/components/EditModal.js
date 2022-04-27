@@ -63,7 +63,7 @@ function EditModal(props) {
         setEmailAdd(props.itemInfo.User_Email);
         setPhoneNum(props.itemInfo.User_Phone);
         setDriverLicense(props.itemInfo.User_DL);
-        setDOB(props.itemInfo.User_DOB);
+        setDOB(formatDate(props.itemInfo.User_DOB));
 
         console.log(props.itemInfo);
     },[props.show, props.itemInfo]);
