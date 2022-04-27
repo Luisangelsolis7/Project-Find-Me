@@ -72,6 +72,7 @@ function DonateModal(props) {
                     time: getCurrentTime()
                 })
             })
+            window.location.reload();
             setIsPending(false);
             props.setShow(false);
         }

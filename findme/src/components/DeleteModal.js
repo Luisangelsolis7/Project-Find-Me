@@ -31,8 +31,7 @@ function DeleteModal(props) {
 
                 })
             })
-            setIsPending(false);
-            props.setShow(false);
+            window.location.reload();
         }
 
         console.log(props.itemInfo);
