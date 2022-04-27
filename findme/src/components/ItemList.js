@@ -7,8 +7,8 @@ import Pagination from "./Pagination";
 
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
-    const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
+    const [showDelete, setDeleteShow] = useState(false);
+    const [showEdit, setEditShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(25);
@@ -167,13 +167,13 @@ const ItemList = function (props) {
                         <td>{checkNull(i.Officer_Badge)}</td>
                         <td><Button variant="secondary" size="sm" onClick={() => {
                             setCurrentItem(i);
-                            setShowEdit(true);
+                            props.setEditShow(true)
                         }}>Edit</Button>
                         </td>
 
                         <td><Button className="btn btn-secondary" size="sm" background-color="Red" onClick={() => {
                             setCurrentItem(i);
-                            setShowDelete(true);
+                            props.setDeleteShow(true);
                         }}>Delete</Button>
                         </td>
                     </tr>
