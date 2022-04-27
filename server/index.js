@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-app.get("/api/getLost", authenticateToken, (req, res) => {
+app.get("/api/getLost", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
@@ -40,7 +40,7 @@ app.get("/api/getLost", authenticateToken, (req, res) => {
     });
 });
 
-app.get("/api/getUnclaimed", authenticateToken, (req, res) => {
+app.get("/api/getUnclaimed", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
@@ -61,7 +61,7 @@ app.get("/api/getUnclaimed", authenticateToken, (req, res) => {
     });
 });
 
-app.get("/api/getClaimed", authenticateToken, (req, res) => {
+app.get("/api/getClaimed", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
@@ -82,7 +82,7 @@ app.get("/api/getClaimed", authenticateToken, (req, res) => {
     });
 });
 
-app.get("/api/getDonated", authenticateToken, (req, res) => {
+app.get("/api/getDonated", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Date, ish.ISH_Time,
                         o.Officer_Badge
@@ -101,7 +101,7 @@ app.get("/api/getDonated", authenticateToken, (req, res) => {
     });
 });
 
-app.get("/api/getDestroyed", authenticateToken, (req, res) => {
+app.get("/api/getDestroyed", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Date, ish.ISH_Time,
                         o.Officer_Badge
@@ -159,7 +159,7 @@ app.post("/api/insertClaimed", (req, res) => {
                  INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
                         values (?, @user_id, 'Claimed', ?, ?, '999');`
     idArr.forEach(item => {
-        db.query(sql, [req.body.firstName, req.body.lastName, req.body.dob, req.body.phone, req.body.email, req.body.AUID, req.body.driverlicense, req.body.dlState,
+        db.query(sql, [req.body.firstName, req.body.lastName, req.body.dob, req.body.phone, req.body.email, req.body.AUID, req.body.dl, req.body.dlState,
             item, req.body.date, req.body.time], (err, result) => {
             if (err) {
                 console.log(err)

@@ -68,7 +68,7 @@ function ClaimModal(props) {
                     email: emailAdd,
                     phone: phoneNum,
                     dob: dob,
-                    driverLicense: driverLicense,
+                    dl: driverLicense,
                     dlState: dlState,
                     AUID: AUID,
                     date: getCurrentDate(),

@@ -11,8 +11,18 @@ import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 const Claimed = function() {
 
     const axiosPrivate = useAxiosPrivate();
+    const [toggle, setToggle] = useState("C")
+    const [showEdit, setEditShow] = useState(false);
+    const [showDelete, setDeleteShow] = useState(false);
     const [items, setItems] = useState([]);
     const [q, setQ] = useState("");
+    const[currentPage, setCurrentPage] = useState(1);
+    const[itemsPerPage, setItemsPerPage] = useState(20);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const [itemInfo, setItemInfo] = useState([]);
 
     const getItems = async () => {
         try {
@@ -41,9 +51,10 @@ const Claimed = function() {
         )
     }
 
+
     useEffect(() => {
         getItems();
-    },[])
+    },[showEdit, showDelete])
 
     return (
         <>
@@ -62,7 +73,16 @@ const Claimed = function() {
                     </div>
                         <br/>
 
-                        <ItemList items={search(items)} active="C"/>
+                        {items && <ItemList items={search(currentItems)} itemInfo={itemInfo} setItemInfo={setItemInfo}
+                                            active={toggle} onClose={() => {
+                            setDeleteShow(false);
+                            setEditShow(false);
+                        }}
+                                            showEdit={showEdit} showDelete={showDelete}
+                                            setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>}
+
+
+                        <Pagination itemsPerPage={itemsPerPage} totalItems={search(items).length} paginate={paginate} currentPage={currentPage}/>
                     </Col>
                     <Col md={1}>
 

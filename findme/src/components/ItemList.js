@@ -8,11 +8,7 @@ import Pagination from "./Pagination";
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
     const [style1, setStyle1] = useState("fixedHeight");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(25);
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = props.items.slice(indexOfFirstItem, indexOfLastItem);
+
     const [currentItem, setCurrentItem] = useState("", "", "", "", "", "", "", "", "", "", "", "");
     let tableHeader = [];
     if (props.active === "H") {
@@ -26,7 +22,7 @@ const ItemList = function (props) {
     }
 
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
     function checkNull(item) {
         if (item !== null) {
@@ -178,8 +174,6 @@ const ItemList = function (props) {
                 ))}
                 </tbody>
             </table>
-            < Pagination itemsPerPage={itemsPerPage} totalItems={props.items.length} paginate={paginate}
-                         currentPage={currentPage}/>
             <EditModal onClose={props.onClose} itemInfo={currentItem} setShow={props.setEditShow} show={props.showEdit}/>
             <DeleteModal onClose={props.onClose} itemInfo={currentItem} setShow={props.setDeleteShow} show={props.showDelete}/>
 

@@ -15,6 +15,7 @@ import DonateModal from "../components/DonateModal";
 import 'jspdf-autotable';
 import jsPDF from 'jspdf'
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import Pagination from "../components/Pagination";
 
 
 const Home = function () {
@@ -28,6 +29,16 @@ const Home = function () {
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
     const [items, setItems] = useState([]);
+    const [itemInfo, setItemInfo] = useState([]);
+    const [q, setQ] = useState("H");
+    const [action, setAction] = useState("claim");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(25);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
 
@@ -74,7 +85,7 @@ const Home = function () {
 
     const getItems = async () => {
         try {
-            const response = await axiosPrivate(url);
+            const response = await axiosPrivate("/api/getUnclaimed");
             setItems(response.data);
         } catch (e){
             console.error(e)
@@ -93,9 +104,7 @@ const Home = function () {
         doc.save('Test.pdf');
     }
 
-    const [itemInfo, setItemInfo] = useState([]);
-    const [q, setQ] = useState("H");
-    const [action, setAction] = useState("claim");
+
 
 
 
@@ -158,7 +167,7 @@ const Home = function () {
 
     useEffect(() => {
         getItems();
-    },[showAdd, showClaim, showDonate, showDestroy, url,showEdit,showDelete])
+    },[showAdd, showClaim, showDonate, showDestroy, showEdit, showDelete])
 
 
     return (
@@ -179,13 +188,15 @@ const Home = function () {
                         <br/>
 
 
-                        {items && <ItemList items={search(items)} itemInfo={itemInfo} setItemInfo={setItemInfo}
+                        {items && <ItemList items={search(currentItems)} itemInfo={itemInfo} setItemInfo={setItemInfo}
                                             active={toggle} onClose={() => {
                             setDeleteShow(false);
                             setEditShow(false);
                         }}
                                             showEdit={showEdit} showDelete={showDelete}
                                             setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>}
+                        < Pagination itemsPerPage={itemsPerPage} totalItems={items.length} paginate={paginate}
+                                     currentPage={currentPage}/>
 
 
                     </Col>
