@@ -181,7 +181,7 @@ const ItemList = function (props) {
                 </tbody>
             </table>
             < Pagination itemsPerPage={itemsPerPage} totalItems={props.items.length} paginate={paginate}
-                         currentPage={currentPage}/>}
+                         currentPage={currentPage}/>
             <EditModal onClose={() => setShowEdit(false)} itemInfo={currentItem} setShow={setShowEdit} show={showEdit}/>
             <DeleteModal onClose={() => setShowDelete(false)} itemInfo={currentItem} setShow={setShowDelete} show={showDelete}/>
 
