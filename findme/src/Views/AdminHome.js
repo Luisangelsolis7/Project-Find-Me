@@ -119,7 +119,6 @@ const Home = function () {
                             aria-label="Example select with button addon">
                         <option value="claim">Claim</option>
                         <option value="donate">Donate</option>
-                        <option value="destroy">Destroy</option>
                     </select>
                     <button className="btn btn-outline-dark" onClick={(e) => openModal(action)}>Apply</button>
                 </div>
