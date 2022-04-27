@@ -96,8 +96,7 @@ function EditModal(props) {
                 userId: props.itemInfo.User_FK
             })
         })
-            props.setShow(false); // adding go back 1 page-
-            setIsPending(false);
+        window.location.reload();
     }
     function Options(i){
         if(i.Status_FK === 'Lost'){
