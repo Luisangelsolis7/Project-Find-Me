@@ -13,8 +13,6 @@ function NavBar(){
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <Button className="btn btn-success" href="/Admin">Admin Home</Button>
-                                <Button className="btn btn-success" onClick={() => setShow(true)}>Log In</Button>
-                                <LoginModal onClose={() => setShow(false)} show={show} />
                             </li>
                         </ul>
                     </div>
