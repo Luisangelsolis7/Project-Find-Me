@@ -6,10 +6,12 @@ import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 import {useNavigate} from "react-router-dom";
 import {FormControl} from "react-bootstrap";
+import useAuth from "../Hooks/useAuth";
 
 
 
 function ClaimModal(props) {
+    const {auth} = useAuth();
     const navigate = useNavigate();
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
@@ -72,7 +74,8 @@ function ClaimModal(props) {
                     dlState: dlState,
                     AUID: AUID,
                     date: getCurrentDate(),
-                    time: getCurrentTime()
+                    time: getCurrentTime(),
+                    badge: auth.badge
                 })
             })
             setIsPending(false);
@@ -82,7 +85,6 @@ function ClaimModal(props) {
             return null;
         }
 
-        console.log(props.itemInfo);
         return (
             <div className="modal">
                 <div className="modal-content">

@@ -8,9 +8,11 @@ import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
 import useFetch from "../Hooks/useFetch";
+import useAuth from "../Hooks/useAuth";
 
 
 function DestroyModal(props) {
+    const {auth} = useAuth()
     const navigate = useNavigate();
     const [isPending, setIsPending] = useState(false);
 
@@ -38,7 +40,8 @@ function DestroyModal(props) {
                 body: JSON.stringify({
                     itemId: props.itemInfo,
                     date: getCurrentDate(),
-                    time: getCurrentTime()
+                    time: getCurrentTime(),
+                    badge: auth.badge
                 })
             })
             window.location.reload();

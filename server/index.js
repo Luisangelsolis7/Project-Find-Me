@@ -142,10 +142,10 @@ app.post("/api/insertUnclaimed", (req, res) => {
     const sql = `INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);
                     SET @item_id = LAST_INSERT_ID();
                  INSERT INTO Item_Status_History (Item_FK, Officer_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) 
-                        values (@item_id, '999', 'Unclaimed', ?, ?, ?);`
+                        values (@item_id, ?, 'Unclaimed', ?, ?, ?);`
 
         db.query(sql, [req.body.itemName, req.body.category, req.body.value, req.body.desc,
-            req.body.date, req.body.time, req.body.location], (err, iResult) => {
+            req.body.badge, req.body.date, req.body.time, req.body.location], (err, iResult) => {
             if(err){
                 console.log(err)
             }
@@ -157,10 +157,10 @@ app.post("/api/insertClaimed", (req, res) => {
     const sql = `INSERT INTO User (User_Fname, User_Lname, User_DOB, User_Phone, User_Email, User_AUID, User_DL, User_DLState) values (?, ?, ?, ?, ?, ?, ?, ?);
                     SET @user_id = LAST_INSERT_ID();
                  INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
-                        values (?, @user_id, 'Claimed', ?, ?, '999');`
+                        values (?, @user_id, 'Claimed', ?, ?, ?);`
     idArr.forEach(item => {
         db.query(sql, [req.body.firstName, req.body.lastName, req.body.dob, req.body.phone, req.body.email, req.body.AUID, req.body.dl, req.body.dlState,
-            item, req.body.date, req.body.time], (err, result) => {
+            item, req.body.date, req.body.time, req.body.badge], (err, result) => {
             if (err) {
                 console.log(err)
             }
@@ -174,10 +174,10 @@ app.post("/api/insertDonated", (req, res) => {
     const sql = `INSERT INTO Charity (Charity_Name, Charity_Address, Charity_City, Charity_State, Charity_Zip, Charity_Contact, Charity_Phone) values (?, ?, ?, ?, ?, ?, ?);
                     SET @charity_id = LAST_INSERT_ID();
                  INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
-                        values (?, @charity_id, 'Donated', ?, ?, '999');`
+                        values (?, @charity_id, 'Donated', ?, ?, ?);`
     idArr.forEach(item => {
         db.query(sql, [req.body.name, req.body.address, req.body.city, req.body.state, req.body.zip, req.body.contact, req.body.phone,
-            item, req.body.date, req.body.time], (err, result) => {
+            item, req.body.date, req.body.time, req.body.badge], (err, result) => {
             if (err) {
                 console.log(err)
             }
@@ -189,9 +189,9 @@ app.post("/api/insertDonated", (req, res) => {
 app.post("/api/insertDestroyed", (req, res) => {
     const idArr = req.body.itemId;
     const sql = `INSERT INTO Item_Status_History (Item_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
-                        values (?, 'Destroyed', ?, ?, '999');`
+                        values (?, 'Destroyed', ?, ?, ?);`
     idArr.forEach(item => {
-        db.query(sql, [item, req.body.date, req.body.time], (err, result) => {
+        db.query(sql, [item, req.body.date, req.body.time, req.body.badge], (err, result) => {
             if (err) {
                 console.log(err)
             }
@@ -303,8 +303,9 @@ app.get("/api/refresh", (req, res) => {
     const refreshToken = cookies.jwt;
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if(err) return res.status(403);
+            console.log(decoded.badge)
             const accessToken = jwt.sign({"email":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
-            res.json({accessToken: accessToken});
+            res.json({badge: decoded.badge, accessToken: accessToken});
         }
     )
 
@@ -317,7 +318,6 @@ app.get("/api/clear", async (req, res) => {
     }
     res.clearCookie('jwt', {httpOnly: true, sameSite: 'none', secure: true, maxAge: 24*60*60*1000});
     res.status(204).send();
-    //const refreshToken = cookies.jwt;
 
 });
 

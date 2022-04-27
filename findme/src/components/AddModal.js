@@ -36,7 +36,8 @@ function AddModal(props) {
                     value: val,
                     location: loc,
                     date: dat,
-                    time: tim
+                    time: tim,
+                    badge: auth.badge
                 })
             });
             props.setShow(false);
