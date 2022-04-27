@@ -23,8 +23,8 @@ const Home = function () {
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
     const [showClaim, setClaimShow] = useState(false);
-    const [showEdit, setEditShow] = useState(false);
     const [showDelete, setDeleteShow] = useState(false);
+    const [showEdit, setEditShow] = useState(false);
     const [showDestroy, setDestroyShow] = useState(false);
     const [showDonate, setDonateShow] = useState(false);
     const [items, setItems] = useState([]);
@@ -180,7 +180,12 @@ const Home = function () {
 
 
                         {items && <ItemList items={search(items)} itemInfo={itemInfo} setItemInfo={setItemInfo}
-                                            active={toggle} />}
+                                            active={toggle} onClose={() => {
+                            setDeleteShow(false);
+                            setEditShow(false);
+                        }}
+                                            showEdit={showEdit} showDelete={showDelete}
+                                            setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>}
 
 
                     </Col>
