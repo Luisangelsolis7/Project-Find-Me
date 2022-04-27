@@ -158,7 +158,7 @@ const Home = function () {
 
     useEffect(() => {
         getItems();
-    },[showAdd, showClaim, showDonate, showDestroy, url])
+    },[showAdd, showClaim, showDonate, showDestroy, url,showEdit,showDelete])
 
 
     return (
@@ -180,7 +180,12 @@ const Home = function () {
 
 
                         {items && <ItemList items={search(items)} itemInfo={itemInfo} setItemInfo={setItemInfo}
-                                            active={toggle} />}
+                                            active={toggle} onClose={() => {
+                            setDeleteShow(false);
+                            setEditShow(false);
+                        }}
+                                            showEdit={showEdit} showDelete={showDelete}
+                                            setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>}
 
 
                     </Col>

@@ -7,8 +7,6 @@ import Pagination from "./Pagination";
 
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
-    const [showDelete, setDeleteShow] = useState(false);
-    const [showEdit, setEditShow] = useState(false);
     const [style1, setStyle1] = useState("fixedHeight");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(25);
@@ -182,8 +180,8 @@ const ItemList = function (props) {
             </table>
             < Pagination itemsPerPage={itemsPerPage} totalItems={props.items.length} paginate={paginate}
                          currentPage={currentPage}/>
-            <EditModal onClose={props.onClose} itemInfo={currentItem} setShow={setEditShow} show={props.showEdit}/>
-            <DeleteModal onClose={props.onClose} itemInfo={currentItem} setShow={setDeleteShow} show={props.showDelete}/>
+            <EditModal onClose={props.onClose} itemInfo={currentItem} setShow={props.setEditShow} show={props.showEdit}/>
+            <DeleteModal onClose={props.onClose} itemInfo={currentItem} setShow={props.setDeleteShow} show={props.showDelete}/>
 
 
         </div>
