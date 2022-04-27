@@ -182,8 +182,8 @@ const ItemList = function (props) {
             </table>
             < Pagination itemsPerPage={itemsPerPage} totalItems={props.items.length} paginate={paginate}
                          currentPage={currentPage}/>
-            <EditModal onClose={() => setShowEdit(false)} itemInfo={currentItem} setShow={setShowEdit} show={showEdit}/>
-            <DeleteModal onClose={() => setShowDelete(false)} itemInfo={currentItem} setShow={setShowDelete} show={showDelete}/>
+            <EditModal onClose={props.onClose} itemInfo={currentItem} setShow={setEditShow} show={props.showEdit}/>
+            <DeleteModal onClose={props.onClose} itemInfo={currentItem} setShow={setDeleteShow} show={props.showDelete}/>
 
 
         </div>
