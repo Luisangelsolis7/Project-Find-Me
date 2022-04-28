@@ -21,7 +21,6 @@ function Login() {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true
             });
-            console.log(JSON.stringify(response?.data))
             const accessToken = response?.data?.accessToken;
             const badge = response?.data?.badge;
             setAuth({email, password, badge, accessToken});

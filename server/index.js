@@ -275,7 +275,7 @@ app.post("/api/login", async (req, res) => {
                 const verified = bcrypt.compareSync(password, passwordHash);
                 if (verified) {
                     const user = {email: email, badge:result[0]["Officer_Badge"]};
-                    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+                    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '300s'});
                     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'});
                     res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'none', secure: true, maxAge: 24*60*60*1000});
                     res.status(200).json({badge:result[0]["Officer_Badge"], accessToken: accessToken});
@@ -303,7 +303,7 @@ app.get("/api/refresh", (req, res) => {
     const refreshToken = cookies.jwt;
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if(err) return res.status(403);
-            const accessToken = jwt.sign({"email":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+            const accessToken = jwt.sign({"email":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '300s'});
             res.json({badge: decoded.badge, accessToken: accessToken});
         }
     )

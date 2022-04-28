@@ -21,7 +21,7 @@ function EditModal(props) {
     const [loc, setLocation] = useState('');
     const [dat, setDate] = useState('');
     const [tim, setTime] = useState('');
-    const [dob, setDOB] = useState("");
+    const [dob, setDOB] = useState();
     const [driverLicense, setDriverLicense] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
 
@@ -62,8 +62,24 @@ function EditModal(props) {
         {props.itemInfo.User_Email && setEmailAdd(props.itemInfo.User_Email)};
         {props.itemInfo.User_Phone && setPhoneNum(props.itemInfo.User_Phone)};
         {props.itemInfo.User_DL && setDriverLicense(props.itemInfo.User_DL)};
-        {props.itemInfo.User_DOB && setDOB(formatDate(props.itemInfo.User_DOB))};
-    },[props.show, props.itemInfo]);
+        setDOB(formatDate(props.itemInfo.User_DOB));
+    },[props.show == true, props.itemInfo]);
+
+    useEffect(() => {
+        setName('');
+        setCat('');
+        setValue('');
+        setLocation('');
+        setDesc('');
+        setDate('');
+        setTime('');
+        setFName('');
+        setLName('');
+        setEmailAdd('');
+        setPhoneNum('');
+        setDriverLicense('');
+        setDOB('');
+    },[]);
 
     if (!props.show) {
         return null;
