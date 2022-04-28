@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-app.get("/api/getLost", (req, res) => {
+app.get("/api/getLost", authenticateToken, (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
@@ -40,7 +40,7 @@ app.get("/api/getLost", (req, res) => {
     });
 });
 
-app.get("/api/getUnclaimed", (req, res) => {
+app.get("/api/getUnclaimed", authenticateToken, (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
@@ -61,7 +61,7 @@ app.get("/api/getUnclaimed", (req, res) => {
     });
 });
 
-app.get("/api/getClaimed", (req, res) => {
+app.get("/api/getClaimed", authenticateToken, (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
                         u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
@@ -82,7 +82,7 @@ app.get("/api/getClaimed", (req, res) => {
     });
 });
 
-app.get("/api/getDonated", (req, res) => {
+app.get("/api/getDonated", authenticateToken, (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Date, ish.ISH_Time,
                         o.Officer_Badge
@@ -101,7 +101,7 @@ app.get("/api/getDonated", (req, res) => {
     });
 });
 
-app.get("/api/getDestroyed", (req, res) => {
+app.get("/api/getDestroyed", authenticateToken, (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Date, ish.ISH_Time,
                         o.Officer_Badge
@@ -120,7 +120,7 @@ app.get("/api/getDestroyed", (req, res) => {
     });
 });
 
-app.post("/api/insertLost", (req, res) => {
+app.post("/api/insertLost", authenticateToken, (req, res) => {
     const sql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email, User_DL, User_AUID) values (?, ?, ?, ?, ?, ?);
                     SET @user_id = LAST_INSERT_ID();
                  INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);
@@ -137,7 +137,7 @@ app.post("/api/insertLost", (req, res) => {
     });
 });
 
-app.post("/api/insertUnclaimed", (req, res) => {
+app.post("/api/insertUnclaimed", authenticateToken, (req, res) => {
 
     const sql = `INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);
                     SET @item_id = LAST_INSERT_ID();
@@ -152,7 +152,7 @@ app.post("/api/insertUnclaimed", (req, res) => {
         });
 });
 
-app.post("/api/insertClaimed", (req, res) => {
+app.post("/api/insertClaimed", authenticateToken, (req, res) => {
     const idArr = req.body.itemId;
     const sql = `INSERT INTO User (User_Fname, User_Lname, User_DOB, User_Phone, User_Email, User_AUID, User_DL, User_DLState) values (?, ?, ?, ?, ?, ?, ?, ?);
                     SET @user_id = LAST_INSERT_ID();
@@ -169,7 +169,7 @@ app.post("/api/insertClaimed", (req, res) => {
 
 });
 
-app.post("/api/insertDonated", (req, res) => {
+app.post("/api/insertDonated", authenticateToken, (req, res) => {
     const idArr = req.body.itemId;
     const sql = `INSERT INTO Charity (Charity_Name, Charity_Address, Charity_City, Charity_State, Charity_Zip, Charity_Contact, Charity_Phone) values (?, ?, ?, ?, ?, ?, ?);
                     SET @charity_id = LAST_INSERT_ID();
@@ -186,7 +186,7 @@ app.post("/api/insertDonated", (req, res) => {
 
 });
 
-app.post("/api/insertDestroyed", (req, res) => {
+app.post("/api/insertDestroyed", authenticateToken, (req, res) => {
     const idArr = req.body.itemId;
     const sql = `INSERT INTO Item_Status_History (Item_FK, Status_FK, ISH_Date, ISH_Time, Officer_FK) 
                         values (?, 'Destroyed', ?, ?, ?);`
@@ -200,7 +200,7 @@ app.post("/api/insertDestroyed", (req, res) => {
 
 });
 
-app.post("/api/edit", (req, res) => {
+app.post("/api/edit", authenticateToken, (req, res) => {
     const sql = `UPDATE Item
                  SET Item_Name = ?, Category_FK = ?, Item_Value = ?, Item_Desc = ?
                  Where Item_ID = ?`
@@ -229,7 +229,7 @@ app.post("/api/edit", (req, res) => {
     })
 });
 
-app.post("/api/delete", (req, res) => {
+app.post("/api/delete", authenticateToken, (req, res) => {
     const sql = `Delete FROM Item_Status_History Where Item_FK = ? and Status_FK = ?`
     db.query(sql, [req.body.itemId, req.body.status], (err, result) =>{
         if(err){
@@ -239,7 +239,7 @@ app.post("/api/delete", (req, res) => {
 
 });
 
-app.post("/api/register",[check('email').isEmail().normalizeEmail()], async (req, res) => {
+app.post("/api/register", authenticateToken, [check('email').isEmail().normalizeEmail()], async (req, res) => {
     try{
         const errors = validationResult(req)
         if(!errors.isEmpty()){
