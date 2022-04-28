@@ -43,13 +43,13 @@ app.get("/api/getLost", (req, res) => {
 app.get("/api/getUnclaimed", (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,
-                        u.User_Fname, u.User_Lname, u.User_DOB, u.User_DL, u.User_Phone, u.User_Email, u.User_AUID,
+
                         o.Officer_Badge, o.Officer_Fname, o.Officer_Lname 
                   FROM (Select h.Item_FK, h.ISH_Date, h.Status_FK, h.User_FK, h.ISH_Location, h.ISH_Time, h.Officer_FK 
                          From Item_Status_History h, (Select Item_FK, MAX(ISH_Date) as mdate, MAX(ISH_Time) as mtime from Item_Status_History Group by Item_FK) t 
                          where t.Item_FK = h.Item_FK and t.mdate = h.ISH_date and t.mtime = h.ISH_Time) ish 
                          Join Item i on i.Item_ID = ish.Item_FK 
-                         Left Join User u on u.User_ID = ish.User_FK 
+
                          Left Join Officer o on o.Officer_Badge = ish.Officer_FK join Category c on i.Category_FK = c.Category_Name 
                             Where ish.Status_FK = 'Unclaimed' 
                          Order by ish.ISH_Date DESC, ish.ISH_Time DESC`;
@@ -239,7 +239,7 @@ app.post("/api/delete", (req, res) => {
 
 });
 
-app.post("/api/register",[check('email').isEmail().normalizeEmail(), check('password').isLength({min : 8})], async (req, res) => {
+app.post("/api/register",[check('email').isEmail().normalizeEmail()], async (req, res) => {
     try{
         const errors = validationResult(req)
         if(!errors.isEmpty()){
@@ -303,7 +303,6 @@ app.get("/api/refresh", (req, res) => {
     const refreshToken = cookies.jwt;
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if(err) return res.status(403);
-            console.log(decoded.badge)
             const accessToken = jwt.sign({"email":decoded.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
             res.json({badge: decoded.badge, accessToken: accessToken});
         }
