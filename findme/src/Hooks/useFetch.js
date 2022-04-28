@@ -16,7 +16,6 @@ const useFetch = ( url ) => {
                 } catch(err){
                         console.log(`connection error: ${err.message}`)
                         alert( `Fetch Error: ${err.message }`)
-                        setError( err.message )
                 }
             }
 

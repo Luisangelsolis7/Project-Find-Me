@@ -16,10 +16,10 @@ import 'jspdf-autotable';
 import jsPDF from 'jspdf'
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import Pagination from "../components/Pagination";
+import axios from "../api/axios";
 
 
 const Home = function () {
-    let url;
     const axiosPrivate = useAxiosPrivate();
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
@@ -30,7 +30,7 @@ const Home = function () {
     const [showDonate, setDonateShow] = useState(false);
     const [items, setItems] = useState([]);
     const [itemInfo, setItemInfo] = useState([]);
-    const [q, setQ] = useState("H");
+    const [q, setQ] = useState("");
     const [action, setAction] = useState("claim");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(25);
@@ -55,7 +55,7 @@ const Home = function () {
             columnWidth: 'wrap',
             overflowColumns: 'linebreak'
         }
-        url = '/api/getUnclaimed';
+
 
     } else if (toggle === "R") {
         colWidths = {
@@ -68,7 +68,7 @@ const Home = function () {
             columnWidth: 'wrap',
             overflowColumns: 'linebreak'
         }
-        url = '/api/getLost';
+
     } else if (toggle === "C") {
         styles = {
             overflow: 'linebreak',
@@ -80,12 +80,12 @@ const Home = function () {
             5: {cellWidth: 40}, 6: {cellWidth: 10}, 7: {cellWidth: 1}, 8: {cellWidth: 30}, 9: {cellWidth: 10},
             10: {cellWidth: 1}, 11: {cellWidth: 1}
         }
-        url = '/api/getClaimed';
+
     }
 
     const getItems = async () => {
         try {
-            const response = await axiosPrivate("/api/getUnclaimed");
+            const response = await axios("/api/getUnclaimed");
             setItems(response.data);
         } catch (e){
             console.error(e)
@@ -165,6 +165,7 @@ const Home = function () {
         }
     }
 
+
     useEffect(() => {
         getItems();
     },[showAdd, showClaim, showDonate, showDestroy, showEdit, showDelete])
@@ -188,13 +189,13 @@ const Home = function () {
                         <br/>
 
 
-                        {items && <ItemList items={search(currentItems)} itemInfo={itemInfo} setItemInfo={setItemInfo}
+                        <ItemList items={search(currentItems)} itemInfo={itemInfo} setItemInfo={setItemInfo}
                                             active={toggle} onClose={() => {
                             setDeleteShow(false);
                             setEditShow(false);
                         }}
                                             showEdit={showEdit} showDelete={showDelete}
-                                            setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>}
+                                            setEditShow={setEditShow} setDeleteShow={setDeleteShow}/>
                         < Pagination itemsPerPage={itemsPerPage} totalItems={items.length} paginate={paginate}
                                      currentPage={currentPage}/>
 

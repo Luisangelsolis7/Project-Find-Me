@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -7,8 +7,10 @@ import {FormControl, NavItem} from "react-bootstrap";
 import useLogout from "../Hooks/useLogout";
 import {useNavigate} from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import AddModal from "./AddModal";
+import Register from "./Register";
 function AdminNavBar(props){
-
+    const[show,setShow] = useState(false);
     const logout = useLogout();
     const navigate = useNavigate();
     let Home, Claimed, Reports = "nav-link";
@@ -54,7 +56,7 @@ function AdminNavBar(props){
                             />
                             <br/>
                             <div className="space"></div>
-                            <Button className="btn btn-primary">Register</Button>
+                            <Button className="btn btn-primary" onClick={() => setShow(true)}>Register</Button>
                             <div className="space"></div>
                             <Button className="btn btn-primary" onClick={signOut}>Logout</Button>
 
@@ -62,6 +64,7 @@ function AdminNavBar(props){
                         </InputGroup>
                     </Nav>
                 </Navbar.Collapse>
+                <Register onClose={() => setShow(false)} setShow={setShow} show={show}/>
             </Container>
         </Navbar>
     )
