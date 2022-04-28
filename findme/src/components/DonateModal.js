@@ -2,19 +2,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
-import {Link, useNavigate} from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
-import useFetch from "../Hooks/useFetch";
 import useAuth from "../Hooks/useAuth";
 
 
 function DonateModal(props) {
     const {auth}= useAuth();
-    const navigate = useNavigate();
-    const [isPending, setIsPending] = useState(false);
     const [phoneNum, setPhoneNum] = useState('');
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
@@ -57,7 +52,6 @@ function DonateModal(props) {
         }
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
-            setIsPending(true);
             fetch("http://localhost:3001/api/insertDonated", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
@@ -76,7 +70,6 @@ function DonateModal(props) {
                 })
             })
             window.location.reload();
-            setIsPending(false);
             props.setShow(false);
         }
 

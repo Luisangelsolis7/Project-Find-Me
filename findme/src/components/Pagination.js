@@ -12,31 +12,31 @@ function Pagination(props){
         <nav>
             <ul className="pagination">
                 <li key="first" className="page-item">
-                    <a  onClick={() => props.paginate(1)} className="page-link">
+                    <button  onClick={() => props.paginate(1)} className="page-link">
                         {"<<"}
-                    </a>
+                    </button>
                 </li>
-                <li key="prev" className="page-item">
-                    <a  onClick={() => props.paginate(props.currentPage - 1)} className="page-link">
+                {props.currentPage > 1 &&<li key="prev" className="page-item">
+                    <button onClick={() => props.paginate(props.currentPage - 1)} className="page-link">
                         {"<"}
-                    </a>
-                </li>
+                    </button>
+                </li>}
                 {pageNumbers.map(number => (
                     <li key={number} className="page-item">
-                        <a  onClick={() => props.paginate(number)} className="page-link">
+                        <button  onClick={() => props.paginate(number)} className="page-link">
                             {number}
-                        </a>
+                        </button>
                     </li>
                 ))}
-                <li key="next" className="page-item">
-                    <a  onClick={() => props.paginate(props.currentPage + 1)} className="page-link">
+                {props.currentPage < pageNumbers.length  && <li key="next" className="page-item">
+                    <button  onClick={() => props.paginate(props.currentPage + 1)} className="page-link">
                         {">"}
-                    </a>
-                </li>
+                    </button>
+                </li>}
                 <li key="last" className="page-item">
-                    <a onClick={() => props.paginate(pageNumbers.length)} className="page-link">
+                    <button onClick={() => props.paginate(pageNumbers.length)} className="page-link">
                         {">>"}
-                    </a>
+                    </button>
                 </li>
             </ul>
 

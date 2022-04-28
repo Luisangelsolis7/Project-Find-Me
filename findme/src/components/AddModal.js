@@ -3,15 +3,12 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
-import axios, {axiosPrivate} from "../api/axios";
 import useAuth from "../Hooks/useAuth";
 
 function AddModal(props) {
     const {auth} = useAuth()
-    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [cat, setCat] = useState("");
     const [val, setValue] = useState("");
@@ -19,12 +16,10 @@ function AddModal(props) {
     const [loc, setLocation] = useState("");
     const [dat, setDate] = useState("");
     const [tim, setTime] = useState("");
-    const [isPending, setIsPending] = useState(false);
 
 
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
-            setIsPending(true);
             fetch("http://localhost:3001/api/insertUnclaimed", {
                 credentials: "include",
                 method: 'POST',
@@ -41,8 +36,6 @@ function AddModal(props) {
                 })
             });
             props.setShow(false);
-            setIsPending(false);
-            //navigate(0);
         }
 
         useEffect(() => {

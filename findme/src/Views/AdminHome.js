@@ -20,6 +20,7 @@ import axios from "../api/axios";
 
 
 const Home = function () {
+    let url;
     const axiosPrivate = useAxiosPrivate();
     const [toggle, setToggle] = useState("H")
     const [showAdd, setAddShow] = useState(false);
@@ -55,7 +56,7 @@ const Home = function () {
             columnWidth: 'wrap',
             overflowColumns: 'linebreak'
         }
-
+        url ='/api/getUnclaimed';
 
     } else if (toggle === "R") {
         colWidths = {
@@ -68,7 +69,7 @@ const Home = function () {
             columnWidth: 'wrap',
             overflowColumns: 'linebreak'
         }
-
+        url='/api/getLost';
     } else if (toggle === "C") {
         styles = {
             overflow: 'linebreak',
@@ -80,12 +81,12 @@ const Home = function () {
             5: {cellWidth: 40}, 6: {cellWidth: 10}, 7: {cellWidth: 1}, 8: {cellWidth: 30}, 9: {cellWidth: 10},
             10: {cellWidth: 1}, 11: {cellWidth: 1}
         }
-
+        url = '/api/getClaimed';
     }
 
     const getItems = async () => {
         try {
-            const response = await axios("/api/getUnclaimed");
+            const response = await axiosPrivate(url);
             setItems(response.data);
         } catch (e){
             console.error(e)
@@ -168,7 +169,7 @@ const Home = function () {
 
     useEffect(() => {
         getItems();
-    },[showAdd, showClaim, showDonate, showDestroy, showEdit, showDelete])
+    },[url, showAdd, showClaim, showDonate, showDestroy, showEdit, showDelete])
 
 
     return (

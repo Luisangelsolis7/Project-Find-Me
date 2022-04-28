@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
-import LoginModal from "./LoginModal";
 function NavBar(){
 
     return(
