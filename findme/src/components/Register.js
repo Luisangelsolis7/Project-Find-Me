@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import React, {useState, useEffect} from "react";
-import {Link,useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 
 function Register(props) {
@@ -101,7 +101,7 @@ function Register(props) {
                 </div>
                 <p className={errMsg}>{errMsg}</p>
                 <div className="modal-footer">
-                    <button className="btn btn-success" disabled={password != matchPassword} onClick={handleSubmit}>Log In</button>
+                    <button className="btn btn-success" disabled={password !== matchPassword} onClick={handleSubmit}>Log In</button>
 
                     <button className="btn btn-success" onClick={props.onClose}>Close</button>
                 </div>

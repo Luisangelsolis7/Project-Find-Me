@@ -3,13 +3,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import InputGroup from "react-bootstrap/InputGroup";
-import {FormControl, NavItem} from "react-bootstrap";
+import {Col, FormControl, NavItem} from "react-bootstrap";
 import useLogout from "../Hooks/useLogout";
 import {useNavigate} from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import AddModal from "./AddModal";
 import Register from "./Register";
+import useAuth from "../Hooks/useAuth";
 function AdminNavBar(props){
+    const {auth} = useAuth();
     const[show,setShow] = useState(false);
     const logout = useLogout();
     const navigate = useNavigate();
@@ -43,9 +44,9 @@ function AdminNavBar(props){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav variant="tabs">
-                        <NavItem className="NavItem"><Nav.Link className={Reports} href="reports" >Lost Reports</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Home} href="admin">Found Items</Nav.Link></NavItem>
-                        <NavItem className="NavItem"><Nav.Link className={Claimed} href="claimed">Claimed Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Reports} onClick={() => props.changeToggle("R")}>Lost Reports</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Home} onClick={() => props.changeToggle("H")}>Found Items</Nav.Link></NavItem>
+                        <NavItem className="NavItem"><Nav.Link className={Claimed} onClick={() => props.changeToggle("C")}>Claimed Items</Nav.Link></NavItem>
                         <InputGroup className="searchBar">
                             <FormControl
                                 placeholder="Search"
@@ -55,10 +56,12 @@ function AdminNavBar(props){
                                 onChange={props.onChangeValue}
                             />
                             <br/>
-                            <div className="space"></div>
-                            <Button className="btn btn-primary" onClick={() => setShow(true)}>Register</Button>
-                            <div className="space"></div>
-                            <Button className="btn btn-primary" onClick={signOut}>Logout</Button>
+
+                            <Col>
+                                <Button className="btn btn-primary" onClick={() => setShow(true)}>Register</Button>
+                                <Button className="btn btn-primary" onClick={signOut}>Logout</Button><br/>
+                                Logged in as Officer: {auth.badge}.
+                            </Col>
 
 
                         </InputGroup>

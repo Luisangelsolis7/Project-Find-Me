@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
-import {useNavigate} from "react-router-dom";
 import {FormControl} from "react-bootstrap";
 import useAuth from "../Hooks/useAuth";
 
@@ -12,7 +11,6 @@ import useAuth from "../Hooks/useAuth";
 
 function ClaimModal(props) {
     const {auth} = useAuth();
-    const navigate = useNavigate();
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [emailAdd, setEmailAdd] = useState("");
@@ -21,7 +19,6 @@ function ClaimModal(props) {
     const [dlState, setDlState] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
     const [AUID, setAUID] = useState('');
-    const [isPending, setIsPending] = useState(false);
 
     function formatPhoneNumber(value) {
         // if input value is falsy eg if the user deletes the input, then just return
@@ -59,7 +56,6 @@ function ClaimModal(props) {
         };
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
-            setIsPending(true);
             fetch("http://localhost:3001/api/insertClaimed", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
@@ -78,7 +74,6 @@ function ClaimModal(props) {
                     badge: auth.badge
                 })
             })
-            setIsPending(false);
             props.setShow(false);
         }
         if (!props.show) {

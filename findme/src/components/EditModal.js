@@ -3,14 +3,12 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
 
 
 
 function EditModal(props) {
-    const navigate = useNavigate();
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [emailAdd, setEmailAdd] = useState("");
@@ -24,7 +22,6 @@ function EditModal(props) {
     const [dob, setDOB] = useState("");
     const [driverLicense, setDriverLicense] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
-    const [isPending, setIsPending] = useState(false);
 
     function formatPhoneNumber(value) {
         // if input value is falsy eg if the user deletes the input, then just return
@@ -73,7 +70,6 @@ function EditModal(props) {
     console.log(name);
     const handleSubmit = (e) => {
         e.preventDefault(); // prevent page from auto refresh
-        setIsPending(true);
         fetch("http://localhost:3001/api/edit", {
             method: 'POST',
             headers: {"Content-type": "application/json"},
@@ -96,7 +92,6 @@ function EditModal(props) {
                 userId: props.itemInfo.User_FK
             })
         })
-        setIsPending(false);
         props.setShow(false);
     }
     function Options(i){

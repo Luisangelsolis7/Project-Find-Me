@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
-import Pagination from "./Pagination";
 
 
 const ItemList = function (props) {
     //This is the code to format how the list of items to be displayed
-    const [style1, setStyle1] = useState("fixedHeight");
+    const [style1] = useState("fixedHeight");
 
     const [currentItem, setCurrentItem] = useState("", "", "", "", "", "", "", "", "", "", "", "");
     let tableHeader = [];
@@ -75,7 +74,7 @@ const ItemList = function (props) {
 
     function generateKey(i) {
         let key = i
-        if (i == "") {
+        if (i === "") {
             counter++;
             return counter;
         }

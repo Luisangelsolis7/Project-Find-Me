@@ -270,7 +270,7 @@ app.post("/api/login", async (req, res) => {
             if(err){
                 console.log(err)
             }
-            if(result.length != 0) {
+            if(result.length !== 0) {
                 let passwordHash = result[0]["Hash"];
                 const verified = bcrypt.compareSync(password, passwordHash);
                 if (verified) {
