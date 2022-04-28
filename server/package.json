@@ -24,7 +24,6 @@
     "express-validator": "^6.14.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.23",
-
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.15"
