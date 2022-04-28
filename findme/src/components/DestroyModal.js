@@ -6,10 +6,12 @@ import Button from "react-bootstrap/Button";
 
 
 import useAuth from "../Hooks/useAuth";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 
 function DestroyModal(props) {
     const {auth} = useAuth()
+    const axiosPrivate = useAxiosPrivate();
 
 
     function getCurrentDate(separator = '-') {
@@ -26,22 +28,25 @@ function DestroyModal(props) {
 
     }
 
-    {
-        const handleSubmit = (e) => {
-            e.preventDefault(); // prevent page from auto refresh
-            fetch("http://localhost:3001/api/insertDestroyed", {
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({
-                    itemId: props.itemInfo,
-                    date: getCurrentDate(),
-                    time: getCurrentTime(),
-                    badge: auth.badge
+    const handleSubmit = (e) => {
+        e.preventDefault(); // prevent page from auto refresh
+        try{
+            const response =  axiosPrivate.post('/api/insertDestroyed', JSON.stringify({
+                itemId: props.itemInfo,
+                date: getCurrentDate(),
+                time: getCurrentTime(),
+                badge: auth.badge
                 })
-            })
-            window.location.reload();
+            )
             props.setShow(false);
+
+        }catch (err){
+            if (err) {
+                console.error(err)
+            }
         }
+
+    }
 
         if (!props.show) {
             return null;
@@ -71,7 +76,7 @@ function DestroyModal(props) {
                 </div>
             </div>
         )
-    }
+
 }
 
 export default DestroyModal;

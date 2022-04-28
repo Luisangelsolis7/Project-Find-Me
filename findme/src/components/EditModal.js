@@ -5,21 +5,23 @@ import Col from "react-bootstrap/Col";
 import React, {useEffect, useState} from 'react';
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 
 
 function EditModal(props) {
+    const axiosPrivate = useAxiosPrivate();
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [emailAdd, setEmailAdd] = useState("");
-    const [name, setName] = useState(props.itemInfo.Item_Name);
-    const [cat, setCat] = useState(props.itemInfo.Category_Name);
-    const [val, setValue] = useState(props.itemInfo.Item_Value);
-    const [des, setDesc] = useState(props.itemInfo.Item_Desc);
-    const [loc, setLocation] = useState(props.itemInfo.ISH_Location);
-    const [dat, setDate] = useState(props.itemInfo.ISH_Date);
-    const [tim, setTime] = useState(props.itemInfo.ISH_Time);
-    const [dob, setDOB] = useState("");
+    const [name, setName] = useState('');
+    const [cat, setCat] = useState('');
+    const [val, setValue] = useState('');
+    const [des, setDesc] = useState('');
+    const [loc, setLocation] = useState('');
+    const [dat, setDate] = useState('');
+    const [tim, setTime] = useState('');
+    const [dob, setDOB] = useState();
     const [driverLicense, setDriverLicense] = useState("");
     const [phoneNum, setPhoneNum] = useState('');
 
@@ -48,32 +50,45 @@ function EditModal(props) {
 
     }
     useEffect(() => {
-        setName(props.itemInfo.Item_Name);
-        setCat(props.itemInfo.Category_Name);
-        setValue(props.itemInfo.Item_Value);
-        setLocation(props.itemInfo.ISH_Location);
-        setDesc(props.itemInfo.Item_Desc);
-        setDate(formatDate(props.itemInfo.ISH_Date));
-        setTime(props.itemInfo.ISH_Time);
-        setFName(props.itemInfo.User_Fname);
-        setLName(props.itemInfo.User_Lname);
-        setEmailAdd(props.itemInfo.User_Email);
-        setPhoneNum(props.itemInfo.User_Phone);
-        setDriverLicense(props.itemInfo.User_DL);
+        {props.itemInfo.Item_Name && setName(props.itemInfo.Item_Name)};
+        {props.itemInfo.Category_Name && setCat(props.itemInfo.Category_Name)};
+        {props.itemInfo.Item_Value && setValue(props.itemInfo.Item_Value)};
+        {props.itemInfo.ISH_Location && setLocation(props.itemInfo.ISH_Location)};
+        {props.itemInfo.Item_Desc && setDesc(props.itemInfo.Item_Desc)};
+        {props.itemInfo.ISH_Date && setDate(formatDate(props.itemInfo.ISH_Date))};
+        {props.itemInfo.ISH_Time && setTime(props.itemInfo.ISH_Time)};
+        {props.itemInfo.User_Fname && setFName(props.itemInfo.User_Fname)};
+        {props.itemInfo.User_Lname && setLName(props.itemInfo.User_Lname)};
+        {props.itemInfo.User_Email && setEmailAdd(props.itemInfo.User_Email)};
+        {props.itemInfo.User_Phone && setPhoneNum(props.itemInfo.User_Phone)};
+        {props.itemInfo.User_DL && setDriverLicense(props.itemInfo.User_DL)};
         setDOB(formatDate(props.itemInfo.User_DOB));
+    },[props.show == true, props.itemInfo]);
 
-        console.log(props.itemInfo);
-    },[props.show, props.itemInfo]);
+    useEffect(() => {
+        setName('');
+        setCat('');
+        setValue('');
+        setLocation('');
+        setDesc('');
+        setDate('');
+        setTime('');
+        setFName('');
+        setLName('');
+        setEmailAdd('');
+        setPhoneNum('');
+        setDriverLicense('');
+        setDOB('');
+    },[]);
+
     if (!props.show) {
         return null;
     }
-    console.log(name);
+
     const handleSubmit = (e) => {
         e.preventDefault(); // prevent page from auto refresh
-        fetch("http://localhost:3001/api/edit", {
-            method: 'POST',
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({
+        try{
+            const response =  axiosPrivate.post('/api/edit', JSON.stringify({
                 itemId: props.itemInfo.Item_ID,
                 status: props.itemInfo.Status_FK,
                 itemName: name,
@@ -90,17 +105,25 @@ function EditModal(props) {
                 dob: dob,
                 dl: driverLicense,
                 userId: props.itemInfo.User_FK
-            })
-        })
-        props.setShow(false);
+                })
+            )
+            props.setShow(false);
+
+        }catch (err){
+            if (err) {
+                console.error(err)
+            }
+        }
+
     }
+
     function Options(i){
         if(i.Status_FK === 'Lost'){
             return(
             <Container>
                 <Row>
                     <Form.Label>Location Found</Form.Label>
-                    <input value={loc} onChange={event => setLocation(event.target.value)} type="text"/>
+                    <input value={loc} onChange={(event) => setLocation(event.target.value)} type="text"/>
                 </Row>
                 <Row>
                     <Col md={6}>
@@ -109,7 +132,7 @@ function EditModal(props) {
                                 <FormControl type="text"
                                             name="firstName"
                                             value={fName}
-                                            onChange={(event => setFName(event.target.value))}
+                                            onChange={(event) => setFName(event.target.value)}
                                             placeholder="Enter First Name"/>
                         </Form.Group>
                     </Col>
@@ -119,7 +142,7 @@ function EditModal(props) {
                                 <FormControl type="text"
                                              name="lastName"
                                              value={lName}
-                                             onChange={(event => setLName(event.target.value))}
+                                             onChange={(event) => setLName(event.target.value)}
                                              placeholder="Enter Last Name"/>
                         </Form.Group>
                     </Col>
@@ -130,7 +153,7 @@ function EditModal(props) {
                             <Form.Control type="email"
                                           name="email"
                                           value={emailAdd}
-                                          onChange={(event => setEmailAdd(event.target.value))}
+                                          onChange={(event) => setEmailAdd(event.target.value)}
                                           placeholder="Email"></Form.Control>
 
                         </Col>
@@ -149,7 +172,7 @@ function EditModal(props) {
                         <Form.Control type="text"
                                       name="driverLicense"
                                       value={driverLicense}
-                                      onChange={event => setDriverLicense(event.target.value)}
+                                      onChange={(event) => setDriverLicense(event.target.value)}
                                       placeholder="Driver's License"></Form.Control>
                     </Col>
                     <Col md={5}>
@@ -157,7 +180,7 @@ function EditModal(props) {
                         <Form.Control type="date"
                                       name="dob"
                                       value={dob}
-                                      onChange={event => setDOB(event.target.value)}
+                                      onChange={(event) => setDOB(event.target.value)}
                         ></Form.Control>
                     </Col>
                 </Row>
@@ -169,7 +192,7 @@ function EditModal(props) {
                 <Container>
                     <Row>
                         <Form.Label>Location Found</Form.Label>
-                        <input value={loc} onChange={event => setLocation(event.target.value)} type="text"/>
+                        <input value={loc} onChange={(event) => setLocation(event.target.value)} type="text"/>
                     </Row>
 
                 </Container>
@@ -185,7 +208,7 @@ function EditModal(props) {
                                 <FormControl type="text"
                                              name="firstName"
                                              value={fName}
-                                             onChange={(event => setFName(event.target.value))}
+                                             onChange={(event) => setFName(event.target.value)}
                                              placeholder="Enter First Name"/>
                             </Form.Group>
                         </Col>
@@ -195,7 +218,7 @@ function EditModal(props) {
                                 <FormControl type="text"
                                              name="lastName"
                                              value={lName}
-                                             onChange={(event => setLName(event.target.value))}
+                                             onChange={(event) => setLName(event.target.value)}
                                              placeholder="Enter Last Name"/>
                             </Form.Group>
                         </Col>
@@ -206,7 +229,7 @@ function EditModal(props) {
                             <Form.Control type="email"
                                           name="email"
                                           value={emailAdd}
-                                          onChange={(event => setEmailAdd(event.target.value))}
+                                          onChange={(event) => setEmailAdd(event.target.value)}
                                           placeholder="Email"></Form.Control>
 
                         </Col>
@@ -226,7 +249,7 @@ function EditModal(props) {
                             <Form.Control type="text"
                                           name="driverLicense"
                                           value={driverLicense}
-                                          onChange={event => setDriverLicense(event.target.value)}
+                                          onChange={(event) => setDriverLicense(event.target.value)}
                                           placeholder="Driver's License"></Form.Control>
                         </Col>
                         <Col md={5}>
@@ -234,7 +257,7 @@ function EditModal(props) {
                             <Form.Control type="date"
                                           name="dob"
                                           value={dob}
-                                          onChange={event => setDOB(event.target.value)}
+                                          onChange={(event) => setDOB(event.target.value)}
                             ></Form.Control>
                         </Col>
                     </Row>
@@ -259,7 +282,7 @@ function EditModal(props) {
                                     <Form.Label>Select Date</Form.Label>
                                     <Form.Control type="date"
                                                   name="date"
-                                                  onChange={event => setDate(event.target.value)}
+                                                  onChange={(event) => setDate(event.target.value)}
                                                   value={dat}/>
                                 </Form.Group>
                             </Col>
@@ -276,13 +299,13 @@ function EditModal(props) {
                         <Row>
                             <Form.Label>Item Name</Form.Label>
                                 <input value={name}
-                                       onChange={(event => setName(event.target.value))}
+                                       onChange={(event) => setName(event.target.value)}
                                        type="text"/>
                         </Row>
                         <Row>
                             <Form.Label>Item Category</Form.Label><select className="form-select" id="inputGroupSelect04"
                                                   value={cat}
-                                                  onChange={(event => setCat(event.target.value))}
+                                                  onChange={(event) => setCat(event.target.value)}
                                                   aria-label="Example select with button addon">
                             <option value="">--Category--</option>
                             <option value="Electronic">Electronic</option>
@@ -296,7 +319,7 @@ function EditModal(props) {
                         </Row>
                         <Row>
                             <Form.Label>Description</Form.Label>
-                            <textarea value={des} onChange={(event => setDesc(event.target.value))}
+                            <textarea value={des} onChange={(event) => setDesc(event.target.value)}
                                           rows="4"></textarea>
                         </Row>
                         <Row>
@@ -304,7 +327,7 @@ function EditModal(props) {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text>$</InputGroup.Text>
                                 <FormControl name="value" value={val}
-                                             onChange={(event => setValue(event.target.value))}
+                                             onChange={(event) => setValue(event.target.value)}
                                              aria-label="Amount (to the nearest dollar)"/>
                                 <InputGroup.Text>.00</InputGroup.Text>
                             </InputGroup>

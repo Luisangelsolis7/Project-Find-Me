@@ -2,27 +2,34 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import React from 'react';
 import Button from "react-bootstrap/Button";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 
 function DeleteModal(props) {
+    const axiosPrivate = useAxiosPrivate();
 
     if (!props.show) {
         return null;
     }
-    {
-        const handleSubmit = (e) => {
-            e.preventDefault(); // prevent page from auto refresh
-            fetch("http://localhost:3001/api/delete", {
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({
-                    itemId: props.itemInfo.Item_ID,
-                    status: props.itemInfo.Status_FK
 
+    const handleSubmit = (e) => {
+        e.preventDefault(); // prevent page from auto refresh
+        try{
+            const response =  axiosPrivate.post('/api/delete', JSON.stringify({
+                itemId: props.itemInfo.Item_ID,
+                status: props.itemInfo.Status_FK
                 })
-            })
+            )
             props.setShow(false);
+
+        }catch (err){
+            if (err) {
+                console.error(err)
+            }
         }
+
+    }
+
 
         console.log(props.itemInfo);
         return (
@@ -48,7 +55,7 @@ function DeleteModal(props) {
                 </div>
             </div>
         )
-    }
+
 
 
 

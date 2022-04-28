@@ -6,10 +6,12 @@ import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 import {FormControl} from "react-bootstrap";
 import useAuth from "../Hooks/useAuth";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 
 
 function ClaimModal(props) {
+    const axiosPrivate = useAxiosPrivate();
     const {auth} = useAuth();
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
@@ -54,12 +56,11 @@ function ClaimModal(props) {
             // we'll set the input value using our setInputValue
             setPhoneNum(formattedPhoneNumber);
         };
+
         const handleSubmit = (e) => {
             e.preventDefault(); // prevent page from auto refresh
-            fetch("http://localhost:3001/api/insertClaimed", {
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({
+            try{
+                const response =  axiosPrivate.post('/api/insertClaimed', JSON.stringify({
                     itemId: props.itemInfo,
                     firstName: fName,
                     lastName: lName,
@@ -72,10 +73,18 @@ function ClaimModal(props) {
                     date: getCurrentDate(),
                     time: getCurrentTime(),
                     badge: auth.badge
-                })
-            })
-            props.setShow(false);
+                    })
+                )
+                props.setShow(false);
+
+            }catch (err){
+                if (err) {
+                    console.error(err)
+                }
+            }
+
         }
+
         if (!props.show) {
             return null;
         }

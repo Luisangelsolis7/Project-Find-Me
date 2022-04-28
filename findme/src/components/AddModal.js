@@ -6,6 +6,7 @@ import React, {useEffect, useState} from 'react';
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
 import useAuth from "../Hooks/useAuth";
+import  {axiosPrivate} from "../api/axios";
 
 function AddModal(props) {
     const {auth} = useAuth()
@@ -18,13 +19,10 @@ function AddModal(props) {
     const [tim, setTime] = useState("");
 
 
-        const handleSubmit = (e) => {
+        const handleSubmit =  (e) => {
             e.preventDefault(); // prevent page from auto refresh
-            fetch("http://localhost:3001/api/insertUnclaimed", {
-                credentials: "include",
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({
+            try{
+                const response = axiosPrivate.post('/api/insertUnclaimed', JSON.stringify({
                     itemName: name,
                     category: cat,
                     desc: des,
@@ -34,8 +32,15 @@ function AddModal(props) {
                     time: tim,
                     badge: auth.badge
                 })
-            });
-            props.setShow(false);
+                )
+                props.setShow(false);
+
+            }catch (err){
+                if (err) {
+                    console.error(err)
+                }
+            }
+
         }
 
         useEffect(() => {

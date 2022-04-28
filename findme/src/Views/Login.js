@@ -21,7 +21,6 @@ function Login() {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true
             });
-            console.log(JSON.stringify(response?.data))
             const accessToken = response?.data?.accessToken;
             const badge = response?.data?.badge;
             setAuth({email, password, badge, accessToken});
@@ -40,41 +39,6 @@ function Login() {
             }
 
         }
-        /*
-        try {
-            const response = await fetch("http://localhost:3001/api/login", {
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                credentials: 'include',
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            })
-            if (!response) {
-                setErrMSg('No Server Response')
-            }else if(response?.status === 200){
-                setErrMSg('Login Success!')
-                let data = await response.json();
-                const accessToken = data?.accessToken;
-                setAuth({email, password, accessToken});
-                console.log(data);
-                navigate('/Admin');
-            }
-            else if(response?.status === 400) {
-                setErrMSg('Missing Username or Password')
-            } else if (response?.status === 401) {
-                setErrMSg('Invalid Login')
-            } else {
-                setErrMSg(('Login Failed'))
-
-            }
-
-        }catch (err){
-            alert(err)
-
-        }*/
-
     }
 
     useEffect(() => {

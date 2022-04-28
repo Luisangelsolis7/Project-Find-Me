@@ -13,10 +13,10 @@ import DonateModal from "../components/DonateModal";
 
 
 import 'jspdf-autotable';
-import jsPDF from 'jspdf'
+import JsPDF from 'jspdf'
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import Pagination from "../components/Pagination";
-import axios from "../api/axios";
+
 
 
 const Home = function () {
@@ -34,7 +34,7 @@ const Home = function () {
     const [q, setQ] = useState("");
     const [action, setAction] = useState("claim");
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(25);
+    const [itemsPerPage] = useState(25);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = search(items).slice(indexOfFirstItem, indexOfLastItem);
@@ -94,7 +94,7 @@ const Home = function () {
     }
 
     function convertToPDF() {
-        const doc = new jsPDF();
+        const doc = new JsPDF();
 
         doc.autoTable({
             html: '.table',
@@ -105,18 +105,6 @@ const Home = function () {
         doc.save('Test.pdf');
     }
 
-
-
-
-
-    function formatDate(inputDate) {
-        let date = new Date(inputDate);
-        if (!isNaN(date.getTime())) {
-            // Months use 0 index.
-            return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-        }
-
-    }
 
 
 
@@ -131,7 +119,7 @@ const Home = function () {
                         <option value="donate">Donate</option>
                         <option value="destroy">Destroy</option>
                     </select>
-                    <button className="btn btn-outline-dark" onClick={(e) => openModal(action)}>Apply</button>
+                    <button className="btn btn-outline-dark" onClick={() => openModal(action)}>Apply</button>
                 </div>
             )
         }
