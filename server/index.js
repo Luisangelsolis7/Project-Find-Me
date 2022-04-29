@@ -348,6 +348,6 @@ function authenticateToken(req, res, next){
 
 
 
-app.listen(3001, () => {
-    console.log("Running on port 3001")
+app.listen(8080, () => {
+    console.log("Running on port 8080")
 });
