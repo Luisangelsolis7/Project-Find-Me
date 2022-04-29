@@ -21,7 +21,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.get('/*', function(req, res) {
+<<<<<<< Updated upstream
     res.sendFile(path.join(__dirname, '..findme/build/index.html'), function(err) {
+=======
+    res.sendFile(path.join(__dirname, '../findme/build/index.html'), function(err) {
+>>>>>>> Stashed changes
         if (err) {
             res.status(500).send(err)
         }
