@@ -248,7 +248,7 @@ app.post("/api/delete", authenticateToken, (req, res) => {
 
 });
 
-app.post("/api/register", authenticateToken, [check('email').isEmail().normalizeEmail()], async (req, res) => {
+app.post("/api/register", [check('email').isEmail().normalizeEmail()], async (req, res) => {
     try{
         const errors = validationResult(req)
         if(!errors.isEmpty()){
