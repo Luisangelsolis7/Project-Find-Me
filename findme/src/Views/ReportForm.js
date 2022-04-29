@@ -265,7 +265,7 @@ class ReportForm extends React.Component {
 
                             <div></div>
                             <Row className="centered">
-                                <Col className="smallLabel"><Form.Label>Reporter Information</Form.Label></Col>
+                                <Col className="smallLabel"><Form.Label>  Reporter Information</Form.Label></Col>
                             </Row>
                             <Row className="centered">
                                 <Col md={5}>
