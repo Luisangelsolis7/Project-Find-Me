@@ -9,19 +9,19 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const credentials = require('./credentials');
-const corsOptions = require('./config/corsOptions')
+//const corsOptions = require('./config/corsOptions')
 const path = require("path");
 
 
 app.use(credentials);
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'findme/build/index.html'), function(err) {
+    res.sendFile(path.join(__dirname, '..findme/build/index.html'), function(err) {
         if (err) {
             res.status(500).send(err)
         }
