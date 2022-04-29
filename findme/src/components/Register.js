@@ -16,7 +16,7 @@ function Register(props) {
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:3001/api/register", {
+            const response = await fetch("https://findme-56jcg.ondigitalocean.app/api/register", {
                 method: 'POST',
                 headers: {"Content-type": "application/json"},
                 credentials: 'include',
