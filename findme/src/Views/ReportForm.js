@@ -74,9 +74,7 @@ class ReportForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state.input);
         if (this.validate()) {
-            console.log(this.state);
 
             let input = {};
             input["itemName"] = "";
@@ -92,7 +90,7 @@ class ReportForm extends React.Component {
             input["email"] = "";
 
 
-            fetch('http://localhost:3001/api/insertLost', {
+            fetch('https://findme-56jcg.ondigitalocean.app/api/insertLost', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(this.state.input)
