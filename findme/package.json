@@ -19,15 +19,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "init" : "npm install && cd server && npm install && cd ../findme && npm install",
-    "build-client": "cd findme && npm run build",
-    "start-client-dev": "cd findme && npm start",
-    "start-client-prod": "cd findme && set PORT=80 && serve -s build ",
-    "start-api": "cd server && npm start",
-    "start-dev": "concurrently --kill-others-on-fail \"npm run start-api\" \"npm run start-client-dev\"",
-    "start-prod-using-serve": "npm run init && npm run build-client && concurrently --kill-others-on-fail \"npm run start-api\" \"npm run start-client-prod\"",
-    "start-prod-nginx": "npm run init && npm run build-client && concurrently --kill-others-on-fail \"npm run start-api\"",
-    "start": "npm run start-prod-nginx"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
