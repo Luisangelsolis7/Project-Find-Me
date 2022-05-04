@@ -2,11 +2,12 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import useAuth from "../Hooks/useAuth";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+
 
 function Register(props) {
 
-    const{setAuth} = useAuth();
+    const axiosPrivate = useAxiosPrivate();
     const[errMsg, setErrMSg] = useState('');
     const navigate = useNavigate();
     const[email, setEmail] = useState("");
@@ -15,40 +16,22 @@ function Register(props) {
     const[badge, setBadge] = useState("");
     const handleSubmit = async(e) => {
         e.preventDefault();
-        try {
-            const response = await fetch("http://localhost:8080/api/register", {
-                method: 'POST',
-                headers: {"Content-type": "application/json"},
-                credentials: 'include',
-                body: JSON.stringify({
-                    email: email,
-                    password: password,
-                    badge: badge
+        try{
+            const response = axiosPrivate.post('/api/register', JSON.stringify({
+                email: email,
+                badge: badge,
+                password: password
                 })
-            })
-            if (!response) {
-                setErrMSg('No Server Response')
-            }else if(response?.status === 200){
-                setErrMSg('Login Success!')
-                let data = await response.json();
-                const accessToken = data?.accessToken;
-                setAuth({email, password, accessToken});
-                console.log(data);
-                navigate('/Admin');
-            }
-            else if(response?.status === 400) {
-                setErrMSg('Missing Username or Password')
-            } else if (response?.status === 401) {
-                setErrMSg('Invalid Login')
-            } else {
-                setErrMSg(('Failed'))
-
-            }
+            )
+            props.setShow(false);
+            alert("New Admin Added")
 
         }catch (err){
-            alert(err)
-
+            if (err) {
+                console.error(err)
+            }
         }
+
 
     }
 

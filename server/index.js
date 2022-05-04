@@ -20,14 +20,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-/*app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, '..findme/build/index.html'), function(err) {
-        if (err) {
-            res.status(500).send(err)
-        }
-    })
-});*/
-
 app.get("/api/getLost", authenticateToken, (req, res) => {
     const sql = `SELECT i.Item_ID, c.Category_Name, i.Item_Name, i.Item_Value, i.Item_Desc, 
                         ish.Status_FK, ish.ISH_Location, ish.ISH_Date, ish.ISH_Time, ish.User_FK,

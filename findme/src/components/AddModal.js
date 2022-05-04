@@ -6,9 +6,10 @@ import React, {useEffect, useState} from 'react';
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
 import useAuth from "../Hooks/useAuth";
-import  {axiosPrivate} from "../api/axios";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 function AddModal(props) {
+    const axiosPrivate = useAxiosPrivate()
     const {auth} = useAuth()
     const [name, setName] = useState("");
     const [cat, setCat] = useState("");
