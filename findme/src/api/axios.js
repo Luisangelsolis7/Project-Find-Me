@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = 'https://findme-56jcg.ondigitalocean.app:8080/'
+const BASE_URL = 'https://www.aulostnfound.live'
 
 export default axios.create({
     baseURL: BASE_URL

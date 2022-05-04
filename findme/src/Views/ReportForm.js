@@ -90,7 +90,7 @@ class ReportForm extends React.Component {
             input["email"] = "";
 
 
-            fetch('https://findme-56jcg.ondigitalocean.app/api/insertLost', {
+            fetch('https://www.aulostnfound.live/api/insertLost', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(this.state.input)
