@@ -52,7 +52,7 @@ function Register(props) {
             <div className="modal-content">
                 <div className="modal-header">
                     <h4 className="modal-title">
-                        Admin Log-in
+                        Register
                     </h4>
                 </div>
                 <div className="modal-body">
@@ -79,7 +79,7 @@ function Register(props) {
                 </div>
                 <p className={errMsg}>{errMsg}</p>
                 <div className="modal-footer">
-                    <button className="btn btn-success" disabled={password !== matchPassword} onClick={handleSubmit}>Log In</button>
+                    <button className="btn btn-success" disabled={password !== matchPassword || password == ''} onClick={handleSubmit}>Submit</button>
 
                     <button className="btn btn-success" onClick={props.onClose}>Close</button>
                 </div>
