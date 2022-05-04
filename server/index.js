@@ -270,7 +270,7 @@ app.post("/api/register", authenticateToken, [check('email').isEmail().normalize
     }
 });
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
     const {email, password} = req.body;
     if(!email || !password) return res.status(400).send('No Email or Password');
     try{
