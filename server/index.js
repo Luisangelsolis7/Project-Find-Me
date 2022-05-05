@@ -129,7 +129,7 @@ app.get("/api/getDestroyed", authenticateToken, (req, res) => {
     });
 });
 
-app.post("/api/insertLost", authenticateToken, (req, res) => {
+app.post("/api/insertLost", (req, res) => {
     const sql = `INSERT INTO User (User_Fname, User_Lname, User_Phone, User_Email, User_DL, User_AUID) values (?, ?, ?, ?, ?, ?);
                     SET @user_id = LAST_INSERT_ID();
                  INSERT INTO Item (Item_Name, Category_FK, Item_Value, Item_Desc) values (?, ?, ?, ?);
