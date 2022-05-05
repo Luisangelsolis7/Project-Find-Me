@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import axios from "../api/axios";
 
 
 
@@ -72,7 +73,7 @@ class ReportForm extends React.Component {
         this.setState({input});
     };
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
         if (this.validate()) {
 
@@ -90,10 +91,8 @@ class ReportForm extends React.Component {
             input["email"] = "";
 
 
-            fetch('https://www.aulostnfound.live/api/insertLost', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(this.state.input)
+           const response = axios.post('/api/insertLost', JSON.stringify(this.state.input), {
+                headers: {'Content-Type': 'application/json'},
             })
             this.setState({input: input});
             alert('Item has been submitted!');

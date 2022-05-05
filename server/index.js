@@ -9,13 +9,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const credentials = require('./credentials');
-//const corsOptions = require('./config/corsOptions')
+const corsOptions = require('./config/corsOptions')
 const path = require("path");
 
 
-//app.use(credentials);
+app.use(credentials);
 app.use(cookieParser());
-app.use(cors({origin: '*'}));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
