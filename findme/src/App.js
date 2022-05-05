@@ -7,7 +7,7 @@ import PersistLogin from "./components/PersistLogin";
 
 //imported views
 import NoPage from "./Views/NoPageFound";
-import Report from "./Views/ReportForm";
+import Report from "./Views/Report";
 import AdminHome from "./Views/AdminHome";
 import Layout from "./components/Layout";
 import Login from "./Views/Login";

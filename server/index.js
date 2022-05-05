@@ -128,7 +128,7 @@ app.post("/api/insertLost", (req, res) => {
                     SET @item_id = LAST_INSERT_ID();
                  INSERT INTO Item_Status_History (Item_FK, User_FK, Status_FK, ISH_Date, ISH_Time, ISH_Location) 
                         values (@item_id, @user_id, 'Lost', ?, ?, ?);`
-    db.query(sql,  [req.body.firstName, req.body.lastName, req.body.phone, req.body.email, req.body.ID, req.body.AUID,
+    db.query(sql,  [req.body.firstName, req.body.lastName, req.body.phone, req.body.email, req.body.dl, req.body.auID,
                     req.body.itemName, req.body.category, req.body.value, req.body.desc,
                     req.body.date, req.body.time, req.body.location], (err, result) =>{
        if(err){
