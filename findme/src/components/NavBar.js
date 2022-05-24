@@ -1,23 +1,29 @@
 import React from 'react';
-import Button from "react-bootstrap/Button";
-import Navbar from "react-bootstrap/Navbar";
-function NavBar(){
+import {Navbar, Button, Container, Nav} from "react-bootstrap";
+import "../CSS/NavBar_Custom_Styles.css";
+import AU_Logo from "../imgs/AU_Logo_Transparent_WhiteText.png";
 
-    return(
+function NavBar() {
+
+    return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container-fluid">
-                    <Navbar.Brand className="justify-content-center"><img className="resize" src={require("../imgs/AULogo.jpg") } alt="AU Logo"/></Navbar.Brand>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Button className="btn btn-success" href="/Admin">Admin Home</Button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <Navbar className={"bg-au-blue"} expand={"lg"}>
+                <Container>
+                    <Navbar.Brand href="/">
+                        <img
+                            src={AU_Logo}
+                            width="120px"
+                            className="d-inline-block align-top"
+                            alt="AU_Logo"
+                        />
+                    </Navbar.Brand>
+                    <Nav>
+                        <Button className="btn btn-success" href="/Admin">Admin Login</Button>
+                    </Nav>
+                </Container>
+            </Navbar>
         </>
     )
 }
+
 export default NavBar;
