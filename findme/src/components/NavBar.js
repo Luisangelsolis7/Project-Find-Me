@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navbar, Button, Container, Nav} from "react-bootstrap";
-import "../CSS/NavBar_Custom_Styles.css";
+import "../CSS/NavBarCustomization.css";
 import AU_Logo from "../imgs/AU_Logo_Transparent_WhiteText.png";
 
 function NavBar() {

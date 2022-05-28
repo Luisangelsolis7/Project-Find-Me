@@ -1,27 +1,19 @@
 import React from 'react';
 import NavBar from "../components/NavBar";
-import InputGroup from "react-bootstrap/InputGroup";
-import {FormControl, FormGroup} from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import FooterContent from "../components/FooterContent"
+import {FormControl, Row, Col, Form, InputGroup, Card, Button} from "react-bootstrap";
 import axios from "../api/axios";
-
-
-
-
-
 
 class ReportForm extends React.Component {
     constructor() {
         super();
         this.state = {
-            input: {itemName:"", category:"", value:"",  desc:"",
-                firstName:"", lastName:"", date:"", phone:"", time:"", email:"", ID:"", AUID:""},
+            input: {
+                itemName: "", category: "", value: "", desc: "",
+                firstName: "", lastName: "", date: "", phone: "", time: "", email: "", ID: "", AUID: ""
+            },
             errors: {},
-            inputValue : ''
+            inputValue: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -52,7 +44,7 @@ class ReportForm extends React.Component {
 
         // finally, if the phoneNumberLength is greater then seven, we add the last
         // bit of formatting and return it.
-        return( `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+        return (`(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
             3,
             6
         )}-${phoneNumber.slice(6, 10)}`);
@@ -67,7 +59,7 @@ class ReportForm extends React.Component {
     }
 
 
-    handleInput (event){
+    handleInput(event) {
         let input = this.state.input;
         input[event.target.name] = this.formatPhoneNumber(event.target.value);
         this.setState({input});
@@ -91,7 +83,7 @@ class ReportForm extends React.Component {
             input["email"] = "";
 
 
-           const response = axios.post('/api/insertLost', JSON.stringify(this.state.input), {
+            const response = axios.post('/api/insertLost', JSON.stringify(this.state.input), {
                 headers: {'Content-Type': 'application/json'},
             })
             this.setState({input: input});
@@ -168,32 +160,31 @@ class ReportForm extends React.Component {
         return (
             <div className="ReportBackground">
                 <NavBar/>
-                <Container>
-                    <br />
-                    <form onSubmit={this.handleSubmit}>
-                        <h1 className="ReportTitle" > Lost Item Form</h1>
-                        <Row>
-                            <Row className="centered">
-                                <Col md={5}>
-                                    <FormGroup>
-                                        <Form.Label>Item Name</Form.Label>
-                                        <FormControl type="text"
-                                                     name="itemName"
-                                                     value={this.state.input.itemName}
-                                                     onChange={this.handleChange}
-                                                     maxLength="50"
-                                                     placeholder="Ex: Black Iphone, Red Beanie"/>
-                                        <div className="text-danger">{this.state.errors.itemName}</div>
-                                    </FormGroup>
-                                </Col>
 
-                                <Col md={5}>
-                                    <FormGroup>
+                <br/>
+                <div className={"container"}>
+                    <Card className={"container d-flex justify-content-center align-items-center"}
+                          style={{width: "80%", background: "#fff"}}>
+                        <Card.Text>
+                            <div className={"fw-bold"} style={{fontSize: "3rem"}}>AU Lost 'N' Found Report From</div>
+                            <form style={{background: "#fff"}}>
+                                <Row className="centered">
+                                    <Col className="smallLabel">
+                                        <Form.Label>Item Information</Form.Label>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Form.Group as={Col} controlId="formGridItemName">
+                                        <Form.Label>Item Name</Form.Label>
+                                        <Form.Control type="email" placeholder="Ex: Black Iphone, Red Beanie..."/>
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} controlId="fromGridItemCategory">
                                         <Form.Label>Item Category</Form.Label>
                                         <select className="form-select" id="inputGroupSelect04"
                                                 name="category"
                                                 onChange={this.handleChange}
-                                                maxLength="35"
                                                 aria-label="Example select with button addon">
                                             <option defaultValue="">---Categories---</option>
                                             <option value="electronic">Electronic</option>
@@ -204,23 +195,23 @@ class ReportForm extends React.Component {
                                             <option value="misc">Misc</option>
                                         </select>
                                         <div className="text-danger">{this.state.errors.category}</div>
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                            <Row className="centered">
-                                <Col md={5}>
-                                    <Form.Label>Value</Form.Label>
-                                    <InputGroup>
-                                        <InputGroup.Text>$</InputGroup.Text>
-                                        <FormControl name="value" value={this.state.input.value}
-                                                     onChange={this.handleChange}
-                                                     aria-label="Amount (to the nearest dollar)"/>
-                                        <InputGroup.Text>.00</InputGroup.Text>
-                                    </InputGroup>
-                                    <div className="text-danger">{this.state.errors.value}</div>
-                                </Col>
-                                <Col md={5}>
-                                        <Form.Label>Location Lost</Form.Label>
+                                    </Form.Group>
+                                </Row>
+
+                                <Row>
+                                    <Col>
+                                        <Form.Label>Item Value</Form.Label>
+                                        <InputGroup>
+                                            <InputGroup.Text>$</InputGroup.Text>
+                                            <FormControl name="value" value={this.state.input.value}
+                                                         onChange={this.handleChange}
+                                                         aria-label="Amount (to the nearest dollar)"/>
+                                            <InputGroup.Text>.00</InputGroup.Text>
+                                        </InputGroup>
+                                        <div className="text-danger">{this.state.errors.value}</div>
+                                    </Col>
+                                    <Col>
+                                        <Form.Label>Location Item Was Lost</Form.Label>
                                         <select className="form-select" id="inputGroupSelect05"
                                                 name="location"
                                                 onChange={this.handleChange}
@@ -229,102 +220,106 @@ class ReportForm extends React.Component {
                                                 <option key={i} value={i}>{i}</option>
                                             ))}
                                         </select>
-                                </Col>
-                            </Row>
-                            <Row className="centered">
-                                <Col md={4}>
-                                    <Form.Group>
-                                        <Form.Label>Select Date</Form.Label>
-                                        <Form.Control type="date" name="date" onChange={this.handleChange} value={this.state.input.date}/>
-                                        <div className="text-danger">{this.state.errors.date}</div>
-                                    </Form.Group>
-                                </Col>
-                                <Col md={4}>
-                                    <Form.Group>
-                                        <Form.Label>Time Lost</Form.Label>
-                                        <Form.Control type="time" name="time" onChange={this.handleChange}
-                                                      value={this.state.input.time}></Form.Control>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <Row className="centered">
-                                <Col md={7}>
-                                    <Form.Group>
-                                        <Form.Label>Description</Form.Label>
-                                        <Form.Control as="textarea" value={this.state.input.desc}
-                                                      name="desc"
-                                                      maxLength="255"
-                                                      onChange={this.handleChange} rows={4}
-                                                      className="col-md-6"></Form.Control>
+                                    </Col>
+                                </Row>
 
-                                        <div className="text-danger">{this.state.errors.desc}</div>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-
-                            <div></div>
-                            <Row className="centered">
-                                <Col className="smallLabel"><Form.Label>Reporter Information</Form.Label></Col>
-                            </Row>
-                            <Row className="centered">
-                                <Col md={5}>
-                                    <Form.Group>
-                                        <Form.Label>First Name</Form.Label>
-                                        <FormControl type="text"
-                                                     name="firstName"
-                                                     value={this.state.input.firstName}
-                                                     onChange={this.handleChange}
-                                                     maxLength="35"
-                                                     placeholder="Enter First Name"/>
-                                        <div className="text-danger">{this.state.errors.firstName}</div>
-                                    </Form.Group>
-                                </Col>
-                                <Col md={5}>
-                                    <Form.Group>
-                                        <Form.Label>Last Name</Form.Label>
-                                        <FormControl type="text"
-                                                     name="lastName"
-                                                     maxLength="35"
-                                                     value={this.state.input.lastName}
-                                                     onChange={this.handleChange}
-                                                     placeholder="Enter Last Name"/>
-                                        <div className="text-danger">{this.state.errors.lastName}</div>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-
-                            <Row className="centered">
-                                <Col md={6}>
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email"
-                                                  name="email"
-                                                  value={this.state.input.email}
-                                                  onChange={this.handleChange}
-                                                  maxLength="50"
-                                                  placeholder="Enter Email"></Form.Control>
-                                    <div className="text-danger">{this.state.errors.email}</div>
-                                </Col>
-                                <Col md={4}>
-                                    <Form.Group>
-                                        <Form.Label>Phone Number</Form.Label>
-                                        <Form.Control type="input" name="phone" onChange={this.handleInput} value={this.state.input.phone} placeholder="(###)###-####"/>
-                                        <div className="text-danger">{this.state.errors.phone}</div>
-                                    </Form.Group>
-                                </Col>
-                                <Row className="centered">
-                                <Col md={5}>
-                                    <Form.Group>
-                                        <Form.Label>Driver's License/State ID</Form.Label>
-                                        <Form.Control type="input" name="ID"
-                                                      onChange={this.handleChange}
-                                                      value={this.state.input.ID}
-                                                      maxLength="20"
-                                                      placeholder="Enter Driver's License/State ID"/>
-                                    </Form.Group>
-                                </Col>
-                                    <Col md={5}>
+                                <Row>
+                                    <Col>
                                         <Form.Group>
-                                            <Form.Label>AU ID</Form.Label>
+                                            <Form.Label>Date Lost</Form.Label>
+                                            <Form.Control type="date" name="date" onChange={this.handleChange}
+                                                          value={this.state.input.date}/>
+                                            <div className="text-danger">{this.state.errors.date}</div>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Time Lost (Estimate)</Form.Label>
+                                            <Form.Control type="time" name="time" onChange={this.handleChange}
+                                                          value={this.state.input.time}></Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Lost Item Description</Form.Label>
+                                            <Form.Control as="textarea" rows="3" name="description"
+                                                          onChange={this.handleChange}
+                                                          value={this.state.input.description}/>
+                                            <div className="text-danger">{this.state.errors.description}</div>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+
+                                {/*    REPORTER INFORMATION SECTION */}
+                                <Row className="centered">
+                                    <Col className="smallLabel"><Form.Label>Reporter Information</Form.Label></Col>
+                                </Row>
+
+                                <Row>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>First Name</Form.Label>
+                                            <FormControl type="text"
+                                                         name="firstName"
+                                                         value={this.state.input.firstName}
+                                                         onChange={this.handleChange}
+                                                         maxLength="35"
+                                                         placeholder="Enter First Name"/>
+                                            <div className="text-danger">{this.state.errors.firstName}</div>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Last Name</Form.Label>
+                                            <FormControl type="text"
+                                                         name="lastName"
+                                                         maxLength="35"
+                                                         value={this.state.input.lastName}
+                                                         onChange={this.handleChange}
+                                                         placeholder="Enter Last Name"/>
+                                            <div className="text-danger">{this.state.errors.lastName}</div>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col>
+                                        <Form.Label>Email (Preferably AU Email)</Form.Label>
+                                        <Form.Control type="email"
+                                                      name="email"
+                                                      value={this.state.input.email}
+                                                      onChange={this.handleChange}
+                                                      maxLength="50"
+                                                      placeholder="Enter Email"></Form.Control>
+                                        <div className="text-danger">{this.state.errors.email}</div>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Phone Number</Form.Label>
+                                            <Form.Control type="input" name="phone" onChange={this.handleInput}
+                                                          value={this.state.input.phone} placeholder="(123) 456-7890"/>
+                                            <div className="text-danger">{this.state.errors.phone}</div>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Driver's License/State ID (Optional)</Form.Label>
+                                            <Form.Control type="input" name="ID"
+                                                          onChange={this.handleChange}
+                                                          value={this.state.input.ID}
+                                                          maxLength="20"
+                                                          placeholder="Enter Driver's License/State ID"/>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>AU ID (Optional)</Form.Label>
                                             <Form.Control type="input"
                                                           name="AUID"
                                                           onChange={this.handleChange}
@@ -334,35 +329,31 @@ class ReportForm extends React.Component {
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                            </Row>
-                            <Row md={1} className="centered">
-                                <Col className="submitButton">
-                                    <input type="submit" value="Submit" className="btn btn-success"/>
-                                </Col>
-                            </Row>
-                        </Row>
-                    </form>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
 
-                </Container>
+                                <br/>
+                                <Row>
+                                    <Col>
+                                        <Button variant={"danger"} type={"reset"} className={"float-end"}>Clear
+                                            Fields</Button>
+                                    </Col>
+                                    <Col>
+                                        <Button variant={"primary"} type={"submit"} className={"float-start"}>Submit
+                                            Form</Button>
+                                    </Col>
+                                </Row>
+
+                            </form>
+                        </Card.Text>
+                        <br/>
+                    </Card>
+                </div>
+
+                <br/>
+
+                <FooterContent/>
             </div>
         )
     }
 }
 
 export default ReportForm;
-
-
-
-
-
-
-
-
-
-
-
-

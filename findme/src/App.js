@@ -12,6 +12,7 @@ import AdminHome from "./Views/AdminHome";
 import Layout from "./components/Layout";
 import Login from "./Views/Login";
 
+
 function App() {
     let locations = ["N/A", "Alumni Hall", "Bookstore", "Campus Public Safety", "Business Office", "Centennial Hall",
         "Parking Garage", "Institute for Collaboration",
