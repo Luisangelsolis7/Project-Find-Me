@@ -13,10 +13,10 @@ const corsOptions = require('./config/corsOptions')
 const path = require("path");
 
 
-//app.use(credentials);
+app.use(credentials);
 app.use(cookieParser());
-//app.use(cors(corsOptions));
-app.use(cors({origin: '*'}));
+app.use(cors(corsOptions));
+//app.use(cors({origin: '*'}));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
